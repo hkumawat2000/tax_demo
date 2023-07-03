@@ -14,6 +14,9 @@ class TaxCalculator extends StatefulWidget {
 
 class _TaxCalculatorState extends State<TaxCalculator> {
 
+  TextEditingController ageTextEditingController = TextEditingController();
+
+
   TextEditingController basicSalarySalaryTextEditingController = TextEditingController();
   TextEditingController hraSalaryTextEditingController = TextEditingController();
   TextEditingController saSalaryTextEditingController = TextEditingController();
@@ -846,6 +849,35 @@ class _TaxCalculatorState extends State<TaxCalculator> {
       tilePadding: EdgeInsets.zero,
       children: [
         const SizedBox(height: 20),
+        TextField(
+          controller: ageTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+              labelText: "Age",
+              counterText: "",
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey)
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              focusColor: Colors.grey
+          ),
+          onChanged: (val) => calculateAllDeduction(),
+        ),
+        const SizedBox(height: 10),
+        Text("Citizen Type : ${getCitizenType(int.parse(getStringToDouble(ageTextEditingController.text.toString().trim()).toString()))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+        const SizedBox(height: 20),
         const Text("Section 80 C", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
         const SizedBox(height: 20),
         TextField(
@@ -1377,6 +1409,21 @@ class _TaxCalculatorState extends State<TaxCalculator> {
 
     setState(() {});
   }
+
+  getCitizenType(int age){
+    String type = "";
+    if(age == 0) {
+      type = "";
+    } else if(age <= 60) {
+      type = "Normal Citizen";
+    } else if(age >= 60 && age <= 80){
+      type = "Senior Citizen";
+    } else {
+      type = "Super Senior Citizen";
+    }
+    return type;
+  }
+
 
   String numberToString(String str) {
     return str.replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => "${m[1]},");
