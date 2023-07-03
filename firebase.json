@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "public": "build/web",
+    "site" : "1finance-tax",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

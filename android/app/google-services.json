@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "470562996829",
+    "project_id": "tax-planning-a0ce7",
+    "storage_bucket": "tax-planning-a0ce7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:470562996829:android:315d1e3844dc7ea096c3b4",
+        "android_client_info": {
+          "package_name": "com.himanshu.tax"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "470562996829-9gr5gd9tjo69qoae9lr9orqv5aggdh25.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8-2fE9Zy8Tm15TjIF5YJXmVd7fC31Szo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "470562996829-9gr5gd9tjo69qoae9lr9orqv5aggdh25.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
