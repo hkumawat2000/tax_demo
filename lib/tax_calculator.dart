@@ -343,6 +343,172 @@ class _TaxCalculatorState extends State<TaxCalculator> {
           onChanged: (val) => calculateOnlySalary(),
         ),
         const SizedBox(height: 10),
+        Text("Gross Salary                           :  ${numberToString(grossSalary.toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+        const SizedBox(height: 10),
+        TextField(
+          controller: pfDeductionTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+              labelText: "Provident Fund",
+              counterText: "",
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey)
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              focusColor: Colors.grey
+          ),
+          onChanged: (val) => calculateOnlySalary(),
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          controller: vpfDeductionTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+              labelText: "V P F",
+              counterText: "",
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey)
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              focusColor: Colors.grey
+          ),
+          onChanged: (val) => calculateOnlySalary(),
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          controller: ptDeductionTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+              labelText: "Profession Tax",
+              counterText: "",
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey)
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              focusColor: Colors.grey
+          ),
+          onChanged: (val) => calculateOnlySalary(),
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          controller: tdsDeductionTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+              labelText: "TDS Deducted",
+              counterText: "",
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey)
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              focusColor: Colors.grey
+          ),
+          onChanged: (val) => calculateOnlySalary(),
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          controller: ad1DeductionTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+              labelText: "Additional Deducted 1",
+              counterText: "",
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey)
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              focusColor: Colors.grey
+          ),
+          onChanged: (val) => calculateOnlySalary(),
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          controller: ad2DeductionTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+              labelText: "Additional Deducted 2",
+              counterText: "",
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey)
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              focusColor: Colors.grey
+          ),
+          onChanged: (val) => calculateOnlySalary(),
+        ),
+        const SizedBox(height: 10),
+        Text("Net Salary received               :  ${numberToString(netSalaryReceived.toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+        const SizedBox(height: 10),
         TextField(
           controller: rentPaidSalaryTextEditingController,
           keyboardType: TextInputType.number,
@@ -392,8 +558,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
           },
         ),
         const SizedBox(height: 10),
-        Text("Gross Salary                           :  ${numberToString(grossSalary.toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-        Text("HRA Received                        :  ${getStringToDouble(hraSalaryTextEditingController.text.toString().trim()).toStringAsFixed(0)}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+        Text("HRA Received                        :  ${numberToString(getStringToDouble(hraSalaryTextEditingController.text.toString().trim()).toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
         Text("40% or 50% of Basic             :  ${numberToString(ofBasic.toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
         Text("Rent Paid > 10% of Salary    :  ${numberToString(ofRentPaid.toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
         Text("HRA Exemption                     :  ${numberToString(ofHraExemption.toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
@@ -401,7 +566,10 @@ class _TaxCalculatorState extends State<TaxCalculator> {
         Text("Taxable Salary                       :  ${numberToString((grossSalary - ofHraExemption).toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
         Text("Standard Deduction             :  ${numberToString((min((grossSalary - ofHraExemption), 50000)).toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
         const SizedBox(height: 10),
-        Text("Income taxable under the head Salaries :  ${numberToString(((grossSalary - ofHraExemption) - (min((grossSalary - ofHraExemption), 50000))).toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+        Text("Income taxable under the head Salaries :  ${numberToString(((grossSalary - ofHraExemption)
+            - (min((grossSalary - ofHraExemption), 50000))
+            - getStringToDouble(ptDeductionTextEditingController.text.toString().trim())).toStringAsFixed(0))}",
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
         const SizedBox(height: 20),
       ],
     );
@@ -688,7 +856,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               ),
               focusColor: Colors.grey
           ),
-          onChanged: (val) => calculateOnlyDeduction(),
+          onChanged: (val) => calculateOnlySalary(),
         ),
         const SizedBox(height: 10),
         TextField(
@@ -715,7 +883,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               ),
               focusColor: Colors.grey
           ),
-          onChanged: (val) => calculateOnlyDeduction(),
+          onChanged: (val) => calculateOnlySalary(),
         ),
         const SizedBox(height: 10),
         TextField(
@@ -742,7 +910,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               ),
               focusColor: Colors.grey
           ),
-          onChanged: (val) => calculateOnlyDeduction(),
+          onChanged: (val) => calculateOnlySalary(),
         ),
         const SizedBox(height: 10),
         TextField(
@@ -769,7 +937,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               ),
               focusColor: Colors.grey
           ),
-          onChanged: (val) => calculateOnlyDeduction(),
+          onChanged: (val) => calculateOnlySalary(),
         ),
         const SizedBox(height: 10),
         TextField(
@@ -796,7 +964,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               ),
               focusColor: Colors.grey
           ),
-          onChanged: (val) => calculateOnlyDeduction(),
+          onChanged: (val) => calculateOnlySalary(),
         ),
         const SizedBox(height: 10),
         TextField(
@@ -823,7 +991,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               ),
               focusColor: Colors.grey
           ),
-          onChanged: (val) => calculateOnlyDeduction(),
+          onChanged: (val) => calculateOnlySalary(),
         ),
         const SizedBox(height: 10),
         Text("Total Deductions : ${numberToString(totalDeduction.toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
@@ -866,12 +1034,15 @@ class _TaxCalculatorState extends State<TaxCalculator> {
     }
 
     ofHraTaxable = hraReceived - ofHraExemption;
+    calculateOnlyTotalDeduction();
+
     setState(() {
       grossSalary = salary;
+      netSalaryReceived = grossSalary - totalDeduction;
     });
   }
 
-  calculateOnlyDeduction(){
+  calculateOnlyTotalDeduction(){
     double deduction = getStringToDouble(pfDeductionTextEditingController.text.toString().trim())
         + getStringToDouble(vpfDeductionTextEditingController.text.toString().trim())
         + getStringToDouble(ptDeductionTextEditingController.text.toString().trim())
