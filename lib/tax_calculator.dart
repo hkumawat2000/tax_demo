@@ -67,6 +67,31 @@ class _TaxCalculatorState extends State<TaxCalculator> {
 
   TextEditingController addDeductionTextEditingController = TextEditingController();
 
+  TextEditingController section80s1DeductionTextEditingController = TextEditingController();
+  TextEditingController section80s2DeductionTextEditingController = TextEditingController();
+  TextEditingController section80s3DeductionTextEditingController = TextEditingController();
+  TextEditingController section80s4DeductionTextEditingController = TextEditingController();
+  TextEditingController section80s5DeductionTextEditingController = TextEditingController();
+  TextEditingController section80s6DeductionTextEditingController = TextEditingController();
+  TextEditingController section80s7DeductionTextEditingController = TextEditingController();
+  TextEditingController section80s8DeductionTextEditingController = TextEditingController();
+  TextEditingController section80s9DeductionTextEditingController = TextEditingController();
+  TextEditingController section80s10DeductionTextEditingController = TextEditingController();
+  TextEditingController section80s11DeductionTextEditingController = TextEditingController();
+
+
+  double section80s1DeductionValue = 0;
+  double section80s2DeductionValue = 0;
+  double section80s3DeductionValue = 0;
+  double section80s4DeductionValue = 0;
+  double section80s5DeductionValue = 0;
+  double section80s6DeductionValue = 0;
+  double section80s7DeductionValue = 0;
+  double section80s8DeductionValue = 0;
+  double section80s9DeductionValue = 0;
+  double section80s10DeductionValue = 0;
+  double section80s11DeductionValue = 0;
+
   String year = "2022-23";
   double oldPayableTaxAmount = 0;
   double newPayableTaxAmount = 0;
@@ -77,6 +102,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
   double totalHouseIncome = 0;
   double totalOtherIncomeSource = 0;
   String cityType = "metro";
+  String citizenType = "";
   double ofBasic = 0;
   double ofRentPaid = 0;
   double ofHraExemption = 0;
@@ -389,7 +415,10 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               ),
               focusColor: Colors.grey
           ),
-          onChanged: (val) => calculateOnlySalary(),
+          onChanged: (val) {
+            calculateOnlySalary();
+            calculateAllDeduction();
+          },
         ),
         const SizedBox(height: 10),
         TextField(
@@ -416,7 +445,10 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               ),
               focusColor: Colors.grey
           ),
-          onChanged: (val) => calculateOnlySalary(),
+          onChanged: (val) {
+            calculateOnlySalary();
+            calculateAllDeduction();
+          },
         ),
         const SizedBox(height: 10),
         TextField(
@@ -873,10 +905,10 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               ),
               focusColor: Colors.grey
           ),
-          onChanged: (val) => calculateAllDeduction(),
+          onChanged: (val) => getCitizenType(int.parse(getStringToDouble(ageTextEditingController.text.toString().trim()).toString())),
         ),
         const SizedBox(height: 10),
-        Text("Citizen Type : ${getCitizenType(int.parse(getStringToDouble(ageTextEditingController.text.toString().trim()).toString()))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+        Text("Citizen Type : $citizenType", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
         const SizedBox(height: 20),
         const Text("Section 80 C", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
         const SizedBox(height: 20),
@@ -1218,6 +1250,326 @@ class _TaxCalculatorState extends State<TaxCalculator> {
         const SizedBox(height: 10),
         Text("Net deduction of 80 C, 80 CCC and 80 CCD  :  ${numberToString(min(int.parse(getStringToDouble(addDeductionTextEditingController.text.toString().trim()).toString()), 50000).toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
         const SizedBox(height: 20),
+        TextField(
+          controller: section80s1DeductionTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+            labelText: "80D - Mediclaim Insurance (Self & dependent)",
+            counterText: "",
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey)
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            focusColor: Colors.grey,
+            suffix: Text(section80s1DeductionValue.toStringAsFixed(0)),
+          ),
+          onChanged: (val) {
+            double value = getStringToDouble(section80s1DeductionTextEditingController.text.toString().trim());
+            if(citizenType == "Normal Citizen"){
+              section80s1DeductionValue =  min(value, 25000);
+            } else {
+              section80s1DeductionValue = min(value, 50000);
+            }
+            setState(() {});
+          },
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          controller: section80s2DeductionTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+            labelText: "80D - Mediclaim Insurance (Parents)",
+            counterText: "",
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey)
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            focusColor: Colors.grey,
+            suffix: Text(section80s2DeductionValue.toStringAsFixed(0)),
+          ),
+          onChanged: (val) => calculateAllDeduction(),
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          controller: section80s3DeductionTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+            labelText: "80E - Interest on education loan  ",
+            counterText: "",
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey)
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            focusColor: Colors.grey,
+            suffix: Text(section80s3DeductionValue.toStringAsFixed(0)),
+          ),
+          onChanged: (val) => calculateAllDeduction(),
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          controller: section80s4DeductionTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+            labelText: "80EE - Interest on Home Loan as per conditions mentioned therein",
+            counterText: "",
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey)
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            focusColor: Colors.grey,
+            suffix: Text(section80s4DeductionValue.toStringAsFixed(0)),
+          ),
+          onChanged: (val) => calculateAllDeduction(),
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          controller: section80s5DeductionTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+            labelText: "80DD - Medical Treatment of handicapped Dependent",
+            counterText: "",
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey)
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            focusColor: Colors.grey,
+            suffix: Text(section80s5DeductionValue.toStringAsFixed(0)),
+          ),
+          onChanged: (val) => calculateAllDeduction(),
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          controller: section80s6DeductionTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+            labelText: "80DDB - 80DDB Expenditure on Selected Medical Treatment",
+            counterText: "",
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey)
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            focusColor: Colors.grey,
+            suffix: Text(section80s6DeductionValue.toStringAsFixed(0)),
+          ),
+          onChanged: (val) => calculateAllDeduction(),
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          controller: section80s7DeductionTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+            labelText: "80G, 80GGA, 80GGC Donation to approved funds",
+            counterText: "",
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey)
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            focusColor: Colors.grey,
+            suffix: Text(section80s7DeductionValue.toStringAsFixed(0)),
+          ),
+          onChanged: (val) => calculateAllDeduction(),
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          controller: section80s8DeductionTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+            labelText: "80GG For Rent to an Individual, not receiving HRA (File Form 10BA)",
+            counterText: "",
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey)
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            focusColor: Colors.grey,
+            suffix: Text(section80s8DeductionValue.toStringAsFixed(0)),
+          ),
+          onChanged: (val) => calculateAllDeduction(),
+        ),
+        const SizedBox(height: 10),
+        const Text("80TTA - SB interest received by Normal Citizen : ", style:  TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+        const SizedBox(height: 10),
+        const Text("80TTB - Interest on SB Act. & deposits received by Sr. & very Sr. Citizen : ", style:  TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+        const SizedBox(height: 10),
+        TextField(
+          controller: section80s9DeductionTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+            labelText: "80U - Physically Disable Assesse",
+            counterText: "",
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey)
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            focusColor: Colors.grey,
+            suffix: Text(section80s9DeductionValue.toStringAsFixed(0)),
+          ),
+          onChanged: (val) => calculateAllDeduction(),
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          controller: section80s10DeductionTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+            labelText: "Any other section (Enter the componenet here)",
+            counterText: "",
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey)
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            focusColor: Colors.grey,
+            suffix: Text(section80s10DeductionValue.toStringAsFixed(0)),
+          ),
+          onChanged: (val) => calculateAllDeduction(),
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          controller: section80s11DeductionTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+            labelText: "Any other section (Enter the componenet here)",
+            counterText: "",
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey)
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            focusColor: Colors.grey,
+            suffix: Text(section80s11DeductionValue.toStringAsFixed(0)),
+          ),
+          onChanged: (val) => calculateAllDeduction(),
+        ),
+        const SizedBox(height: 10),
       ],
     );
   }
@@ -1278,6 +1630,26 @@ class _TaxCalculatorState extends State<TaxCalculator> {
   }
 
   calculateAllDeduction(){
+    double deduction = getStringToDouble(li80CDeductionTextEditingController.text.toString().trim())
+        + getStringToDouble(pfDeductionTextEditingController.text.toString().trim())
+        + getStringToDouble(vpfDeductionTextEditingController.text.toString().trim())
+        + getStringToDouble(ppf80CDeductionTextEditingController.text.toString().trim())
+        + getStringToDouble(nscAI80CDeductionTextEditingController.text.toString().trim())
+        + getStringToDouble(hlPr80CDeductionTextEditingController.text.toString().trim())
+        + getStringToDouble(ssa80CDeductionTextEditingController.text.toString().trim())
+        + getStringToDouble(tfFc80CDeductionTextEditingController.text.toString().trim())
+        + getStringToDouble(tsFdIb80CDeductionTextEditingController.text.toString().trim())
+        + getStringToDouble(tsb80CDeductionTextEditingController.text.toString().trim())
+        + getStringToDouble(eLSS80CDeductionTextEditingController.text.toString().trim())
+        + getStringToDouble(pp80cccDeductionTextEditingController.text.toString().trim())
+        + getStringToDouble(nps80ccdDeductionTextEditingController.text.toString().trim());
+
+    setState(() {
+      total80sDeduction = deduction;
+    });
+  }
+
+  calculateAllSection80sDeduction(){
     double deduction = getStringToDouble(li80CDeductionTextEditingController.text.toString().trim())
         + getStringToDouble(pfDeductionTextEditingController.text.toString().trim())
         + getStringToDouble(vpfDeductionTextEditingController.text.toString().trim())
@@ -1411,17 +1783,16 @@ class _TaxCalculatorState extends State<TaxCalculator> {
   }
 
   getCitizenType(int age){
-    String type = "";
     if(age == 0) {
-      type = "";
+      citizenType = "";
     } else if(age <= 60) {
-      type = "Normal Citizen";
+      citizenType = "Normal Citizen";
     } else if(age >= 60 && age <= 80){
-      type = "Senior Citizen";
+      citizenType = "Senior Citizen";
     } else {
-      type = "Super Senior Citizen";
+      citizenType = "Super Senior Citizen";
     }
-    return type;
+    setState(() {});
   }
 
 
