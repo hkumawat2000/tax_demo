@@ -195,9 +195,8 @@ class _TaxCalculatorState extends State<TaxCalculator> {
           onChanged: (val) => getCitizenType(int.parse(getStringToDouble(ageTextEditingController.text.toString().trim()).toString())),
         ),
         const SizedBox(height: 10),
-        Text("Citizen Type : $citizenType", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-        const SizedBox(height: 10),
-        salaryChildWidget(),
+        Text("Citizen Type : $citizenType", style: const TextStyle(fontWeight: FontWeight.bold)),
+        salaryIncomeChildWidget(),
         houseIncomeChildWidget(),
         otherSourceIncomeChildWidget(),
         deductionChildWidget(),
@@ -222,7 +221,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
     );
   }
 
-  salaryChildWidget(){
+  salaryIncomeChildWidget(){
     return ExpansionTile(
       title: const Text("Income From Salary"),
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
