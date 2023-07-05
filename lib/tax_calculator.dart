@@ -119,10 +119,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
   String selectedClaiming = "Claiming 80U?";
 
   @override
-  void initState() {
-    section80s9DeductionTextEditingController.text = "1000";
-    section80s10DeductionTextEditingController.text = "0";
-
+  void initState(){
     super.initState();
   }
 
@@ -1291,15 +1288,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
             focusColor: Colors.grey,
             suffix: Text(section80s1DeductionValue.toStringAsFixed(0)),
           ),
-          onChanged: (val) {
-            double value = getStringToDouble(section80s1DeductionTextEditingController.text.toString().trim());
-            if(citizenType == "Normal Citizen"){
-              section80s1DeductionValue =  min(value, 25000);
-            } else {
-              section80s1DeductionValue = min(value, 50000);
-            }
-            calculateAllSection80sDeduction();
-          },
+          onChanged: (val) => calculateAllSection80sDeduction(),
         ),
         const SizedBox(height: 10),
         TextField(
@@ -1328,12 +1317,6 @@ class _TaxCalculatorState extends State<TaxCalculator> {
             suffix: Text(section80s2DeductionValue.toStringAsFixed(0)),
           ),
           onChanged: (val) {
-            double value = getStringToDouble(section80s2DeductionTextEditingController.text.toString().trim());
-            if(citizenType == "Normal Citizen"){
-              section80s2DeductionValue =  min(value, 25000);
-            } else {
-              section80s2DeductionValue = min(value, 50000);
-            }
             calculateAllSection80sDeduction();
           },
         ),
@@ -1364,7 +1347,6 @@ class _TaxCalculatorState extends State<TaxCalculator> {
             suffix: Text(section80s3DeductionValue.toStringAsFixed(0)),
           ),
           onChanged: (val) {
-            section80s3DeductionValue = getStringToDouble(section80s3DeductionTextEditingController.text.toString().trim());
             calculateAllSection80sDeduction();
           },
         ),
@@ -1395,7 +1377,6 @@ class _TaxCalculatorState extends State<TaxCalculator> {
             suffix: Text(section80s4DeductionValue.toStringAsFixed(0)),
           ),
           onChanged: (val) {
-            section80s4DeductionValue = getStringToDouble(section80s4DeductionTextEditingController.text.toString().trim());
             calculateAllSection80sDeduction();
           },
         ),
@@ -1429,17 +1410,6 @@ class _TaxCalculatorState extends State<TaxCalculator> {
                   suffix: Text(section80s5DeductionValue.toStringAsFixed(0)),
                 ),
                 onChanged: (val) {
-                  if(selectedClaiming == "No"){
-                    if(selectedDisability == "40% to 79%"){
-                      section80s5DeductionValue = 75000;
-                    } else if(selectedDisability == "80% & more"){
-                      section80s5DeductionValue = 125000;
-                    } else {
-                      section80s5DeductionValue = 0;
-                    }
-                  } else {
-                    section80s5DeductionValue = 0;
-                  }
                   calculateAllSection80sDeduction();
                 },
               ),
@@ -1487,12 +1457,6 @@ class _TaxCalculatorState extends State<TaxCalculator> {
             suffix: Text(section80s6DeductionValue.toStringAsFixed(0)),
           ),
           onChanged: (val) {
-            double value = getStringToDouble(section80s6DeductionTextEditingController.text.toString().trim());
-            if(citizenType == "Normal Citizen"){
-              section80s6DeductionValue =  min(value, 40000);
-            } else {
-              section80s6DeductionValue = min(value, 100000);
-            }
             calculateAllSection80sDeduction();
           },
         ),
@@ -1523,7 +1487,6 @@ class _TaxCalculatorState extends State<TaxCalculator> {
             suffix: Text(section80s7DeductionValue.toStringAsFixed(0)),
           ),
           onChanged: (val) {
-            section80s7DeductionValue = getStringToDouble(section80s7DeductionTextEditingController.text.toString().trim());
             calculateAllSection80sDeduction();
           },
         ),
@@ -1554,41 +1517,69 @@ class _TaxCalculatorState extends State<TaxCalculator> {
             suffix: Text(section80s8DeductionValue.toStringAsFixed(0)),
           ),
           onChanged: (val) {
-            // Section 8
-            double value = getStringToDouble(section80s8DeductionTextEditingController.text.toString().trim());
-            if(value > 1){
-              /*Minimum of these values
-              * value - ((netTaxableOfSalaryIncome - total80sDeduction - int.parse(getStringToDouble(addDeductionTextEditingController.text.toString().trim()).toString()) - section80s1DeductionValue - section80s2DeductionValue - section80s3DeductionValue - section80s5DeductionValue - section80s6DeductionValue - section80s7DeductionValue - section80s9DeductionValue - section80s10DeductionValue, section80s11DeductionValue) * 0.1))
-              * 60000
-              *((netTaxableOfSalaryIncome - total80sDeduction - int.parse(getStringToDouble(addDeductionTextEditingController.text.toString().trim()).toString()) - section80s1DeductionValue - section80s2DeductionValue - section80s3DeductionValue - section80s5DeductionValue - section80s6DeductionValue - section80s7DeductionValue - section80s9DeductionValue - section80s10DeductionValue, section80s11DeductionValue) * 0.25)
-              * */
-              double calculatedValue = netTaxableOfSalaryIncome - total80sDeduction - int.parse(getStringToDouble(addDeductionTextEditingController.text.toString().trim()).toString()) - section80s1DeductionValue - section80s2DeductionValue - section80s3DeductionValue - section80s5DeductionValue - section80s6DeductionValue - section80s7DeductionValue - section80s9DeductionValue - section80s10DeductionValue - section80s11DeductionValue;
-              section80s8DeductionValue =  min(min(value - (calculatedValue * 0.1), 60000), (calculatedValue * 0.25));
-            } else {
-              section80s8DeductionValue = 0;
-            }
-
-            // Section 9
-            if(citizenType == "Normal Citizen"){
-              section80s9DeductionValue = min(getStringToDouble(section80s9DeductionTextEditingController.text.toString().trim()), 10000);
-            } else {
-              section80s9DeductionValue = 0;
-            }
-            // Section 10
-            if(citizenType == "Normal Citizen"){
-              section80s9DeductionValue = 0;
-            } else {
-              section80s9DeductionValue = min(getStringToDouble(section80s10DeductionTextEditingController.text.toString().trim()), 50000);
-            }
             calculateAllSection80sDeduction();
           },
         ),
         const SizedBox(height: 10),
-        Text("80TTA - SB interest received by Normal Citizen : ${section80s9DeductionTextEditingController.text.toString().trim()}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-        Text("                         ${section80s9DeductionValue.toStringAsFixed(0)}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+        TextField(
+          controller: section80s9DeductionTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+            labelText: "80TTA - SB interest received by Normal Citizen",
+            counterText: "",
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey)
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            focusColor: Colors.grey,
+            suffix: Text(section80s9DeductionValue.toStringAsFixed(0)),
+          ),
+          onChanged: (val) {
+            calculateAllSection80sDeduction();
+          },
+        ),
         const SizedBox(height: 10),
-        Text("80TTB - Interest on SB Act. & deposits received by Sr. & very Sr. Citizen : ${section80s10DeductionTextEditingController.text.toString().trim()}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-        Text("                         ${section80s10DeductionValue.toStringAsFixed(0)}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+        TextField(
+          controller: section80s10DeductionTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+            labelText: "80TTB - Interest on SB Act. & deposits received by Sr. & very Sr. Citizen",
+            counterText: "",
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey)
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            focusColor: Colors.grey,
+            suffix: Text(section80s10DeductionValue.toStringAsFixed(0)),
+          ),
+          onChanged: (val) {
+            calculateAllSection80sDeduction();
+          },
+        ),
         const SizedBox(height: 10),
         TextField(
           controller: section80s11DeductionTextEditingController,
@@ -1613,20 +1604,9 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               borderSide: const BorderSide(color: Colors.grey),
             ),
             focusColor: Colors.grey,
-            suffix: Text(section80s9DeductionValue.toStringAsFixed(0)),
+            suffix: Text(section80s11DeductionValue.toStringAsFixed(0)),
           ),
           onChanged: (val) {
-            if(selectedClaiming == "Yes"){
-              if(selectedDisability == "40% to 79%"){
-                section80s11DeductionValue = 75000;
-              } else if(selectedDisability == "80% & more"){
-                section80s11DeductionValue = 125000;
-              } else{
-                section80s11DeductionValue = 0;
-              }
-            } else {
-              section80s11DeductionValue = 0;
-            }
             calculateAllSection80sDeduction();
           },
         ),
@@ -1654,10 +1634,9 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               borderSide: const BorderSide(color: Colors.grey),
             ),
             focusColor: Colors.grey,
-            suffix: Text(section80s10DeductionValue.toStringAsFixed(0)),
+            suffix: Text(section80s12DeductionValue.toStringAsFixed(0)),
           ),
           onChanged: (val) {
-            section80s12DeductionValue = getStringToDouble(section80s12DeductionTextEditingController.text.toString().trim());
             calculateAllSection80sDeduction();
           },
         ),
@@ -1685,10 +1664,9 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               borderSide: const BorderSide(color: Colors.grey),
             ),
             focusColor: Colors.grey,
-            suffix: Text(section80s11DeductionValue.toStringAsFixed(0)),
+            suffix: Text(section80s13DeductionValue.toStringAsFixed(0)),
           ),
           onChanged: (val) {
-            section80s13DeductionValue = getStringToDouble(section80s13DeductionTextEditingController.text.toString().trim());
             calculateAllSection80sDeduction();
           },
         ),
@@ -1780,6 +1758,100 @@ class _TaxCalculatorState extends State<TaxCalculator> {
   }
 
   calculateAllSection80sDeduction(){
+    // Section 1
+    double value1 = getStringToDouble(section80s1DeductionTextEditingController.text.toString().trim());
+    if(citizenType == "Normal Citizen"){
+      section80s1DeductionValue =  min(value1, 25000);
+    } else {
+      section80s1DeductionValue = min(value1, 50000);
+    }
+
+    // Section 2
+    double value2 = getStringToDouble(section80s2DeductionTextEditingController.text.toString().trim());
+    if(citizenType == "Normal Citizen"){
+      section80s2DeductionValue =  min(value2, 25000);
+    } else {
+      section80s2DeductionValue = min(value2, 50000);
+    }
+
+    // Section 3
+    section80s3DeductionValue = getStringToDouble(section80s3DeductionTextEditingController.text.toString().trim());
+
+    // Section 4
+    section80s4DeductionValue = getStringToDouble(section80s4DeductionTextEditingController.text.toString().trim());
+
+    // Section 5
+    if(selectedClaiming == "No"){
+      if(selectedDisability == "40% to 79%"){
+        section80s5DeductionValue = 75000;
+      } else if(selectedDisability == "80% & more"){
+        section80s5DeductionValue = 125000;
+      } else {
+        section80s5DeductionValue = 0;
+      }
+    } else {
+      section80s5DeductionValue = 0;
+    }
+
+    // Section 6
+    double value6 = getStringToDouble(section80s6DeductionTextEditingController.text.toString().trim());
+    if(citizenType == "Normal Citizen"){
+      section80s6DeductionValue =  min(value6, 40000);
+    } else {
+      section80s6DeductionValue = min(value6, 100000);
+    }
+
+    // Section 7
+    section80s7DeductionValue = getStringToDouble(section80s7DeductionTextEditingController.text.toString().trim());
+
+    // Section 8
+    double value = getStringToDouble(section80s8DeductionTextEditingController.text.toString().trim());
+    if(value > 1){
+      /*Minimum of these values
+              * value - ((netTaxableOfSalaryIncome - total80sDeduction - int.parse(getStringToDouble(addDeductionTextEditingController.text.toString().trim()).toString()) - section80s1DeductionValue - section80s2DeductionValue - section80s3DeductionValue - section80s5DeductionValue - section80s6DeductionValue - section80s7DeductionValue - section80s9DeductionValue - section80s10DeductionValue, section80s11DeductionValue) * 0.1))
+              * 60000
+              *((netTaxableOfSalaryIncome - total80sDeduction - int.parse(getStringToDouble(addDeductionTextEditingController.text.toString().trim()).toString()) - section80s1DeductionValue - section80s2DeductionValue - section80s3DeductionValue - section80s5DeductionValue - section80s6DeductionValue - section80s7DeductionValue - section80s9DeductionValue - section80s10DeductionValue, section80s11DeductionValue) * 0.25)
+              * */
+      double calculatedValue = netTaxableOfSalaryIncome - total80sDeduction - int.parse(getStringToDouble(addDeductionTextEditingController.text.toString().trim()).toString()) - section80s1DeductionValue - section80s2DeductionValue - section80s3DeductionValue - section80s5DeductionValue - section80s6DeductionValue - section80s7DeductionValue - section80s9DeductionValue - section80s10DeductionValue - section80s11DeductionValue;
+      section80s8DeductionValue =  min(min(value - (calculatedValue * 0.1), 60000), (calculatedValue * 0.25));
+    } else {
+      section80s8DeductionValue = 0;
+    }
+
+    // Section 9
+    if(citizenType == "Normal Citizen"){
+      section80s9DeductionValue = min(getStringToDouble(section80s9DeductionTextEditingController.text.toString().trim()), 10000);
+    } else {
+      section80s9DeductionValue = 0;
+    }
+
+    // Section 10
+    if(citizenType == "Normal Citizen"){
+      section80s10DeductionValue = 0;
+    } else {
+      section80s10DeductionValue = min(getStringToDouble(section80s10DeductionTextEditingController.text.toString().trim()), 50000);
+    }
+
+    // Section 11
+    if(selectedClaiming == "Yes"){
+      if(selectedDisability == "40% to 79%"){
+        section80s11DeductionValue = 75000;
+      } else if(selectedDisability == "80% & more"){
+        section80s11DeductionValue = 125000;
+      } else{
+        section80s11DeductionValue = 0;
+      }
+    } else {
+      section80s11DeductionValue = 0;
+    }
+
+    // Section 12
+    section80s12DeductionValue = getStringToDouble(section80s12DeductionTextEditingController.text.toString().trim());
+
+    // Section 13
+    section80s13DeductionValue = getStringToDouble(section80s13DeductionTextEditingController.text.toString().trim());
+
+
     double section80Deduction = section80s1DeductionValue + section80s2DeductionValue + section80s3DeductionValue + section80s4DeductionValue +
         section80s5DeductionValue + section80s6DeductionValue + section80s7DeductionValue + section80s8DeductionValue +
     section80s9DeductionValue + section80s10DeductionValue + section80s11DeductionValue + section80s12DeductionValue + section80s13DeductionValue;
