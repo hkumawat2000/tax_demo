@@ -1557,12 +1557,12 @@ class _TaxCalculatorState extends State<TaxCalculator> {
             // Section 8
             double value = getStringToDouble(section80s8DeductionTextEditingController.text.toString().trim());
             if(value > 1){
-              /*Mininum of these values
+              /*Minimum of these values
               * value - ((netTaxableOfSalaryIncome - total80sDeduction - int.parse(getStringToDouble(addDeductionTextEditingController.text.toString().trim()).toString()) - section80s1DeductionValue - section80s2DeductionValue - section80s3DeductionValue - section80s5DeductionValue - section80s6DeductionValue - section80s7DeductionValue - section80s9DeductionValue - section80s10DeductionValue, section80s11DeductionValue) * 0.1))
               * 60000
               *((netTaxableOfSalaryIncome - total80sDeduction - int.parse(getStringToDouble(addDeductionTextEditingController.text.toString().trim()).toString()) - section80s1DeductionValue - section80s2DeductionValue - section80s3DeductionValue - section80s5DeductionValue - section80s6DeductionValue - section80s7DeductionValue - section80s9DeductionValue - section80s10DeductionValue, section80s11DeductionValue) * 0.25)
               * */
-              double calculatedValue = netTaxableOfSalaryIncome - total80sDeduction - int.parse(getStringToDouble(addDeductionTextEditingController.text.toString().trim()).toString()) - section80s1DeductionValue - section80s2DeductionValue - section80s3DeductionValue - section80s5DeductionValue - section80s6DeductionValue - section80s7DeductionValue - section80s9DeductionValue - section80s10DeductionValue, section80s11DeductionValue;
+              double calculatedValue = netTaxableOfSalaryIncome - total80sDeduction - int.parse(getStringToDouble(addDeductionTextEditingController.text.toString().trim()).toString()) - section80s1DeductionValue - section80s2DeductionValue - section80s3DeductionValue - section80s5DeductionValue - section80s6DeductionValue - section80s7DeductionValue - section80s9DeductionValue - section80s10DeductionValue - section80s11DeductionValue;
               section80s8DeductionValue =  min(min(value - (calculatedValue * 0.1), 60000), (calculatedValue * 0.25));
             } else {
               section80s8DeductionValue = 0;
@@ -1598,7 +1598,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
             FilteringTextInputFormatter.allow(RegExp('[0-9]')),
           ],
           decoration: InputDecoration(
-            labelText: "80U - Physically Disable Assesse",
+            labelText: "80U - Physically Disable Assess",
             counterText: "",
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(6),
@@ -1639,7 +1639,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
             FilteringTextInputFormatter.allow(RegExp('[0-9]')),
           ],
           decoration: InputDecoration(
-            labelText: "Any other section (Enter the componenet here)",
+            labelText: "Any other section (Enter the component here)",
             counterText: "",
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(6),
@@ -1670,7 +1670,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
             FilteringTextInputFormatter.allow(RegExp('[0-9]')),
           ],
           decoration: InputDecoration(
-            labelText: "Any other section (Enter the componenet here)",
+            labelText: "Any other section (Enter the component here)",
             counterText: "",
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(6),
