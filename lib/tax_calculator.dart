@@ -115,6 +115,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
   double netTaxableOfSalaryIncome = 0;
   double overAllTotalDeduction = 0;
 
+  String selectedAssessmentYear = "2023-24";
   String selectedDisability = "Less than 40%";
   String selectedClaiming = "Claiming 80U?";
 
@@ -155,6 +156,47 @@ class _TaxCalculatorState extends State<TaxCalculator> {
       childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
       tilePadding: EdgeInsets.zero,
       children: [
+        Row(
+          children: [
+            const Text("Assessment Year"),
+            const SizedBox(width: 20),
+            DropdownButton(
+              value: selectedAssessmentYear,
+              onChanged: (String? newValue) => setState(() => selectedAssessmentYear = newValue!),
+              items: ["2024-25", "2023-24", "2022-23", "2021-22"].map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          controller: ageTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+              labelText: "Age",
+              counterText: "",
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey)
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              focusColor: Colors.grey
+          ),
+          onChanged: (val) => getCitizenType(int.parse(getStringToDouble(ageTextEditingController.text.toString().trim()).toString())),
+        ),
+        const SizedBox(height: 10),
+        Text("Citizen Type : $citizenType", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+        const SizedBox(height: 10),
         salaryChildWidget(),
         houseIncomeChildWidget(),
         otherSourceIncomeChildWidget(),
@@ -714,7 +756,10 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               ),
               focusColor: Colors.grey
           ),
-          onChanged: (val) => calculateOnlyOtherSourceIncome(),
+          onChanged: (val) {
+            calculateOnlyOtherSourceIncome();
+            calculateAllSection80sDeduction();
+          },
         ),
         const SizedBox(height: 10),
         TextField(
@@ -741,7 +786,10 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               ),
               focusColor: Colors.grey
           ),
-          onChanged: (val) => calculateOnlyOtherSourceIncome(),
+          onChanged: (val) {
+            calculateOnlyOtherSourceIncome();
+            calculateAllSection80sDeduction();
+          },
         ),
         const SizedBox(height: 10),
         TextField(
@@ -893,35 +941,6 @@ class _TaxCalculatorState extends State<TaxCalculator> {
       childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
       tilePadding: EdgeInsets.zero,
       children: [
-        const SizedBox(height: 20),
-        TextField(
-          controller: ageTextEditingController,
-          keyboardType: TextInputType.number,
-          style: const TextStyle(color: Colors.black),
-          inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-          ],
-          decoration: InputDecoration(
-              labelText: "Age",
-              counterText: "",
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(color: Colors.grey)
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6),
-                borderSide: const BorderSide(color: Colors.grey),
-              ),
-              disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6),
-                borderSide: const BorderSide(color: Colors.grey),
-              ),
-              focusColor: Colors.grey
-          ),
-          onChanged: (val) => getCitizenType(int.parse(getStringToDouble(ageTextEditingController.text.toString().trim()).toString())),
-        ),
-        const SizedBox(height: 10),
-        Text("Citizen Type : $citizenType", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
         const SizedBox(height: 20),
         const Text("Section 80 C", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
         const SizedBox(height: 20),
@@ -1524,6 +1543,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
         TextField(
           controller: section80s9DeductionTextEditingController,
           keyboardType: TextInputType.number,
+          readOnly: true,
           style: const TextStyle(color: Colors.black),
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp('[0-9]')),
@@ -1554,6 +1574,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
         TextField(
           controller: section80s10DeductionTextEditingController,
           keyboardType: TextInputType.number,
+          readOnly: true,
           style: const TextStyle(color: Colors.black),
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp('[0-9]')),
@@ -1820,15 +1841,19 @@ class _TaxCalculatorState extends State<TaxCalculator> {
 
     // Section 9
     if(citizenType == "Normal Citizen"){
+      section80s9DeductionTextEditingController.text = biSBAOtherSourceTextEditingController.text;
       section80s9DeductionValue = min(getStringToDouble(section80s9DeductionTextEditingController.text.toString().trim()), 10000);
     } else {
+      section80s9DeductionTextEditingController.text = "0";
       section80s9DeductionValue = 0;
     }
 
     // Section 10
     if(citizenType == "Normal Citizen"){
+      section80s10DeductionTextEditingController.text = "0";
       section80s10DeductionValue = 0;
     } else {
+      section80s10DeductionTextEditingController.text = (getStringToDouble(biSBAOtherSourceTextEditingController.text.trim()) + getStringToDouble(biTDOtherSourceTextEditingController.text.trim())).toString();
       section80s10DeductionValue = min(getStringToDouble(section80s10DeductionTextEditingController.text.toString().trim()), 50000);
     }
 

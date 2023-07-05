@@ -141,31 +141,31 @@ class _HRACalculatorState extends State<HRACalculator> {
         Text("HRA Exemption                   : ${numberToString(hraExemption.toStringAsFixed(0))}"),
         Text("HRA Taxable                        : ${numberToString(hraTaxable.toStringAsFixed(0))}"),
         const SizedBox(height: 40),
-        Text("Minimum Rent Pay             : ${numberToString(minRent.toStringAsFixed(0))}"),
+        Text("Optimized Rent             : ${numberToString(minRent.toStringAsFixed(0))}"),
         const SizedBox(height: 20),
       ],
     );
   }
 
   calculateHRA(){
-    if(hraTextEditingController.text.isNotEmpty && basicSalaryTextEditingController.text.isNotEmpty){
+    if(hraTextEditingController.text.isNotEmpty && basicSalaryTextEditingController.text.isNotEmpty) {
       hraReceived = double.parse(hraTextEditingController.text.toString().trim());
 
       double basicSalary = double.parse(basicSalaryTextEditingController.text.toString().trim());
-      if(cityType == "metro"){
+      if (cityType == "metro") {
         basic = (basicSalary * 50) / 100;
       } else {
         basic = (basicSalary * 40) / 100;
       }
-
-      double totalRentPaid = double.parse(totalRentTextEditingController.text.toString().trim());
-      if((totalRentPaid - (basicSalary * 10) / 100) > 0){
-        rentPaid = totalRentPaid - (basicSalary * 10) / 100;
-      } else {
-        rentPaid = 0;
+      if(totalRentTextEditingController.text.isNotEmpty) {
+        double totalRentPaid = double.parse(totalRentTextEditingController.text.toString().trim());
+        if ((totalRentPaid - (basicSalary * 10) / 100) > 0) {
+          rentPaid = totalRentPaid - (basicSalary * 10) / 100;
+        } else {
+          rentPaid = 0;
+        }
       }
-
-      if(min(min(hraReceived, basicSalary), rentPaid) < 0){
+      if (min(min(hraReceived, basicSalary), rentPaid) < 0) {
         hraExemption = 0;
       } else {
         hraExemption = min(min(hraReceived, basicSalary), rentPaid);
