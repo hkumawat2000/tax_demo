@@ -20,6 +20,7 @@ class _HRACalculatorState extends State<HRACalculator> {
   double rentPaid = 0;
   double hraExemption = 0;
   double hraTaxable = 0;
+  double minRent = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +30,7 @@ class _HRACalculatorState extends State<HRACalculator> {
       childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
       tilePadding: EdgeInsets.zero,
       children: [
+        const SizedBox(height: 20),
         TextField(
           controller: basicSalaryTextEditingController,
           keyboardType: TextInputType.number,
@@ -133,11 +135,13 @@ class _HRACalculatorState extends State<HRACalculator> {
           child: const Text("Calculate", style: TextStyle(color: Colors.white, fontSize: 20),),
         ),
         const SizedBox(height: 20),
-        Text("HRA Received                      : ${numberToString(hraReceived.toString())}"),
-        Text("40% or 50% of Basic           : ${numberToString(basic.toString())}"),
-        Text("Rent Paid > 10% of Salary  : ${numberToString(rentPaid.toString())}"),
-        Text("HRA Exemption                   : ${numberToString(hraExemption.toString())}"),
-        Text("HRA Taxable                        : ${numberToString(hraTaxable.toString())}"),
+        Text("HRA Received                      : ${numberToString(hraReceived.toStringAsFixed(0))}"),
+        Text("40% or 50% of Basic           : ${numberToString(basic.toStringAsFixed(0))}"),
+        Text("Rent Paid > 10% of Salary  : ${numberToString(rentPaid.toStringAsFixed(0))}"),
+        Text("HRA Exemption                   : ${numberToString(hraExemption.toStringAsFixed(0))}"),
+        Text("HRA Taxable                        : ${numberToString(hraTaxable.toStringAsFixed(0))}"),
+        const SizedBox(height: 40),
+        Text("Minimum Rent Pay             : ${numberToString(minRent.toStringAsFixed(0))}"),
         const SizedBox(height: 20),
       ],
     );
@@ -166,11 +170,31 @@ class _HRACalculatorState extends State<HRACalculator> {
       } else {
         hraExemption = min(min(hraReceived, basicSalary), rentPaid);
       }
+      minRent = calculateMinRent(basicSalary, hraReceived, cityType == "metro" ? true : false);
+      hraTaxable = hraReceived - hraExemption;
     }
-
-    hraTaxable = hraReceived - hraExemption;
     setState(() {});
   }
+
+
+  calculateMinRent(double basicSalary, double actualHraReceived, bool metro){
+    double minimumRent = 0;
+    if (metro){
+      if (actualHraReceived >= 0.501 * basicSalary){
+        minimumRent = basicSalary * 0.6;
+      } else {
+        minimumRent = actualHraReceived + 0.1 * basicSalary;
+      }
+    } else {
+      if (actualHraReceived >= 0.401 * basicSalary){
+        minimumRent = basicSalary * 0.5;
+      } else {
+        minimumRent = actualHraReceived + 0.1 * basicSalary;
+      }
+    }
+    return minimumRent;
+  }
+
 
   String numberToString(String str) {
     return str.replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => "${m[1]},");
