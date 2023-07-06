@@ -224,6 +224,11 @@ class _TaxCalculatorState extends State<TaxCalculator> {
           height: 50,
           onPressed: (){
             FocusScope.of(context).unfocus();
+            calculateOnlySalary();
+            calculateOnlyHousePropertiesIncome();
+            calculateOnlyOtherSourceIncome();
+            calculateAllDeduction();
+            calculateAllSection80sDeduction();
             isResultVisibility = true;
             taxCalculateWithOldRegime();
             taxCalculateWithNewRegime();
