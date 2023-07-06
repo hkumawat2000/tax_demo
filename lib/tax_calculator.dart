@@ -180,7 +180,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
             DropdownButton(
               value: selectedAssessmentYear,
               onChanged: (String? newValue) => setState(() => selectedAssessmentYear = newValue!),
-              items: ["2024-25", "2023-24", "2022-23", "2021-22"].map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
+              items: ["2024-25", "2023-24"].map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
             ),
           ],
         ),
@@ -2057,27 +2057,50 @@ class _TaxCalculatorState extends State<TaxCalculator> {
     totalTaxableIncomeNewRegime = grossSalary + totalHouseIncome + totalOtherIncomeSource - netDeductionInNewRegime;
 
     newPayableTaxAmount = 0;
-    if(totalTaxableIncomeNewRegime <= 250000){
-      newTaxSlab = "Tax Slab 1";
-      newPayableTaxAmount = 0;
-    } else if(totalTaxableIncomeNewRegime >= 250001 && totalTaxableIncomeNewRegime <= 500000){
-      newTaxSlab = "Tax Slab 2";
-      newPayableTaxAmount = (totalTaxableIncomeNewRegime - 250000) * 0.05;
-    } else if(totalTaxableIncomeNewRegime >= 500001 && totalTaxableIncomeNewRegime <= 750000){
-      newTaxSlab = "Tax Slab 3";
-      newPayableTaxAmount = 12500 + (totalTaxableIncomeNewRegime - 500000) * 0.1;
-    } else if(totalTaxableIncomeNewRegime >= 750001 && totalTaxableIncomeNewRegime <= 1000000){
-      newTaxSlab = "Tax Slab 4";
-      newPayableTaxAmount = 37500 + (totalTaxableIncomeNewRegime - 750000) * 0.15;
-    } else if(totalTaxableIncomeNewRegime >= 1000001 && totalTaxableIncomeNewRegime <= 1250000){
-      newTaxSlab = "Tax Slab 5";
-      newPayableTaxAmount = 75000 + (totalTaxableIncomeNewRegime - 1000000) * 0.2;
-    } else if(totalTaxableIncomeNewRegime >= 1250001 && totalTaxableIncomeNewRegime <= 1500000){
-      newTaxSlab = "Tax Slab 6";
-      newPayableTaxAmount = 125000 + (totalTaxableIncomeNewRegime - 1250000) * 0.25;
-    } else if(totalTaxableIncomeNewRegime >= 1500001){
-      newTaxSlab = "Tax Slab 7";
-      newPayableTaxAmount = 187500 + (totalTaxableIncomeNewRegime - 1500000) * 0.3;
+    newTaxSlab = "";
+    if(selectedAssessmentYear == "2023-24"){
+      if(totalTaxableIncomeNewRegime <= 250000){
+        newTaxSlab = "Tax Slab 1";
+        newPayableTaxAmount = 0;
+      } else if(totalTaxableIncomeNewRegime >= 250001 && totalTaxableIncomeNewRegime <= 500000){
+        newTaxSlab = "Tax Slab 2";
+        newPayableTaxAmount = (totalTaxableIncomeNewRegime - 250000) * 0.05;
+      } else if(totalTaxableIncomeNewRegime >= 500001 && totalTaxableIncomeNewRegime <= 750000){
+        newTaxSlab = "Tax Slab 3";
+        newPayableTaxAmount = 12500 + (totalTaxableIncomeNewRegime - 500000) * 0.1;
+      } else if(totalTaxableIncomeNewRegime >= 750001 && totalTaxableIncomeNewRegime <= 1000000){
+        newTaxSlab = "Tax Slab 4";
+        newPayableTaxAmount = 37500 + (totalTaxableIncomeNewRegime - 750000) * 0.15;
+      } else if(totalTaxableIncomeNewRegime >= 1000001 && totalTaxableIncomeNewRegime <= 1250000){
+        newTaxSlab = "Tax Slab 5";
+        newPayableTaxAmount = 75000 + (totalTaxableIncomeNewRegime - 1000000) * 0.2;
+      } else if(totalTaxableIncomeNewRegime >= 1250001 && totalTaxableIncomeNewRegime <= 1500000){
+        newTaxSlab = "Tax Slab 6";
+        newPayableTaxAmount = 125000 + (totalTaxableIncomeNewRegime - 1250000) * 0.25;
+      } else if(totalTaxableIncomeNewRegime >= 1500001){
+        newTaxSlab = "Tax Slab 7";
+        newPayableTaxAmount = 187500 + (totalTaxableIncomeNewRegime - 1500000) * 0.3;
+      }
+    } else if(selectedAssessmentYear == "2024-25"){
+      if(totalTaxableIncomeNewRegime <= 300000){
+        newTaxSlab = "Tax Slab 1";
+        newPayableTaxAmount = 0;
+      } else if(totalTaxableIncomeNewRegime >= 300001 && totalTaxableIncomeNewRegime <= 600000){
+        newTaxSlab = "Tax Slab 2";
+        newPayableTaxAmount = (totalTaxableIncomeNewRegime - 300000) * 0.05;
+      } else if(totalTaxableIncomeNewRegime >= 600001 && totalTaxableIncomeNewRegime <= 900000){
+        newTaxSlab = "Tax Slab 3";
+        newPayableTaxAmount = 12500 + (totalTaxableIncomeNewRegime - 600000) * 0.1;
+      } else if(totalTaxableIncomeNewRegime >= 900001 && totalTaxableIncomeNewRegime <= 1200000){
+        newTaxSlab = "Tax Slab 4";
+        newPayableTaxAmount = 37500 + (totalTaxableIncomeNewRegime - 900000) * 0.15;
+      } else if(totalTaxableIncomeNewRegime >= 1200001 && totalTaxableIncomeNewRegime <= 1500000){
+        newTaxSlab = "Tax Slab 5";
+        newPayableTaxAmount = 75000 + (totalTaxableIncomeNewRegime - 1200000) * 0.2;
+      } else if(totalTaxableIncomeNewRegime >= 1500001){
+        newTaxSlab = "Tax Slab 6";
+        newPayableTaxAmount = 187500 + (totalTaxableIncomeNewRegime - 1500000) * 0.3;
+      }
     }
 
     if(totalTaxableIncomeNewRegime > 0 && totalTaxableIncomeNewRegime <= 500000){
