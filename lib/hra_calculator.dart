@@ -141,7 +141,7 @@ class _HRACalculatorState extends State<HRACalculator> {
         Text("HRA Exemption                   : ${numberToString(hraExemption.toStringAsFixed(0))}"),
         Text("HRA Taxable                        : ${numberToString(hraTaxable.toStringAsFixed(0))}"),
         const SizedBox(height: 40),
-        Text("Optimized Rent             : ${numberToString(minRent.toStringAsFixed(0))}"),
+        Text("Optimized Rent                    : ${numberToString(minRent.toStringAsFixed(0))}"),
         const SizedBox(height: 20),
       ],
     );

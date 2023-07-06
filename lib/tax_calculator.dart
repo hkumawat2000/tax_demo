@@ -114,10 +114,19 @@ class _TaxCalculatorState extends State<TaxCalculator> {
   double ofHraTaxable = 0;
   double netTaxableOfSalaryIncome = 0;
   double overAllTotalDeduction = 0;
+  double totalTaxableIncome = 0;
 
   String selectedAssessmentYear = "2023-24";
   String selectedDisability = "Less than 40%";
   String selectedClaiming = "Claiming 80U?";
+
+  bool isResultVisibility = false;
+  double lessRebate = 0;
+  double afterLessRebate = 0;
+  double surcharge = 0;
+  double educationTax = 0;
+  double totalTaxLiability = 0;
+  String oldTaxSlab = "";
 
   @override
   void initState(){
@@ -207,16 +216,41 @@ class _TaxCalculatorState extends State<TaxCalculator> {
           height: 50,
           onPressed: (){
             FocusScope.of(context).unfocus();
+            isResultVisibility = true;
             taxCalculateWithOldRegime();
             taxCalculateWithNewRegime();
           },
           child: const Text("Calculate", style: TextStyle(color: Colors.white, fontSize: 20),),
         ),
         const SizedBox(height: 40),
-        Text("Old Regime Payable Tax Amount is : ${numberToString(oldPayableTaxAmount.toStringAsFixed(0))}"),
-        const SizedBox(height: 20),
-        Text("New Regime Payable Tax Amount is : ${numberToString(newPayableTaxAmount.toStringAsFixed(0))}"),
-        const SizedBox(height: 20),
+        Visibility(
+          visible: isResultVisibility,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text("Old Regime Payable Tax Amount", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+              Text("Income taxable under the head Salaries : ₹ ${numberToString(netTaxableOfSalaryIncome.toStringAsFixed(0))}"),
+              Text("Income taxable under the head House Property : ₹ ${numberToString(totalHouseIncome.toStringAsFixed(0))}"),
+              Text("Income taxable under the head Other Sources : ₹ ${numberToString(totalOtherIncomeSource.toStringAsFixed(0))}"),
+              Text("Total Deductions : ₹ ${numberToString(overAllTotalDeduction.toStringAsFixed(0))}"),
+              const SizedBox(height: 6),
+              Text("Total Taxable Income : ₹ ${numberToString(totalTaxableIncome.toStringAsFixed(0))}"),
+              const SizedBox(height: 6),
+              Text("Old Regime Payable Tax Amount is : ₹ ${numberToString(oldPayableTaxAmount.toStringAsFixed(0))}"),
+              Text("Less : Rebate u/s 87A : ₹ ${numberToString(lessRebate.toStringAsFixed(0))}"),
+              Text("Tax Payable after rebate : ₹ ${numberToString(afterLessRebate.toStringAsFixed(0))}"),
+              Text("Add : Surcharge : ₹ ${numberToString(surcharge.toStringAsFixed(0))}"),
+              Text("Add : Education + Health Cess : ₹ ${numberToString(educationTax.toStringAsFixed(0))}"),
+              Text("Less : TDS from Salary : ₹ ${numberToString(getStringToDouble(tdsDeductionTextEditingController.text.trim()).toStringAsFixed(0))}"),
+              const SizedBox(height: 10),
+              Text("Tax Payable / (Refundable): ₹ ${numberToString((totalTaxLiability + getStringToDouble(tdsDeductionTextEditingController.text.trim())).toStringAsFixed(0))} ($oldTaxSlab)"),
+              const SizedBox(height: 20),
+              const Text("New Regime Payable Tax Amount", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+              Text("New Regime Payable Tax Amount is : ₹ ${numberToString(newPayableTaxAmount.toStringAsFixed(0))}"),
+              const SizedBox(height: 20),
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -227,6 +261,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
       childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
       tilePadding: EdgeInsets.zero,
+      trailing: Text("₹${numberToString(netTaxableOfSalaryIncome.toStringAsFixed(0))}"),
       children: [
         const SizedBox(height: 20),
         TextField(
@@ -687,6 +722,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
       childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
       tilePadding: EdgeInsets.zero,
+      trailing: Text("₹${numberToString(totalHouseIncome.toStringAsFixed(0))}"),
       children: [
         const SizedBox(height: 20),
         TextField(
@@ -729,6 +765,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
       childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
       tilePadding: EdgeInsets.zero,
+      trailing: Text("₹${numberToString(totalOtherIncomeSource.toStringAsFixed(0))}"),
       children: [
         const SizedBox(height: 20),
         TextField(
@@ -939,6 +976,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
       childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
       tilePadding: EdgeInsets.zero,
+      trailing: Text("₹${numberToString(overAllTotalDeduction.toStringAsFixed(0))}"),
       children: [
         const SizedBox(height: 20),
         const Text("Section 80 C", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
@@ -1691,8 +1729,8 @@ class _TaxCalculatorState extends State<TaxCalculator> {
           },
         ),
         const SizedBox(height: 10),
-        Text("Total of Section 80's deductions : ${totalSection80sDeduction.toStringAsFixed(0)}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-        Text("Over All Total Deduction : ${overAllTotalDeduction.toStringAsFixed(0)}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+        Text("Total of Section 80's deductions : ${numberToString(totalSection80sDeduction.toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+        Text("Over All Total Deduction : ${numberToString(overAllTotalDeduction.toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
         const SizedBox(height: 10),
       ],
     );
@@ -1911,48 +1949,73 @@ class _TaxCalculatorState extends State<TaxCalculator> {
 
 
   taxCalculateWithOldRegime(){
-
-    double salary = getStringToDouble(basicSalarySalaryTextEditingController.text.toString().trim())
-        + getStringToDouble(hraSalaryTextEditingController.text.toString().trim())
-        + getStringToDouble(saSalaryTextEditingController.text.toString().trim())
-        + getStringToDouble(ccSalaryTextEditingController.text.toString().trim())
-        + getStringToDouble(taSalaryTextEditingController.text.toString().trim())
-        + getStringToDouble(pensionIncomeTextEditingController.text.toString().trim())
-        + getStringToDouble(aa1SalaryTextEditingController.text.toString().trim())
-        + getStringToDouble(aa2SalaryTextEditingController.text.toString().trim());
-
-    double houseProperty = getStringToDouble(housePropertyTextEditingController.text.toString().trim());
-
-    double totalDeduction = getStringToDouble(pfDeductionTextEditingController.text.toString().trim())
-        + getStringToDouble(vpfDeductionTextEditingController.text.toString().trim())
-        + getStringToDouble(ptDeductionTextEditingController.text.toString().trim())
-        + getStringToDouble(tdsDeductionTextEditingController.text.toString().trim())
-        + getStringToDouble(ad1DeductionTextEditingController.text.toString().trim())
-        + getStringToDouble(ad2DeductionTextEditingController.text.toString().trim());
-
-    double deduction = 0;
-    if(totalDeduction >= 150000){
-      deduction = 150000;
-    } else {
-      deduction = totalDeduction;
-    }
-
-    double netPayableAmount = salary + houseProperty + totalOtherIncomeSource - deduction - 50000;
+    totalTaxableIncome = netTaxableOfSalaryIncome + totalHouseIncome + totalOtherIncomeSource - overAllTotalDeduction;
     oldPayableTaxAmount = 0;
-    if(netPayableAmount <= 250000){
-      debugPrint("Slab 1");
-      oldPayableTaxAmount = 0;
-    } else if(netPayableAmount >= 250001 && netPayableAmount <= 500000){
-      debugPrint("Slab 2");
-      oldPayableTaxAmount = ((netPayableAmount - 250000) * 5) / 100;
-    } else if(netPayableAmount >= 500001 && netPayableAmount <= 1000000){
-      debugPrint("Slab 3");
-      oldPayableTaxAmount = 12500 + ((netPayableAmount - 500000) * 20) / 100;
-    } else if(netPayableAmount >= 1000001){
-      debugPrint("Slab 5");
-      oldPayableTaxAmount = 112500 + ((netPayableAmount - 1000000) * 30) / 100;
+
+    if(citizenType == "Normal Citizen"){
+      if(totalTaxableIncome <= 250000){
+        oldTaxSlab = "Tax Slab 1";
+        oldPayableTaxAmount = 0;
+      } else if(totalTaxableIncome > 250001 && totalTaxableIncome <= 500000){
+        oldTaxSlab = "Tax Slab 2";
+        oldPayableTaxAmount = (totalTaxableIncome - 250000) * 0.05;
+      } else if(totalTaxableIncome > 500001 && totalTaxableIncome <= 1000000){
+        oldTaxSlab = "Tax Slab 3";
+        oldPayableTaxAmount = 12500 + (totalTaxableIncome - 500000) * 0.2;
+      } else if(totalTaxableIncome > 1000001){
+        oldTaxSlab = "Tax Slab 4";
+        oldPayableTaxAmount = 112500 + (totalTaxableIncome - 1000000) * 0.3;
+      }
+    } else if(citizenType == "Senior Citizen"){
+      if(totalTaxableIncome <= 300000){
+        oldTaxSlab = "Tax Slab 1";
+        oldPayableTaxAmount = 0;
+      } else if(totalTaxableIncome > 300001 && totalTaxableIncome <= 500000){
+        oldTaxSlab = "Tax Slab 2";
+        oldPayableTaxAmount = (totalTaxableIncome - 300000) * 0.05;
+      } else if(totalTaxableIncome > 500001 && totalTaxableIncome <= 1000000){
+        oldTaxSlab = "Tax Slab 3";
+        oldPayableTaxAmount = 10000 + (totalTaxableIncome - 500000) * 0.2;
+      } else if(totalTaxableIncome > 1000001){
+        oldTaxSlab = "Tax Slab 4";
+        oldPayableTaxAmount = 110000 + (totalTaxableIncome - 1000000) * 0.3;
+      }
+    } else {
+      if(totalTaxableIncome <= 500000){
+        oldTaxSlab = "Tax Slab 1";
+        oldPayableTaxAmount = 0;
+      } else if(totalTaxableIncome > 500001 && totalTaxableIncome <= 1000000){
+        oldTaxSlab = "Tax Slab 2";
+        oldPayableTaxAmount = (totalTaxableIncome - 500000) * 0.2;
+      } else if(totalTaxableIncome > 1000001){
+        oldTaxSlab = "Tax Slab 4";
+        oldPayableTaxAmount = 100000 + (totalTaxableIncome - 1000000) * 0.3;
+      }
     }
-    oldPayableTaxAmount += (oldPayableTaxAmount * 4) / 100;
+
+    if(totalTaxableIncome > 0 && totalTaxableIncome <= 500000){
+      lessRebate = min(oldPayableTaxAmount, 12500);
+    } else {
+      lessRebate = 0;
+    }
+
+    afterLessRebate = oldPayableTaxAmount + lessRebate;
+
+    if(totalTaxableIncome <= 5000000){
+      surcharge = 0;
+    } else if(totalTaxableIncome > 5000000 && totalTaxableIncome <= 10000000){
+      surcharge = afterLessRebate * 0.1;
+    } else if(totalTaxableIncome > 10000000 && totalTaxableIncome <= 20000000){
+      surcharge = afterLessRebate * 0.15;
+    } else if(totalTaxableIncome > 20000000 && totalTaxableIncome <= 50000000){
+      surcharge = afterLessRebate * 0.25;
+    } else {
+      surcharge = afterLessRebate * 0.37;
+    }
+
+    educationTax = (afterLessRebate + surcharge) * 0.04;
+
+    totalTaxLiability = afterLessRebate + surcharge + educationTax;
     setState(() {
     });
   }
