@@ -262,7 +262,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
 
 
               const Text("New Regime Payable Tax Amount", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-              Text("Income from Salary : ₹ ${numberToString(grossSalary.toStringAsFixed(0))}"),
+              Text("Income from Salary : ₹ ${numberToString((selectedAssessmentYear == "2024-25" ? grossSalary - 50000 : grossSalary).toStringAsFixed(0))}"),
               Text("Income from House property : ₹ ${numberToString(totalHouseIncome.toStringAsFixed(0))}"),
               Text("Income from Other Sources : ₹ ${numberToString(totalOtherIncomeSource.toStringAsFixed(0))}"),
               const Text("Less Deductions"),
@@ -2082,6 +2082,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
         newPayableTaxAmount = 187500 + (totalTaxableIncomeNewRegime - 1500000) * 0.3;
       }
     } else if(selectedAssessmentYear == "2024-25"){
+      totalTaxableIncomeNewRegime -= 50000;
       if(totalTaxableIncomeNewRegime <= 300000){
         newTaxSlab = "Tax Slab 1";
         newPayableTaxAmount = 0;
