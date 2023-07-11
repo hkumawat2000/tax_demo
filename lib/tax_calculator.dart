@@ -2090,16 +2090,16 @@ class _TaxCalculatorState extends State<TaxCalculator> {
         newPayableTaxAmount = (totalTaxableIncomeNewRegime - 300000) * 0.05;
       } else if(totalTaxableIncomeNewRegime >= 600001 && totalTaxableIncomeNewRegime <= 900000){
         newTaxSlab = "Tax Slab 3";
-        newPayableTaxAmount = 12500 + (totalTaxableIncomeNewRegime - 600000) * 0.1;
+        newPayableTaxAmount = 15000 + (totalTaxableIncomeNewRegime - 600000) * 0.1;
       } else if(totalTaxableIncomeNewRegime >= 900001 && totalTaxableIncomeNewRegime <= 1200000){
         newTaxSlab = "Tax Slab 4";
-        newPayableTaxAmount = 37500 + (totalTaxableIncomeNewRegime - 900000) * 0.15;
+        newPayableTaxAmount = 45000 + (totalTaxableIncomeNewRegime - 900000) * 0.15;
       } else if(totalTaxableIncomeNewRegime >= 1200001 && totalTaxableIncomeNewRegime <= 1500000){
         newTaxSlab = "Tax Slab 5";
-        newPayableTaxAmount = 75000 + (totalTaxableIncomeNewRegime - 1200000) * 0.2;
+        newPayableTaxAmount = 90000 + (totalTaxableIncomeNewRegime - 1200000) * 0.2;
       } else if(totalTaxableIncomeNewRegime >= 1500001){
         newTaxSlab = "Tax Slab 6";
-        newPayableTaxAmount = 187500 + (totalTaxableIncomeNewRegime - 1500000) * 0.3;
+        newPayableTaxAmount = 150000 + (totalTaxableIncomeNewRegime - 1500000) * 0.3;
       }
     }
 
