@@ -112,7 +112,6 @@ class _TaxCalculatorState extends State<TaxCalculator> {
   double cTotalNetIncomeHousePropertiesValue = 0;
   double incomeFromHPHousePropertiesValue = 0;
   double currentYearIncomeHousePropertiesValue = 0;
-  double carryForwardLossHousePropertiesValue = 0;
   double lossCurrentYearHousePropertiesValue = 0;
   double lossEarlierYearHousePropertiesValue = 0;
 
@@ -1060,11 +1059,11 @@ class _TaxCalculatorState extends State<TaxCalculator> {
         const SizedBox(height: 10),
         Row(
           children: [
-            const Expanded(child: Text("Maximum Allowable")),
+            const Expanded(child: Text("")),
             const SizedBox(width: 10),
             const Expanded(child: Text("")),
             const SizedBox(width: 10),
-            Expanded(child: Text("Total : ${numberToString(aAllHousePropertiesValue.toStringAsFixed(0))}")),
+            Expanded(child: Text("Maximum Allowable : ${numberToString(aAllHousePropertiesValue.toStringAsFixed(0))}")),
           ],
         ),
 
@@ -1291,7 +1290,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
         Text("Brought forward of House Property Loss of Earlier Years : ${numberToString(lossEarlierYearHousePropertiesValue.toStringAsFixed(0))}"),
 
         const SizedBox(height: 20),
-        Text("Income taxable under the head House Property : ${numberToString(totalHouseIncome.toStringAsFixed(0))}"),
+        Text("Income taxable under the head House Property : ${numberToString(totalHouseIncome.toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold)),
         const SizedBox(height: 20),
       ],
     );
@@ -2478,11 +2477,48 @@ class _TaxCalculatorState extends State<TaxCalculator> {
   }
 
   calculateOnlyHousePropertiesIncome(){
-    double housePropertiesIncome = aAllHousePropertiesValue;
+    a1HousePropertiesValue = min(30000, (getStringToDouble(a1of1HousePropertiesTextEditingController.text.trim()) + getStringToDouble(a1of2HousePropertiesTextEditingController.text.trim())));
+    a2HousePropertiesValue = min(30000, (getStringToDouble(a2of1HousePropertiesTextEditingController.text.trim()) + getStringToDouble(a2of2HousePropertiesTextEditingController.text.trim())));
+    a3HousePropertiesValue = min(30000, (getStringToDouble(a3of1HousePropertiesTextEditingController.text.trim()) + getStringToDouble(a3of2HousePropertiesTextEditingController.text.trim())));
+    a4HousePropertiesValue = min(200000, (getStringToDouble(a4of1HousePropertiesTextEditingController.text.trim()) + getStringToDouble(a4of2HousePropertiesTextEditingController.text.trim())));
+    aAllHousePropertiesValue = min(200000, (a1HousePropertiesValue + a2HousePropertiesValue + a3HousePropertiesValue + a4HousePropertiesValue));
 
-    setState(() {
-      totalHouseIncome = housePropertiesIncome;
-    });
+    bNetAnnualValueHousePropertiesValue = getStringToDouble(bRentHousePropertiesTextEditingController.text.trim()) - getStringToDouble(bMunicipalHousePropertiesTextEditingController.text.trim());
+    bStandardDeductionPropertiesValue = max(0, (bNetAnnualValueHousePropertiesValue * 0.3));
+    bNetIncomeHousePropertiesValue = bNetAnnualValueHousePropertiesValue - bStandardDeductionPropertiesValue - getStringToDouble(bHouseLoanHousePropertiesTextEditingController.text.trim());
+    bTotalNetIncomeHousePropertiesValue = bNetIncomeHousePropertiesValue;
+
+    cNetAnnualValueHousePropertiesValue = getStringToDouble(cRentHousePropertiesTextEditingController.text.trim()) - getStringToDouble(cMunicipalHousePropertiesTextEditingController.text.trim());
+    cStandardDeductionPropertiesValue = max(0, (cNetAnnualValueHousePropertiesValue * 0.3));
+    cNetIncomeHousePropertiesValue = cNetAnnualValueHousePropertiesValue - cStandardDeductionPropertiesValue - getStringToDouble(cHouseLoanHousePropertiesTextEditingController.text.trim());
+    cTotalNetIncomeHousePropertiesValue = cNetIncomeHousePropertiesValue;
+
+    incomeFromHPHousePropertiesValue = - aAllHousePropertiesValue + bTotalNetIncomeHousePropertiesValue + cTotalNetIncomeHousePropertiesValue;
+
+    if(incomeFromHPHousePropertiesValue <= 0){
+      currentYearIncomeHousePropertiesValue = max(incomeFromHPHousePropertiesValue, -200000);
+    } else{
+      currentYearIncomeHousePropertiesValue = incomeFromHPHousePropertiesValue;
+    }
+
+    if(currentYearIncomeHousePropertiesValue < 0){
+      lossCurrentYearHousePropertiesValue = incomeFromHPHousePropertiesValue - currentYearIncomeHousePropertiesValue;
+    } else {
+      lossCurrentYearHousePropertiesValue = 0;
+    }
+
+    if((incomeFromHPHousePropertiesValue - getStringToDouble(carryForwardLossHousePropertiesTextEditingController.text.trim())) > 0){
+      lossEarlierYearHousePropertiesValue = 0;
+    } else {
+      lossEarlierYearHousePropertiesValue = - getStringToDouble(carryForwardLossHousePropertiesTextEditingController.text.trim()) + max(0, incomeFromHPHousePropertiesValue);
+    }
+
+    if(incomeFromHPHousePropertiesValue < 0){
+      totalHouseIncome = currentYearIncomeHousePropertiesValue;
+    } else {
+      totalHouseIncome = max(0, incomeFromHPHousePropertiesValue + getStringToDouble(carryForwardLossHousePropertiesTextEditingController.text.trim()));
+    }
+    setState(() {});
   }
 
 
