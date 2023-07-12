@@ -39,6 +39,22 @@ class _TaxCalculatorState extends State<TaxCalculator> {
   TextEditingController otherSource2TextEditingController = TextEditingController();
 
 
+  //House Property
+  TextEditingController a1of1HousePropertiesTextEditingController = TextEditingController();
+  TextEditingController a1of2HousePropertiesTextEditingController = TextEditingController();
+  TextEditingController a2of1HousePropertiesTextEditingController = TextEditingController();
+  TextEditingController a2of2HousePropertiesTextEditingController = TextEditingController();
+  TextEditingController a3of1HousePropertiesTextEditingController = TextEditingController();
+  TextEditingController a3of2HousePropertiesTextEditingController = TextEditingController();
+  TextEditingController a4of1HousePropertiesTextEditingController = TextEditingController();
+  TextEditingController a4of2HousePropertiesTextEditingController = TextEditingController();
+  TextEditingController bRentHousePropertiesTextEditingController = TextEditingController();
+  TextEditingController bMunicipalHousePropertiesTextEditingController = TextEditingController();
+  TextEditingController bHouseLoanHousePropertiesTextEditingController = TextEditingController();
+  TextEditingController cRentHousePropertiesTextEditingController = TextEditingController();
+  TextEditingController cMunicipalHousePropertiesTextEditingController = TextEditingController();
+  TextEditingController cHouseLoanHousePropertiesTextEditingController = TextEditingController();
+  TextEditingController carryForwardLossHousePropertiesTextEditingController = TextEditingController();
 
 
 
@@ -82,6 +98,28 @@ class _TaxCalculatorState extends State<TaxCalculator> {
   TextEditingController section80s13DeductionTextEditingController = TextEditingController();
 
 
+  //House Properties
+  double a1HousePropertiesValue = 0;
+  double a2HousePropertiesValue = 0;
+  double a3HousePropertiesValue = 0;
+  double a4HousePropertiesValue = 0;
+  double aAllHousePropertiesValue = 0;
+  double bNetAnnualValueHousePropertiesValue = 0;
+  double bNetIncomeHousePropertiesValue = 0;
+  double bStandardDeductionPropertiesValue = 0;
+  double bTotalNetIncomeHousePropertiesValue = 0;
+  double cNetAnnualValueHousePropertiesValue = 0;
+  double cNetIncomeHousePropertiesValue = 0;
+  double cStandardDeductionPropertiesValue = 0;
+  double cTotalNetIncomeHousePropertiesValue = 0;
+  double incomeFromHPHousePropertiesValue = 0;
+  double currentYearIncomeHousePropertiesValue = 0;
+  double carryForwardLossHousePropertiesValue = 0;
+  double lossCurrentYearHousePropertiesValue = 0;
+  double lossEarlierYearHousePropertiesValue = 0;
+
+
+  //Deduction
   double section80s1DeductionValue = 0;
   double section80s2DeductionValue = 0;
   double section80s3DeductionValue = 0;
@@ -756,7 +794,285 @@ class _TaxCalculatorState extends State<TaxCalculator> {
       tilePadding: EdgeInsets.zero,
       trailing: Text("₹${numberToString(totalHouseIncome.toStringAsFixed(0))}"),
       children: [
+        const Text("(A) Self occupied property (Loss)", style: TextStyle(fontWeight: FontWeight.bold)),
+        const SizedBox(height: 10),
+        const Text("Interest on loan / Borrowing taken for Repairs, renewal, or reconstruction"),
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            Expanded(
+              child: TextField(
+                controller: housePropertyTextEditingController,
+                keyboardType: TextInputType.number,
+                style: const TextStyle(color: Colors.black),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
+                ],
+                decoration: InputDecoration(
+                    labelText: "House Property",
+                    counterText: "",
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: const BorderSide(color: Colors.grey)
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    focusColor: Colors.grey
+                ),
+                onChanged: (val) => calculateOnlyHousePropertiesIncome(),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: TextField(
+                controller: housePropertyTextEditingController,
+                keyboardType: TextInputType.number,
+                style: const TextStyle(color: Colors.black),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
+                ],
+                decoration: InputDecoration(
+                    labelText: "House Property",
+                    counterText: "",
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: const BorderSide(color: Colors.grey)
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    focusColor: Colors.grey
+                ),
+                onChanged: (val) => calculateOnlyHousePropertiesIncome(),
+              ),
+            ),
+            const SizedBox(width: 10),
+            const Expanded(child: Text("Total : ??")),
+          ],
+        ),
+        const SizedBox(height: 10),
+        const Text("Interest on loan / Borrowing taken for Construction / Acquisition,  Before 1/4/99"),
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            Expanded(
+              child: TextField(
+                controller: housePropertyTextEditingController,
+                keyboardType: TextInputType.number,
+                style: const TextStyle(color: Colors.black),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
+                ],
+                decoration: InputDecoration(
+                    labelText: "House Property",
+                    counterText: "",
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: const BorderSide(color: Colors.grey)
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    focusColor: Colors.grey
+                ),
+                onChanged: (val) => calculateOnlyHousePropertiesIncome(),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: TextField(
+                controller: housePropertyTextEditingController,
+                keyboardType: TextInputType.number,
+                style: const TextStyle(color: Colors.black),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
+                ],
+                decoration: InputDecoration(
+                    labelText: "House Property",
+                    counterText: "",
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: const BorderSide(color: Colors.grey)
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    focusColor: Colors.grey
+                ),
+                onChanged: (val) => calculateOnlyHousePropertiesIncome(),
+              ),
+            ),
+            const SizedBox(width: 10),
+            const Expanded(child: Text("Total : ??")),
+          ],
+        ),
+        const SizedBox(height: 10),
+        const Text("After 1/4/99 & completed after 5 years from the end of FY of borrowing"),
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            Expanded(
+              child: TextField(
+                controller: housePropertyTextEditingController,
+                keyboardType: TextInputType.number,
+                style: const TextStyle(color: Colors.black),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
+                ],
+                decoration: InputDecoration(
+                    labelText: "House Property",
+                    counterText: "",
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: const BorderSide(color: Colors.grey)
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    focusColor: Colors.grey
+                ),
+                onChanged: (val) => calculateOnlyHousePropertiesIncome(),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: TextField(
+                controller: housePropertyTextEditingController,
+                keyboardType: TextInputType.number,
+                style: const TextStyle(color: Colors.black),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
+                ],
+                decoration: InputDecoration(
+                    labelText: "House Property",
+                    counterText: "",
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: const BorderSide(color: Colors.grey)
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    focusColor: Colors.grey
+                ),
+                onChanged: (val) => calculateOnlyHousePropertiesIncome(),
+              ),
+            ),
+            const SizedBox(width: 10),
+            const Expanded(child: Text("Total : ??")),
+          ],
+        ),
+        const SizedBox(height: 10),
+        const Text("After 1/4/99 & completed within 5 years from the end of FY of borrowing"),
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            Expanded(
+              child: TextField(
+                controller: housePropertyTextEditingController,
+                keyboardType: TextInputType.number,
+                style: const TextStyle(color: Colors.black),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
+                ],
+                decoration: InputDecoration(
+                    labelText: "House Property",
+                    counterText: "",
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: const BorderSide(color: Colors.grey)
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    focusColor: Colors.grey
+                ),
+                onChanged: (val) => calculateOnlyHousePropertiesIncome(),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: TextField(
+                controller: housePropertyTextEditingController,
+                keyboardType: TextInputType.number,
+                style: const TextStyle(color: Colors.black),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
+                ],
+                decoration: InputDecoration(
+                    labelText: "House Property",
+                    counterText: "",
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: const BorderSide(color: Colors.grey)
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    focusColor: Colors.grey
+                ),
+                onChanged: (val) => calculateOnlyHousePropertiesIncome(),
+              ),
+            ),
+            const SizedBox(width: 10),
+            const Expanded(child: Text("Total : ??")),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Row(
+          children: const [
+            Expanded(child: Text("Maximum Allowable")),
+            SizedBox(width: 10),
+            Expanded(child: Text("")),
+            SizedBox(width: 10),
+            Expanded(child: Text("????")),
+          ],
+        ),
+
         const SizedBox(height: 20),
+        const Text("(B) Let out property (Enter name of Property)", style: TextStyle(fontWeight: FontWeight.bold)),
+        const SizedBox(height: 10),
         TextField(
           controller: housePropertyTextEditingController,
           keyboardType: TextInputType.number,
@@ -765,7 +1081,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
             FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
           ],
           decoration: InputDecoration(
-              labelText: "House Property",
+              labelText: "Rent of the property for the year",
               counterText: "",
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
@@ -784,8 +1100,200 @@ class _TaxCalculatorState extends State<TaxCalculator> {
           onChanged: (val) => calculateOnlyHousePropertiesIncome(),
         ),
         const SizedBox(height: 10),
-        Text("Income taxable under the head House Property : "
-            "${numberToString(totalHouseIncome.toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+        TextField(
+          controller: housePropertyTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
+          ],
+          decoration: InputDecoration(
+              labelText: "Less : Municipal Taxes paid in the year",
+              counterText: "",
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey)
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              focusColor: Colors.grey
+          ),
+          onChanged: (val) => calculateOnlyHousePropertiesIncome(),
+        ),
+        const SizedBox(height: 10),
+        const Text("Net Annual Value : ????"),
+        const SizedBox(height: 10),
+        const Text("Less : Standard Deduction : ????"),
+        const SizedBox(height: 10),
+        TextField(
+          controller: housePropertyTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
+          ],
+          decoration: InputDecoration(
+              labelText: "Less : Interest on Housing Loan",
+              counterText: "",
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey)
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              focusColor: Colors.grey
+          ),
+          onChanged: (val) => calculateOnlyHousePropertiesIncome(),
+        ),
+        const SizedBox(height: 10),
+        const Text("Net Income / (Loss) from this House ????"),
+        const Text("????"),
+
+        const SizedBox(height: 20),
+        const Text("(C) Let out property (Enter name of Property)", style: TextStyle(fontWeight: FontWeight.bold)),
+        const SizedBox(height: 10),
+        TextField(
+          controller: housePropertyTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
+          ],
+          decoration: InputDecoration(
+              labelText: "Rent of the property for the year",
+              counterText: "",
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey)
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              focusColor: Colors.grey
+          ),
+          onChanged: (val) => calculateOnlyHousePropertiesIncome(),
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          controller: housePropertyTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
+          ],
+          decoration: InputDecoration(
+              labelText: "Less : Municipal Taxes paid in the year",
+              counterText: "",
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey)
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              focusColor: Colors.grey
+          ),
+          onChanged: (val) => calculateOnlyHousePropertiesIncome(),
+        ),
+        const SizedBox(height: 10),
+        const Text("Net Annual Value : ????"),
+        const SizedBox(height: 10),
+        const Text("Less : Standard Deduction : ????"),
+        const SizedBox(height: 10),
+        TextField(
+          controller: housePropertyTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
+          ],
+          decoration: InputDecoration(
+              labelText: "Less : Interest on Housing Loan",
+              counterText: "",
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey)
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              focusColor: Colors.grey
+          ),
+          onChanged: (val) => calculateOnlyHousePropertiesIncome(),
+        ),
+        const SizedBox(height: 10),
+        const Text("Net Income / (Loss) from this House ????"),
+        const Text("????"),
+
+        const SizedBox(height: 20),
+        const Text("Income from HP before set off of carry forward loss from HP : ????"),
+
+        const SizedBox(height: 20),
+        const Text("Current Year Income / (Loss) from House Property : ????"),
+
+        const SizedBox(height: 20),
+        TextField(
+          controller: housePropertyTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
+          ],
+          decoration: InputDecoration(
+              labelText: "Less : Carry Forward Loss of House Property from earlier Years :",
+              counterText: "",
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey)
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              focusColor: Colors.grey
+          ),
+          onChanged: (val) => calculateOnlyHousePropertiesIncome(),
+        ),
+
+        const SizedBox(height: 20),
+        const Text("Brought forward of House Property Loss of Current Year : ????"),
+
+        const SizedBox(height: 20),
+        const Text("Brought forward of House Property Loss of Earlier Years : ????"),
+
+        const SizedBox(height: 20),
+        Text("Income taxable under the head House Property : ${numberToString(totalHouseIncome.toStringAsFixed(0))}"),
         const SizedBox(height: 20),
       ],
     );
