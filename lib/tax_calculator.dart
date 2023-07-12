@@ -27,8 +27,6 @@ class _TaxCalculatorState extends State<TaxCalculator> {
   TextEditingController aa2SalaryTextEditingController = TextEditingController();
   TextEditingController rentPaidSalaryTextEditingController = TextEditingController();
 
-  TextEditingController housePropertyTextEditingController = TextEditingController();
-
   // TextEditingController otherSourceTextEditingController = TextEditingController();
   TextEditingController biSBAOtherSourceTextEditingController = TextEditingController();
   TextEditingController biTDOtherSourceTextEditingController = TextEditingController();
@@ -802,14 +800,14 @@ class _TaxCalculatorState extends State<TaxCalculator> {
           children: [
             Expanded(
               child: TextField(
-                controller: housePropertyTextEditingController,
+                controller: a1of1HousePropertiesTextEditingController,
                 keyboardType: TextInputType.number,
                 style: const TextStyle(color: Colors.black),
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
                 ],
                 decoration: InputDecoration(
-                    labelText: "House Property",
+                    labelText: "Property 1",
                     counterText: "",
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
@@ -831,14 +829,14 @@ class _TaxCalculatorState extends State<TaxCalculator> {
             const SizedBox(width: 10),
             Expanded(
               child: TextField(
-                controller: housePropertyTextEditingController,
+                controller: a1of2HousePropertiesTextEditingController,
                 keyboardType: TextInputType.number,
                 style: const TextStyle(color: Colors.black),
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
                 ],
                 decoration: InputDecoration(
-                    labelText: "House Property",
+                    labelText: "Property 2",
                     counterText: "",
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
@@ -858,7 +856,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               ),
             ),
             const SizedBox(width: 10),
-            const Expanded(child: Text("Total : ??")),
+            Expanded(child: Text("Total : ${numberToString(a1HousePropertiesValue.toStringAsFixed(0))}")),
           ],
         ),
         const SizedBox(height: 10),
@@ -868,14 +866,14 @@ class _TaxCalculatorState extends State<TaxCalculator> {
           children: [
             Expanded(
               child: TextField(
-                controller: housePropertyTextEditingController,
+                controller: a2of1HousePropertiesTextEditingController,
                 keyboardType: TextInputType.number,
                 style: const TextStyle(color: Colors.black),
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
                 ],
                 decoration: InputDecoration(
-                    labelText: "House Property",
+                    labelText: "Property 1",
                     counterText: "",
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
@@ -897,14 +895,14 @@ class _TaxCalculatorState extends State<TaxCalculator> {
             const SizedBox(width: 10),
             Expanded(
               child: TextField(
-                controller: housePropertyTextEditingController,
+                controller: a2of2HousePropertiesTextEditingController,
                 keyboardType: TextInputType.number,
                 style: const TextStyle(color: Colors.black),
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
                 ],
                 decoration: InputDecoration(
-                    labelText: "House Property",
+                    labelText: "Property 2",
                     counterText: "",
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
@@ -924,7 +922,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               ),
             ),
             const SizedBox(width: 10),
-            const Expanded(child: Text("Total : ??")),
+            Expanded(child: Text("Total : ${numberToString(a2HousePropertiesValue.toStringAsFixed(0))}")),
           ],
         ),
         const SizedBox(height: 10),
@@ -934,14 +932,14 @@ class _TaxCalculatorState extends State<TaxCalculator> {
           children: [
             Expanded(
               child: TextField(
-                controller: housePropertyTextEditingController,
+                controller: a3of1HousePropertiesTextEditingController,
                 keyboardType: TextInputType.number,
                 style: const TextStyle(color: Colors.black),
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
                 ],
                 decoration: InputDecoration(
-                    labelText: "House Property",
+                    labelText: "Property 1",
                     counterText: "",
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
@@ -963,14 +961,14 @@ class _TaxCalculatorState extends State<TaxCalculator> {
             const SizedBox(width: 10),
             Expanded(
               child: TextField(
-                controller: housePropertyTextEditingController,
+                controller: a3of2HousePropertiesTextEditingController,
                 keyboardType: TextInputType.number,
                 style: const TextStyle(color: Colors.black),
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
                 ],
                 decoration: InputDecoration(
-                    labelText: "House Property",
+                    labelText: "Property 2",
                     counterText: "",
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
@@ -990,7 +988,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               ),
             ),
             const SizedBox(width: 10),
-            const Expanded(child: Text("Total : ??")),
+            Expanded(child: Text("Total : ${numberToString(a3HousePropertiesValue.toStringAsFixed(0))}")),
           ],
         ),
         const SizedBox(height: 10),
@@ -1000,14 +998,14 @@ class _TaxCalculatorState extends State<TaxCalculator> {
           children: [
             Expanded(
               child: TextField(
-                controller: housePropertyTextEditingController,
+                controller: a4of1HousePropertiesTextEditingController,
                 keyboardType: TextInputType.number,
                 style: const TextStyle(color: Colors.black),
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
                 ],
                 decoration: InputDecoration(
-                    labelText: "House Property",
+                    labelText: "Property 1",
                     counterText: "",
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
@@ -1029,14 +1027,14 @@ class _TaxCalculatorState extends State<TaxCalculator> {
             const SizedBox(width: 10),
             Expanded(
               child: TextField(
-                controller: housePropertyTextEditingController,
+                controller: a4of2HousePropertiesTextEditingController,
                 keyboardType: TextInputType.number,
                 style: const TextStyle(color: Colors.black),
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
                 ],
                 decoration: InputDecoration(
-                    labelText: "House Property",
+                    labelText: "Property 2",
                     counterText: "",
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
@@ -1056,17 +1054,17 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               ),
             ),
             const SizedBox(width: 10),
-            const Expanded(child: Text("Total : ??")),
+            Expanded(child: Text("Total : ${numberToString(a4HousePropertiesValue.toStringAsFixed(0))}")),
           ],
         ),
         const SizedBox(height: 10),
         Row(
-          children: const [
-            Expanded(child: Text("Maximum Allowable")),
-            SizedBox(width: 10),
-            Expanded(child: Text("")),
-            SizedBox(width: 10),
-            Expanded(child: Text("????")),
+          children: [
+            const Expanded(child: Text("Maximum Allowable")),
+            const SizedBox(width: 10),
+            const Expanded(child: Text("")),
+            const SizedBox(width: 10),
+            Expanded(child: Text("Total : ${numberToString(aAllHousePropertiesValue.toStringAsFixed(0))}")),
           ],
         ),
 
@@ -1074,7 +1072,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
         const Text("(B) Let out property (Enter name of Property)", style: TextStyle(fontWeight: FontWeight.bold)),
         const SizedBox(height: 10),
         TextField(
-          controller: housePropertyTextEditingController,
+          controller: bRentHousePropertiesTextEditingController,
           keyboardType: TextInputType.number,
           style: const TextStyle(color: Colors.black),
           inputFormatters: [
@@ -1101,7 +1099,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
         ),
         const SizedBox(height: 10),
         TextField(
-          controller: housePropertyTextEditingController,
+          controller: bMunicipalHousePropertiesTextEditingController,
           keyboardType: TextInputType.number,
           style: const TextStyle(color: Colors.black),
           inputFormatters: [
@@ -1127,12 +1125,12 @@ class _TaxCalculatorState extends State<TaxCalculator> {
           onChanged: (val) => calculateOnlyHousePropertiesIncome(),
         ),
         const SizedBox(height: 10),
-        const Text("Net Annual Value : ????"),
+        Text("Net Annual Value : ${numberToString(bNetAnnualValueHousePropertiesValue.toStringAsFixed(0))}"),
         const SizedBox(height: 10),
-        const Text("Less : Standard Deduction : ????"),
+        Text("Less : Standard Deduction : ${numberToString(bStandardDeductionPropertiesValue.toStringAsFixed(0))}"),
         const SizedBox(height: 10),
         TextField(
-          controller: housePropertyTextEditingController,
+          controller: bHouseLoanHousePropertiesTextEditingController,
           keyboardType: TextInputType.number,
           style: const TextStyle(color: Colors.black),
           inputFormatters: [
@@ -1158,14 +1156,14 @@ class _TaxCalculatorState extends State<TaxCalculator> {
           onChanged: (val) => calculateOnlyHousePropertiesIncome(),
         ),
         const SizedBox(height: 10),
-        const Text("Net Income / (Loss) from this House ????"),
-        const Text("????"),
+        Text("Net Income / (Loss) from this House ${numberToString(bNetIncomeHousePropertiesValue.toStringAsFixed(0))}"),
+        Text(numberToString(bTotalNetIncomeHousePropertiesValue.toStringAsFixed(0))),
 
         const SizedBox(height: 20),
         const Text("(C) Let out property (Enter name of Property)", style: TextStyle(fontWeight: FontWeight.bold)),
         const SizedBox(height: 10),
         TextField(
-          controller: housePropertyTextEditingController,
+          controller: cRentHousePropertiesTextEditingController,
           keyboardType: TextInputType.number,
           style: const TextStyle(color: Colors.black),
           inputFormatters: [
@@ -1192,7 +1190,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
         ),
         const SizedBox(height: 10),
         TextField(
-          controller: housePropertyTextEditingController,
+          controller: cMunicipalHousePropertiesTextEditingController,
           keyboardType: TextInputType.number,
           style: const TextStyle(color: Colors.black),
           inputFormatters: [
@@ -1218,12 +1216,12 @@ class _TaxCalculatorState extends State<TaxCalculator> {
           onChanged: (val) => calculateOnlyHousePropertiesIncome(),
         ),
         const SizedBox(height: 10),
-        const Text("Net Annual Value : ????"),
+        Text("Net Annual Value : ${numberToString(cNetAnnualValueHousePropertiesValue.toStringAsFixed(0))}"),
         const SizedBox(height: 10),
-        const Text("Less : Standard Deduction : ????"),
+        Text("Less : Standard Deduction : ${numberToString(cStandardDeductionPropertiesValue.toStringAsFixed(0))}"),
         const SizedBox(height: 10),
         TextField(
-          controller: housePropertyTextEditingController,
+          controller: cHouseLoanHousePropertiesTextEditingController,
           keyboardType: TextInputType.number,
           style: const TextStyle(color: Colors.black),
           inputFormatters: [
@@ -1249,18 +1247,18 @@ class _TaxCalculatorState extends State<TaxCalculator> {
           onChanged: (val) => calculateOnlyHousePropertiesIncome(),
         ),
         const SizedBox(height: 10),
-        const Text("Net Income / (Loss) from this House ????"),
-        const Text("????"),
+        Text("Net Income / (Loss) from this House ${numberToString(cNetIncomeHousePropertiesValue.toStringAsFixed(0))}"),
+        Text(numberToString(cTotalNetIncomeHousePropertiesValue.toStringAsFixed(0))),
 
         const SizedBox(height: 20),
-        const Text("Income from HP before set off of carry forward loss from HP : ????"),
+        Text("Income from HP before set off of carry forward loss from HP : ${numberToString(incomeFromHPHousePropertiesValue.toStringAsFixed(0))}"),
 
         const SizedBox(height: 20),
-        const Text("Current Year Income / (Loss) from House Property : ????"),
+        Text("Current Year Income / (Loss) from House Property : ${numberToString(currentYearIncomeHousePropertiesValue.toStringAsFixed(0))}"),
 
         const SizedBox(height: 20),
         TextField(
-          controller: housePropertyTextEditingController,
+          controller: carryForwardLossHousePropertiesTextEditingController,
           keyboardType: TextInputType.number,
           style: const TextStyle(color: Colors.black),
           inputFormatters: [
@@ -1287,10 +1285,10 @@ class _TaxCalculatorState extends State<TaxCalculator> {
         ),
 
         const SizedBox(height: 20),
-        const Text("Brought forward of House Property Loss of Current Year : ????"),
+        Text("Brought forward of House Property Loss of Current Year : ${numberToString(lossCurrentYearHousePropertiesValue.toStringAsFixed(0))}"),
 
         const SizedBox(height: 20),
-        const Text("Brought forward of House Property Loss of Earlier Years : ????"),
+        Text("Brought forward of House Property Loss of Earlier Years : ${numberToString(lossEarlierYearHousePropertiesValue.toStringAsFixed(0))}"),
 
         const SizedBox(height: 20),
         Text("Income taxable under the head House Property : ${numberToString(totalHouseIncome.toStringAsFixed(0))}"),
@@ -2480,7 +2478,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
   }
 
   calculateOnlyHousePropertiesIncome(){
-    double housePropertiesIncome = getStringToDouble(housePropertyTextEditingController.text.toString().trim());
+    double housePropertiesIncome = aAllHousePropertiesValue;
 
     setState(() {
       totalHouseIncome = housePropertiesIncome;
