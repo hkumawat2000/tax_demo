@@ -2300,10 +2300,10 @@ class _TaxCalculatorState extends State<TaxCalculator> {
       ofRentPaid = 0;
     }
 
-    if(min(min(hraReceived, basicSalary), ofRentPaid) < 0){
+    if(min(min(hraReceived, ofBasic), ofRentPaid) < 0){
       ofHraExemption = 0;
     } else {
-      ofHraExemption = min(min(hraReceived, basicSalary), ofRentPaid);
+      ofHraExemption = min(min(hraReceived, ofBasic), ofRentPaid);
     }
 
     ofHraTaxable = hraReceived - ofHraExemption;
