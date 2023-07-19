@@ -1525,7 +1525,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
           keyboardType: TextInputType.number,
           style: const TextStyle(color: Colors.black),
           inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+            FilteringTextInputFormatter.allow(RegExp("^-?\\d*")),
           ],
           decoration: InputDecoration(
               labelText: "Business Profit",
