@@ -1544,7 +1544,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               ),
               focusColor: Colors.grey
           ),
-          onChanged: (val) => calculateAllDeduction(),
+          // onChanged: (val) => setState(() {}),
         ),
         const SizedBox(height: 10),
         Text("Total Profit from Business : ${numberToString(getStringToDouble(businessProfitTextEditingController.text.trim()).toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
