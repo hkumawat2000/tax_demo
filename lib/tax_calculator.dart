@@ -55,6 +55,9 @@ class _TaxCalculatorState extends State<TaxCalculator> {
   TextEditingController carryForwardLossHousePropertiesTextEditingController = TextEditingController();
 
 
+  //Business
+  TextEditingController businessProfitTextEditingController = TextEditingController();
+
 
   //Deduction TextFields
   TextEditingController pfDeductionTextEditingController = TextEditingController();
@@ -251,6 +254,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
         salaryIncomeChildWidget(),
         houseIncomeChildWidget(),
         otherSourceIncomeChildWidget(),
+        businessIncomeChildWidget(),
         deductionChildWidget(),
         const SizedBox(height: 20),
         MaterialButton(
@@ -1507,6 +1511,48 @@ class _TaxCalculatorState extends State<TaxCalculator> {
     );
   }
 
+  businessIncomeChildWidget(){
+    return ExpansionTile(
+      title: const Text("Income from Business"),
+      expandedCrossAxisAlignment: CrossAxisAlignment.start,
+      childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
+      tilePadding: EdgeInsets.zero,
+      trailing: Text("₹${numberToString(getStringToDouble(businessProfitTextEditingController.text.trim()).toStringAsFixed(0))}"),
+      children: [
+        const SizedBox(height: 20),
+        TextField(
+          controller: businessProfitTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+              labelText: "Business Profit",
+              counterText: "",
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey)
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              focusColor: Colors.grey
+          ),
+          onChanged: (val) => calculateAllDeduction(),
+        ),
+        const SizedBox(height: 10),
+        Text("Total Profit from Business : ${numberToString(getStringToDouble(businessProfitTextEditingController.text.trim()).toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+        const SizedBox(height: 10),
+      ],
+    );
+  }
+
   deductionChildWidget(){
     return ExpansionTile(
       title: const Text("Deduction"),
@@ -2523,7 +2569,11 @@ class _TaxCalculatorState extends State<TaxCalculator> {
 
 
   taxCalculateWithOldRegime(){
-    totalTaxableIncomeOldRegime = netTaxableOfSalaryIncome + totalHouseIncome + totalOtherIncomeSource - overAllTotalDeduction;
+    totalTaxableIncomeOldRegime = netTaxableOfSalaryIncome
+        + totalHouseIncome
+        + totalOtherIncomeSource
+        + getStringToDouble(businessProfitTextEditingController.text.trim())
+        - overAllTotalDeduction;
     oldPayableTaxAmount = 0;
 
     if(citizenType == "Normal Citizen"){
@@ -2596,7 +2646,11 @@ class _TaxCalculatorState extends State<TaxCalculator> {
 
   taxCalculateWithNewRegime(){
     netDeductionInNewRegime = min(getStringToDouble(addDeductionTextEditingController.text.toString().trim()), 50000);
-    totalTaxableIncomeNewRegime = grossSalary + totalHouseIncome + totalOtherIncomeSource - netDeductionInNewRegime;
+    totalTaxableIncomeNewRegime = grossSalary
+        + totalHouseIncome
+        + totalOtherIncomeSource
+        + getStringToDouble(businessProfitTextEditingController.text.trim())
+        - netDeductionInNewRegime;
 
     newPayableTaxAmount = 0;
     newTaxSlab = "";
