@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tax/capital_gain.dart';
 import 'package:tax/hra_calculator.dart';
+import 'package:tax/nps_calculator.dart';
 
 class TaxCalculator extends StatefulWidget {
   const TaxCalculator({Key? key}) : super(key: key);
@@ -196,6 +197,8 @@ class _TaxCalculatorState extends State<TaxCalculator> {
                 salaryCalculatorWidget(),
                 const Divider(height: 4, color: Colors.black,thickness: 6),
                 const CapitalGains(),
+                const Divider(height: 4, color: Colors.black,thickness: 6),
+                const NPSCalculator(),
               ],
             ),
           ),
