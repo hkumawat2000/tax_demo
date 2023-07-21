@@ -321,6 +321,21 @@ class _NPSCalculatorState extends State<NPSCalculator> {
 
   calculateNPSValues(){
 
+    double getCurrentAge = getStringToDouble(currentAgeTextEditingController.text.trim());
+    double getTaxSlab = getStringToDouble(taxSlabTextEditingController.text.trim());
+    double getInvNSP = getStringToDouble(investmentAmountTextEditingController.text.trim());
+    double getInvAsset = getStringToDouble(investmentAssetAmountTextEditingController.text.trim());
+    double getReturnOnNSP = getStringToDouble(returnOnNPSTextEditingController.text.trim());
+    double getReturnOnAsset = getStringToDouble(returnOnAssetsTextEditingController.text.trim());
+
+    if(investmentAmountTextEditingController.text.isNotEmpty) {
+      investmentAssetAmountTextEditingController.text = (getInvNSP * (100 - getStringToDouble(taxSlabTextEditingController.text.trim())) / 100).toStringAsFixed(0);
+    }
+
+    yearTo60NPS = 60 - getCurrentAge;
+    yearTo60Asset = 60 - getCurrentAge;
+
+    setState(() {});
   }
 
 
