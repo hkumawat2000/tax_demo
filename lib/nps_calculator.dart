@@ -21,8 +21,10 @@ class _NPSCalculatorState extends State<NPSCalculator> {
   double yearTo60Asset = 0;
   double corpusAt60NPS = 0;
   double corpusAt60Asset = 0;
+  double netCorpusAt60NPS = 0;
+  double netCorpusAt60Asset = 0;
   double profitOnInvNPS = 0;
-  double profileOnInvAsset = 0;
+  double profitOnInvAsset = 0;
   double taxOnProNPS = 0;
   double taxOnProAsset = 0;
   double withdrawNPS = 0;
@@ -227,81 +229,72 @@ class _NPSCalculatorState extends State<NPSCalculator> {
           const SizedBox(height: 20),
           Row(
             children: [
-              Expanded(child: Text("Corpus at 60 : ₹ $corpusAt60NPS")),
+              Expanded(child: Text("Corpus at 60 : ₹ ${numberToString(corpusAt60NPS.toStringAsFixed(2))}")),
               const SizedBox(width: 20),
-              Expanded(child: Text("Corpus at 60 : ₹ $corpusAt60Asset")),
+              Expanded(child: Text("Corpus at 60 : ₹ ${numberToString(corpusAt60Asset.toStringAsFixed(2))}")),
             ],
           ),
 
           const SizedBox(height: 20),
           Row(
             children: [
-              Expanded(child: Text("Profit on Investment : ₹ $profitOnInvNPS")),
+              Expanded(child: Text("Profit on Investment : ₹ ${numberToString(profitOnInvNPS.toStringAsFixed(2))}")),
               const SizedBox(width: 20),
-              Expanded(child: Text("Profit on Investment : ₹ $profileOnInvAsset")),
+              Expanded(child: Text("Profit on Investment : ₹ ${numberToString(profitOnInvAsset.toStringAsFixed(2))}")),
             ],
           ),
 
           const SizedBox(height: 20),
           Row(
             children: [
-              Expanded(child: Text("Tax on Profit : ₹ $taxOnProNPS")),
+              Expanded(child: Text("Tax on Profit : ₹ ${numberToString(taxOnProNPS.toStringAsFixed(2))}")),
               const SizedBox(width: 20),
-              Expanded(child: Text("Tax on Profit : ₹ $taxOnProAsset")),
+              Expanded(child: Text("Tax on Profit : ₹ ${numberToString(taxOnProAsset.toStringAsFixed(2))}")),
             ],
           ),
 
           const SizedBox(height: 20),
           Row(
             children: [
-              Expanded(child: Text("Lumpsum withdraw (at 60) : ₹ $withdrawNPS")),
+              Expanded(child: Text("Lumpsum withdraw (at 60) : ₹ ${numberToString(withdrawNPS.toStringAsFixed(2))}")),
               const SizedBox(width: 20),
-              Expanded(child: Text("Lumpsum withdraw (at 60) : ₹ $withdrawAsset")),
+              Expanded(child: Text("Lumpsum withdraw (at 60) : ₹ ${numberToString(withdrawAsset.toStringAsFixed(2))}")),
             ],
           ),
 
           const SizedBox(height: 20),
           Row(
             children: [
-              Expanded(child: Text("Balance to be invested for Annuity : ₹ $balanceInvForAnnuityNPS")),
+              Expanded(child: Text("Balance to be invested for Annuity : ₹ ${numberToString(balanceInvForAnnuityNPS.toStringAsFixed(2))}")),
               const SizedBox(width: 20),
-              Expanded(child: Text("Balance to be invested for Annuity : ₹ $balanceInvForAnnuityAsset")),
+              Expanded(child: Text("Balance to be invested for Annuity : ₹ ${numberToString(balanceInvForAnnuityAsset.toStringAsFixed(2))}")),
             ],
           ),
 
           const SizedBox(height: 20),
           Row(
             children: [
-              Expanded(child: Text("Annuity @ 5% per year : ₹ $annuityPerYearNPS")),
+              Expanded(child: Text("Annuity @ 5% per year : ₹ ${numberToString(annuityPerYearNPS.toStringAsFixed(2))}")),
               const SizedBox(width: 20),
-              Expanded(child: Text("Annuity @ 5% per year : ₹ $annuityPerYearAsset")),
+              Expanded(child: Text("Annuity @ 5% per year : ₹ ${numberToString(annuityPerYearAsset.toStringAsFixed(2))}")),
             ],
           ),
 
           const SizedBox(height: 20),
           Row(
             children: [
-              Expanded(child: Text("Value at 60 for 1 time investment : ₹ $valueAt60NPS")),
+              Expanded(child: Text("Net Corpus at 60 : ₹ ${numberToString(netCorpusAt60NPS.toStringAsFixed(2))}")),
               const SizedBox(width: 20),
-              Expanded(child: Text("Value at 60 for 1 time investment : ₹ $valueAt60Asset")),
+              Expanded(child: Text("Net Corpus at 60 : ₹ ${numberToString(netCorpusAt60Asset.toStringAsFixed(2))}")),
             ],
           ),
 
           const SizedBox(height: 20),
           Row(
             children: [
-              const Expanded(child: Text("")),
+              Expanded(child: Text("Value at 60 for 1 time investment : ₹ ${numberToString(valueAt60NPS.toStringAsFixed(2))}")),
               const SizedBox(width: 20),
-              Expanded(child: Text("Profit for 1 year : ₹ $profitFor1YearAsset")),
-            ],
-          ),
-
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              const Expanded(child: Text("")),
-              const SizedBox(width: 20),
-              Expanded(child: Text("Tax on profit : ₹ $taxOnProAsset")),
+              Expanded(child: Text("Value at 60 for 1 time investment : ₹ ${numberToString(valueAt60Asset.toStringAsFixed(2))}")),
             ],
           ),
 
@@ -310,7 +303,25 @@ class _NPSCalculatorState extends State<NPSCalculator> {
             children: [
               const Expanded(child: Text("")),
               const SizedBox(width: 20),
-              Expanded(child: Text("Net return : ₹ $netReturnAsset")),
+              Expanded(child: Text("Profit for 1 year : ₹ ${numberToString(profitFor1YearAsset.toStringAsFixed(2))}")),
+            ],
+          ),
+
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              const Expanded(child: Text("")),
+              const SizedBox(width: 20),
+              Expanded(child: Text("Tax on profit : ₹ ${numberToString(taxOnProAsset.toStringAsFixed(2))}")),
+            ],
+          ),
+
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              const Expanded(child: Text("")),
+              const SizedBox(width: 20),
+              Expanded(child: Text("Net return : ₹ ${numberToString(netReturnAsset.toStringAsFixed(2))}")),
             ],
           ),
           const SizedBox(height: 20),
@@ -334,6 +345,43 @@ class _NPSCalculatorState extends State<NPSCalculator> {
 
     yearTo60NPS = 60 - getCurrentAge;
     yearTo60Asset = 60 - getCurrentAge;
+
+
+    corpusAt60NPS = 0;
+    corpusAt60Asset = 0;
+    for(int i=0; i<yearTo60NPS; i++){
+      if(i != 0){
+        corpusAt60NPS += corpusAt60NPS * (getReturnOnNSP / 100);
+      }
+      corpusAt60NPS += getInvNSP;
+    }
+    for(int i=0; i<yearTo60Asset; i++){
+      if(i != 0){
+        corpusAt60Asset += corpusAt60Asset * (getReturnOnAsset / 100);
+      }
+      corpusAt60Asset += getInvAsset;
+    }
+
+
+    profitOnInvNPS = corpusAt60NPS - (getInvNSP * yearTo60NPS);
+    profitOnInvAsset = corpusAt60Asset - (getInvAsset * yearTo60Asset);
+
+    taxOnProNPS = 0;
+    taxOnProAsset = (profitOnInvAsset - 100000) * 0.1;
+
+    withdrawNPS = corpusAt60NPS * 0.6;
+    withdrawAsset = corpusAt60Asset;
+
+    balanceInvForAnnuityNPS = corpusAt60NPS - withdrawNPS;
+    balanceInvForAnnuityAsset = 0;
+
+    annuityPerYearNPS = balanceInvForAnnuityNPS * 0.05;
+    annuityPerYearAsset = 0;
+
+    netCorpusAt60NPS = corpusAt60NPS - taxOnProNPS;
+    netCorpusAt60Asset = corpusAt60Asset - taxOnProAsset;
+
+
 
     setState(() {});
   }
