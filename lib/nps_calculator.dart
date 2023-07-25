@@ -275,9 +275,9 @@ class _NPSCalculatorState extends State<NPSCalculator> {
           const SizedBox(height: 20),
           Row(
             children: [
-              Expanded(child: Text("Annuity @ 5% per year : ₹ ${numberToString(annuityPerYearNPS.toStringAsFixed(2))}")),
+              Expanded(child: Text("Annuity @ 6.5% per year : ₹ ${numberToString(annuityPerYearNPS.toStringAsFixed(2))}")),
               const SizedBox(width: 20),
-              Expanded(child: Text("Annuity @ 5% per year : ₹ ${numberToString(annuityPerYearAsset.toStringAsFixed(2))}")),
+              Expanded(child: Text("Annuity @ 6.5% per year : ₹ ${numberToString(annuityPerYearAsset.toStringAsFixed(2))}")),
             ],
           ),
 
