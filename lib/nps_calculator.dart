@@ -37,6 +37,7 @@ class _NPSCalculatorState extends State<NPSCalculator> {
   double valueAt60Asset = 0;
   double profitFor1YearAsset = 0;
   double taxOnProfitAsset = 0;
+  double netReturnNSP = 0;
   double netReturnAsset = 0;
 
 
@@ -312,7 +313,7 @@ class _NPSCalculatorState extends State<NPSCalculator> {
             children: [
               const Expanded(child: Text("")),
               const SizedBox(width: 20),
-              Expanded(child: Text("Tax on profit : ₹ ${numberToString(taxOnProAsset.toStringAsFixed(2))}")),
+              Expanded(child: Text("Tax on profit : ₹ ${numberToString(taxOnProfitAsset.toStringAsFixed(2))}")),
             ],
           ),
 
@@ -349,17 +350,25 @@ class _NPSCalculatorState extends State<NPSCalculator> {
 
     corpusAt60NPS = 0;
     corpusAt60Asset = 0;
+    valueAt60NPS = 0;
+    valueAt60NPS += getInvNSP;
     for(int i=0; i<yearTo60NPS; i++){
       if(i != 0){
         corpusAt60NPS += corpusAt60NPS * (getReturnOnNSP / 100);
       }
       corpusAt60NPS += getInvNSP;
+      valueAt60NPS += valueAt60NPS * (getReturnOnNSP / 100);
     }
+
+
+    valueAt60Asset = 0;
+    valueAt60Asset += getInvAsset;
     for(int i=0; i<yearTo60Asset; i++){
       if(i != 0){
         corpusAt60Asset += corpusAt60Asset * (getReturnOnAsset / 100);
       }
       corpusAt60Asset += getInvAsset;
+      valueAt60Asset += valueAt60Asset * (getReturnOnAsset / 100);
     }
 
 
@@ -375,13 +384,18 @@ class _NPSCalculatorState extends State<NPSCalculator> {
     balanceInvForAnnuityNPS = corpusAt60NPS - withdrawNPS;
     balanceInvForAnnuityAsset = 0;
 
-    annuityPerYearNPS = balanceInvForAnnuityNPS * 0.05;
+    annuityPerYearNPS = balanceInvForAnnuityNPS * 0.065;
     annuityPerYearAsset = 0;
 
     netCorpusAt60NPS = corpusAt60NPS - taxOnProNPS;
     netCorpusAt60Asset = corpusAt60Asset - taxOnProAsset;
 
+    profitFor1YearAsset = valueAt60Asset - getInvAsset;
 
+    taxOnProfitAsset = profitFor1YearAsset * 0.1;
+
+    netReturnNSP = valueAt60NPS;
+    netReturnAsset = valueAt60Asset - taxOnProfitAsset;
 
     setState(() {});
   }
