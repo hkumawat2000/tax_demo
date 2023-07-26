@@ -165,10 +165,10 @@ class _HRACalculatorState extends State<HRACalculator> {
           rentPaid = 0;
         }
       }
-      if (min(min(hraReceived, basicSalary), rentPaid) < 0) {
+      if (min(min(hraReceived, basic), rentPaid) < 0) {
         hraExemption = 0;
       } else {
-        hraExemption = min(min(hraReceived, basicSalary), rentPaid);
+        hraExemption = min(min(hraReceived, basic), rentPaid);
       }
       minRent = calculateMinRent(basicSalary, hraReceived, cityType == "metro" ? true : false);
       hraTaxable = hraReceived - hraExemption;
