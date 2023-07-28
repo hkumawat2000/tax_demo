@@ -12,10 +12,14 @@ class _NPSCalculatorState extends State<NPSCalculator> {
 
   TextEditingController currentAgeTextEditingController = TextEditingController();
   TextEditingController taxSlabTextEditingController = TextEditingController();
+  TextEditingController periodPayForTextEditingController = TextEditingController();
   TextEditingController investmentAmountTextEditingController = TextEditingController();
   TextEditingController investmentAssetAmountTextEditingController = TextEditingController();
   TextEditingController returnOnNPSTextEditingController = TextEditingController();
   TextEditingController returnOnAssetsTextEditingController = TextEditingController();
+
+
+  FocusNode ageFocusNode = FocusNode();
 
   double yearTo60NPS = 0;
   double yearTo60Asset = 0;
@@ -39,9 +43,23 @@ class _NPSCalculatorState extends State<NPSCalculator> {
   double taxOnProfitAsset = 0;
   double netReturnNSP = 0;
   double netReturnAsset = 0;
+  double periodPayForNSP = 0;
+  double periodPayForAsset = 0;
+  double valuePeriodPayForNSP = 0;
+  double valuePeriodPayForAsset = 0;
 
 
 
+  @override
+  void initState() {
+    ageFocusNode.addListener(() {
+      if(!ageFocusNode.hasFocus){
+        double getCurrentAge = getStringToDouble(currentAgeTextEditingController.text.trim());
+        periodPayForTextEditingController.text = (60 - getCurrentAge).toStringAsFixed(0);
+      }
+    });
+    super.initState();
+  }
 
 
   @override
@@ -56,6 +74,7 @@ class _NPSCalculatorState extends State<NPSCalculator> {
           const SizedBox(height: 20),
           TextField(
             controller: currentAgeTextEditingController,
+            focusNode: ageFocusNode,
             keyboardType: TextInputType.number,
             style: const TextStyle(color: Colors.black),
             onChanged: (val) => calculateNPSValues(),
@@ -86,6 +105,31 @@ class _NPSCalculatorState extends State<NPSCalculator> {
             onChanged: (val) => calculateNPSValues(),
             decoration: InputDecoration(
                 labelText: "Current Tax Slab",
+                counterText: "",
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(6),
+                    borderSide: const BorderSide(color: Colors.grey)
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey),
+                ),
+                focusColor: Colors.grey
+            ),
+          ),
+
+          const SizedBox(height: 20),
+          TextField(
+            controller: periodPayForTextEditingController,
+            keyboardType: TextInputType.number,
+            style: const TextStyle(color: Colors.black),
+            onChanged: (val) => calculateNPSValues(),
+            decoration: InputDecoration(
+                labelText: "Period paying for",
                 counterText: "",
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(6),
@@ -302,6 +346,15 @@ class _NPSCalculatorState extends State<NPSCalculator> {
           const SizedBox(height: 20),
           Row(
             children: [
+              Expanded(child: Text("Value at 60 for $periodPayForNSP time investment : ₹ ${numberToString(valuePeriodPayForNSP.toStringAsFixed(2))}")),
+              const SizedBox(width: 20),
+              Expanded(child: Text("Value at 60 for $periodPayForAsset time investment : ₹ ${numberToString(valuePeriodPayForAsset.toStringAsFixed(2))}")),
+            ],
+          ),
+
+          const SizedBox(height: 20),
+          Row(
+            children: [
               const Expanded(child: Text("")),
               const SizedBox(width: 20),
               Expanded(child: Text("Profit for 1 year : ₹ ${numberToString(profitFor1YearAsset.toStringAsFixed(2))}")),
@@ -335,10 +388,13 @@ class _NPSCalculatorState extends State<NPSCalculator> {
 
     double getCurrentAge = getStringToDouble(currentAgeTextEditingController.text.trim());
     double getTaxSlab = getStringToDouble(taxSlabTextEditingController.text.trim());
+    periodPayForNSP = getStringToDouble(periodPayForTextEditingController.text.trim());
     double getInvNSP = getStringToDouble(investmentAmountTextEditingController.text.trim());
     double getInvAsset = getStringToDouble(investmentAssetAmountTextEditingController.text.trim());
     double getReturnOnNSP = getStringToDouble(returnOnNPSTextEditingController.text.trim());
     double getReturnOnAsset = getStringToDouble(returnOnAssetsTextEditingController.text.trim());
+
+    periodPayForAsset = periodPayForNSP;
 
     if(investmentAmountTextEditingController.text.isNotEmpty) {
       investmentAssetAmountTextEditingController.text = (getInvNSP * (100 - getStringToDouble(taxSlabTextEditingController.text.trim())) / 100).toStringAsFixed(0);
@@ -352,23 +408,33 @@ class _NPSCalculatorState extends State<NPSCalculator> {
     corpusAt60Asset = 0;
     valueAt60NPS = 0;
     valueAt60NPS += getInvNSP;
+    valuePeriodPayForNSP = 0;
     for(int i=0; i<yearTo60NPS; i++){
       if(i != 0){
         corpusAt60NPS += corpusAt60NPS * (getReturnOnNSP / 100);
+        valuePeriodPayForNSP += valuePeriodPayForNSP * (getReturnOnNSP / 100);
       }
       corpusAt60NPS += getInvNSP;
       valueAt60NPS += valueAt60NPS * (getReturnOnNSP / 100);
+      if(i < periodPayForNSP){
+        valuePeriodPayForNSP += getInvNSP;
+      }
     }
 
 
     valueAt60Asset = 0;
+    valuePeriodPayForAsset = 0;
     valueAt60Asset += getInvAsset;
     for(int i=0; i<yearTo60Asset; i++){
       if(i != 0){
         corpusAt60Asset += corpusAt60Asset * (getReturnOnAsset / 100);
+        valuePeriodPayForAsset += valuePeriodPayForAsset * (getReturnOnAsset / 100);
       }
       corpusAt60Asset += getInvAsset;
       valueAt60Asset += valueAt60Asset * (getReturnOnAsset / 100);
+      if(i < periodPayForAsset){
+        valuePeriodPayForAsset += getInvAsset;
+      }
     }
 
 
