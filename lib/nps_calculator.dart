@@ -444,7 +444,11 @@ class _NPSCalculatorState extends State<NPSCalculator> {
     taxOnProNPS = 0;
     taxOnProAsset = (profitOnInvAsset - 100000) * 0.1;
 
-    withdrawNPS = corpusAt60NPS * 0.6;
+    if(corpusAt60NPS <= 500000){
+      withdrawNPS = corpusAt60NPS;
+    } else {
+      withdrawNPS = corpusAt60NPS * 0.6;
+    }
     withdrawAsset = corpusAt60Asset;
 
     balanceInvForAnnuityNPS = corpusAt60NPS - withdrawNPS;
