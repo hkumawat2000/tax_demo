@@ -405,36 +405,31 @@ class _NPSCalculatorState extends State<NPSCalculator> {
 
 
     corpusAt60NPS = 0;
-    corpusAt60Asset = 0;
     valueAt60NPS = 0;
-    valueAt60NPS += getInvNSP;
     valuePeriodPayForNSP = 0;
+    valueAt60NPS += getInvNSP;
     for(int i=0; i<yearTo60NPS; i++){
-      if(i != 0){
-        corpusAt60NPS += corpusAt60NPS * (getReturnOnNSP / 100);
-        valuePeriodPayForNSP += valuePeriodPayForNSP * (getReturnOnNSP / 100);
-      }
       corpusAt60NPS += getInvNSP;
-      valueAt60NPS += valueAt60NPS * (getReturnOnNSP / 100);
       if(i < periodPayForNSP){
         valuePeriodPayForNSP += getInvNSP;
       }
+      corpusAt60NPS += corpusAt60NPS * (getReturnOnNSP / 100);
+      valuePeriodPayForNSP += valuePeriodPayForNSP * (getReturnOnNSP / 100);
+      valueAt60NPS += valueAt60NPS * (getReturnOnNSP / 100);
     }
 
-
+    corpusAt60Asset = 0;
     valueAt60Asset = 0;
     valuePeriodPayForAsset = 0;
     valueAt60Asset += getInvAsset;
     for(int i=0; i<yearTo60Asset; i++){
-      if(i != 0){
-        corpusAt60Asset += corpusAt60Asset * (getReturnOnAsset / 100);
-        valuePeriodPayForAsset += valuePeriodPayForAsset * (getReturnOnAsset / 100);
-      }
       corpusAt60Asset += getInvAsset;
-      valueAt60Asset += valueAt60Asset * (getReturnOnAsset / 100);
       if(i < periodPayForAsset){
         valuePeriodPayForAsset += getInvAsset;
       }
+      corpusAt60Asset += corpusAt60Asset * (getReturnOnAsset / 100);
+      valuePeriodPayForAsset += valuePeriodPayForAsset * (getReturnOnAsset / 100);
+      valueAt60Asset += valueAt60Asset * (getReturnOnAsset / 100);
     }
 
 
