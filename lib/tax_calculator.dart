@@ -2653,6 +2653,12 @@ class _TaxCalculatorState extends State<TaxCalculator> {
         newTaxSlab = "Tax Slab 7";
         newPayableTaxAmount = 187500 + (totalTaxableIncomeNewRegime - 1500000) * 0.3;
       }
+
+      if(totalTaxableIncomeNewRegime > 0 && totalTaxableIncomeNewRegime <= 500000){
+        lessRebateNewRegime = min(newPayableTaxAmount, 12500);
+      } else {
+        lessRebateNewRegime = 0;
+      }
     } else if(selectedAssessmentYear == "2024-25"){
       totalTaxableIncomeNewRegime -= 50000;
       if(totalTaxableIncomeNewRegime <= 300000){
@@ -2674,12 +2680,12 @@ class _TaxCalculatorState extends State<TaxCalculator> {
         newTaxSlab = "Tax Slab 6";
         newPayableTaxAmount = 150000 + (totalTaxableIncomeNewRegime - 1500000) * 0.3;
       }
-    }
 
-    if(totalTaxableIncomeNewRegime > 0 && totalTaxableIncomeNewRegime <= 500000){
-      lessRebateNewRegime = min(newPayableTaxAmount, 12500);
-    } else {
-      lessRebateNewRegime = 0;
+      if(totalTaxableIncomeNewRegime > 0 && totalTaxableIncomeNewRegime <= 700000){
+        lessRebateNewRegime = min(newPayableTaxAmount, 25000);
+      } else {
+        lessRebateNewRegime = 0;
+      }
     }
 
     afterLessRebateNewRegime = newPayableTaxAmount - lessRebateNewRegime;
