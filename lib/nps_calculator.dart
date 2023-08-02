@@ -47,7 +47,7 @@ class _NPSCalculatorState extends State<NPSCalculator> {
   double periodPayForAsset = 0;
   double valuePeriodPayForNSP = 0;
   double valuePeriodPayForAsset = 0;
-
+  bool isValidInvestment = true;
   String periodType = "monthly";
 
 
@@ -190,23 +190,40 @@ class _NPSCalculatorState extends State<NPSCalculator> {
                   controller: investmentAmountTextEditingController,
                   keyboardType: TextInputType.number,
                   style: const TextStyle(color: Colors.black),
-                  onChanged: (val) => calculateNPSValues(),
+                  onChanged: (val) {
+                    if(getStringToDouble(investmentAmountTextEditingController.text.trim()) > 500){
+                      isValidInvestment = true;
+                    } else {
+                      isValidInvestment = false;
+                    }
+                    calculateNPSValues();
+                  },
                   decoration: InputDecoration(
-                      labelText: "Investment (10% of basic of employer contribution)",
-                      counterText: "",
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(6),
-                          borderSide: const BorderSide(color: Colors.grey)
-                      ),
-                      focusedBorder: OutlineInputBorder(
+                    labelText: "Investment (10% of basic of employer contribution)",
+                    counterText: "",
+                    enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      focusColor: Colors.grey
+                        borderSide: const BorderSide(color: Colors.grey)
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.red),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.red),
+                    ),
+                    errorStyle: const TextStyle(color: Colors.red),
+                    errorText: isValidInvestment ? null : "Should be greater than 500",
+                    focusColor: Colors.grey,
                   ),
                 ),
               ),
