@@ -48,6 +48,7 @@ class _NPSCalculatorState extends State<NPSCalculator> {
   double valuePeriodPayForNSP = 0;
   double valuePeriodPayForAsset = 0;
 
+  String periodType = "monthly";
 
 
   @override
@@ -71,6 +72,38 @@ class _NPSCalculatorState extends State<NPSCalculator> {
         childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
         tilePadding: EdgeInsets.zero,
         children: [
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              Expanded(
+                child: RadioListTile(
+                  value: "monthly",
+                  groupValue: periodType,
+                  contentPadding: EdgeInsets.zero,
+                  title: const Text("Monthly"),
+                  onChanged: (val){
+                    setState(() {
+                      periodType = val!;
+                    });
+                  },
+                ),
+              ),
+              const SizedBox(width: 20),
+              Expanded(
+                child: RadioListTile(
+                  value: "yearly",
+                  groupValue: periodType,
+                  contentPadding: EdgeInsets.zero,
+                  title: const Text("Yearly"),
+                  onChanged: (val){
+                    setState(() {
+                      periodType = val!;
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
           const SizedBox(height: 20),
           TextField(
             controller: currentAgeTextEditingController,
