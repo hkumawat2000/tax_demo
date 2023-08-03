@@ -78,9 +78,10 @@ class _TaxCalculatorState extends State<TaxCalculator> {
 
   TextEditingController pp80cccDeductionTextEditingController = TextEditingController();
 
-  TextEditingController nps80ccdDeductionTextEditingController = TextEditingController();
+  TextEditingController nps80ccd1DeductionTextEditingController = TextEditingController();
 
-  TextEditingController addDeductionTextEditingController = TextEditingController();
+  TextEditingController nps80ccd1BDeductionTextEditingController = TextEditingController();
+  TextEditingController nps80ccd2DeductionTextEditingController = TextEditingController();
 
   TextEditingController section80s1DeductionTextEditingController = TextEditingController();
   TextEditingController section80s2DeductionTextEditingController = TextEditingController();
@@ -1820,7 +1821,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
         const Text("Section 80 CCD", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
         const SizedBox(height: 20),
         TextField(
-          controller: nps80ccdDeductionTextEditingController,
+          controller: nps80ccd1DeductionTextEditingController,
           keyboardType: TextInputType.number,
           style: const TextStyle(color: Colors.black),
           inputFormatters: [
@@ -1850,14 +1851,14 @@ class _TaxCalculatorState extends State<TaxCalculator> {
         Text("Net deduction of 80 C, 80 CCC and 80 CCD  :  ${numberToString(min(total80sDeduction, 150000).toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
         const SizedBox(height: 20),
         TextField(
-          controller: addDeductionTextEditingController,
+          controller: nps80ccd1BDeductionTextEditingController,
           keyboardType: TextInputType.number,
           style: const TextStyle(color: Colors.black),
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp('[0-9]')),
           ],
           decoration: InputDecoration(
-              labelText: "Less: Additional Deduction under Sec 80CCD NPS (Max. ₹ 50,000/-)",
+              labelText: "Less: Additional Deduction under Sec 80CCD(1B) NPS (Max. ₹ 50,000/-)",
               counterText: "",
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
@@ -1876,7 +1877,40 @@ class _TaxCalculatorState extends State<TaxCalculator> {
           onChanged: (val) => calculateAllDeduction(),
         ),
         const SizedBox(height: 10),
-        Text("Net Additional Deduction :  ${numberToString(min(int.parse(getStringToDouble(addDeductionTextEditingController.text.toString().trim()).toString()), 50000).toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+        Text("Net Additional Deduction under section 80CCD :  ${numberToString(min(int.parse(getStringToDouble(nps80ccd1BDeductionTextEditingController.text.toString().trim()).toString()), 50000).toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+
+
+        const SizedBox(height: 20),
+        TextField(
+          controller: nps80ccd2DeductionTextEditingController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+          ],
+          decoration: InputDecoration(
+              labelText: "Employer Contribution to NPS under section 80CCD(2)",
+              counterText: "",
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey)
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              focusColor: Colors.grey
+          ),
+          onChanged: (val) => calculateAllDeduction(),
+        ),
+        const SizedBox(height: 10),
+        Text("Net Additional Deduction under section 80CCD(2) :  ${numberToString(min(int.parse(getStringToDouble(nps80ccd2DeductionTextEditingController.text.toString().trim()).toString()), int.parse(getStringToDouble(basicSalarySalaryTextEditingController.text.toString().trim()).toString()) * 0.1).toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+
+
         const SizedBox(height: 20),
         TextField(
           controller: section80s1DeductionTextEditingController,
@@ -2367,7 +2401,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
         + getStringToDouble(tsb80CDeductionTextEditingController.text.toString().trim())
         + getStringToDouble(eLSS80CDeductionTextEditingController.text.toString().trim())
         + getStringToDouble(pp80cccDeductionTextEditingController.text.toString().trim())
-        + getStringToDouble(nps80ccdDeductionTextEditingController.text.toString().trim());
+        + getStringToDouble(nps80ccd1DeductionTextEditingController.text.toString().trim());
 
     setState(() {
       total80sDeduction = deduction;
@@ -2429,7 +2463,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               * 60000
               *((netTaxableOfSalaryIncome - total80sDeduction - int.parse(getStringToDouble(addDeductionTextEditingController.text.toString().trim()).toString()) - section80s1DeductionValue - section80s2DeductionValue - section80s3DeductionValue - section80s5DeductionValue - section80s6DeductionValue - section80s7DeductionValue - section80s9DeductionValue - section80s10DeductionValue, section80s11DeductionValue) * 0.25)
               * */
-      double calculatedValue = netTaxableOfSalaryIncome - total80sDeduction - int.parse(getStringToDouble(addDeductionTextEditingController.text.toString().trim()).toString()) - section80s1DeductionValue - section80s2DeductionValue - section80s3DeductionValue - section80s5DeductionValue - section80s6DeductionValue - section80s7DeductionValue - section80s9DeductionValue - section80s10DeductionValue - section80s11DeductionValue;
+      double calculatedValue = netTaxableOfSalaryIncome - total80sDeduction - int.parse(getStringToDouble(nps80ccd1BDeductionTextEditingController.text.toString().trim()).toString()) - int.parse(getStringToDouble(nps80ccd2DeductionTextEditingController.text.toString().trim()).toString()) - section80s1DeductionValue - section80s2DeductionValue - section80s3DeductionValue - section80s5DeductionValue - section80s6DeductionValue - section80s7DeductionValue - section80s9DeductionValue - section80s10DeductionValue - section80s11DeductionValue;
       section80s8DeductionValue =  min(min(value - (calculatedValue * 0.1), 60000), (calculatedValue * 0.25));
     } else {
       section80s8DeductionValue = 0;
@@ -2477,7 +2511,8 @@ class _TaxCalculatorState extends State<TaxCalculator> {
         section80s5DeductionValue + section80s6DeductionValue + section80s7DeductionValue + section80s8DeductionValue +
     section80s9DeductionValue + section80s10DeductionValue + section80s11DeductionValue + section80s12DeductionValue + section80s13DeductionValue;
 
-    overAllTotalDeduction = min(int.parse(getStringToDouble(addDeductionTextEditingController.text.toString().trim()).toString()), 50000) +
+    overAllTotalDeduction = min(int.parse(getStringToDouble(nps80ccd1BDeductionTextEditingController.text.toString().trim()).toString()), 50000) +
+        min(int.parse(getStringToDouble(nps80ccd2DeductionTextEditingController.text.toString().trim()).toString()), int.parse(getStringToDouble(basicSalarySalaryTextEditingController.text.toString().trim()).toString()) * 0.1) +
         min(total80sDeduction, 150000) + section80Deduction;
     setState(() {
       totalSection80sDeduction = section80Deduction;
@@ -2621,7 +2656,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
   }
 
   taxCalculateWithNewRegime(){
-    netDeductionInNewRegime = min(getStringToDouble(addDeductionTextEditingController.text.toString().trim()), 50000);
+    netDeductionInNewRegime = min(getStringToDouble(nps80ccd2DeductionTextEditingController.text.toString().trim()), getStringToDouble(basicSalarySalaryTextEditingController.text.toString().trim()) * 0.1);
     totalTaxableIncomeNewRegime = grossSalary
         + totalHouseIncome
         + totalOtherIncomeSource
