@@ -281,7 +281,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
                 Text("Income from House property : ₹ ${numberToString(totalHouseIncome.toStringAsFixed(0))}"),
                 Text("Income from Other Sources : ₹ ${numberToString(totalOtherIncomeSource.toStringAsFixed(0))}"),
                 const Text("Less Deductions"),
-                Text("Additional Deduction under Sec 80CCD NPS (Max. ₹ 50,000/-): ₹ ${numberToString(netDeductionInNewRegime.toStringAsFixed(0))}"),
+                Text("Additional Deduction under Sec 80CCD(2) - Employer contribution : ₹ ${numberToString(netDeductionInNewRegime.toStringAsFixed(0))}"),
                 const SizedBox(height: 6),
                 Text("Total Taxable Income : ₹ ${numberToString(totalTaxableIncomeNewRegime.toStringAsFixed(0))}"),
                 const SizedBox(height: 6),
