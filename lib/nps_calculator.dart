@@ -317,9 +317,9 @@ class _NPSCalculatorState extends State<NPSCalculator> {
           const SizedBox(height: 20),
           Row(
             children: [
-              Expanded(child: Text("Years to 60 : ₹ $yearTo60NPS")),
+              Expanded(child: Text("Years to 60 : $yearTo60NPS")),
               const SizedBox(width: 20),
-              Expanded(child: Text("Years to 60 : ₹ $yearTo60Asset")),
+              Expanded(child: Text("Years to 60 : $yearTo60Asset")),
             ],
           ),
 
