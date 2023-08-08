@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class NPSCalculator extends StatefulWidget {
@@ -488,6 +490,10 @@ class _NPSCalculatorState extends State<NPSCalculator> {
         valuePeriodPayForAsset += valuePeriodPayForAsset * (getReturnOnAsset / 100);
         valueAt60Asset += valueAt60Asset * (getReturnOnAsset / 100);
       }
+
+      profitOnInvNPS = corpusAt60NPS - (getInvNSP * yearTo60NPS);
+      profitOnInvAsset = corpusAt60Asset - (getInvAsset * yearTo60Asset);
+
     } else {
       for(int i = 0; i < yearTo60NPS * 12; i++){
         corpusAt60NPS += getInvNSP;
@@ -515,14 +521,13 @@ class _NPSCalculatorState extends State<NPSCalculator> {
         valuePeriodPayForAsset += valuePeriodPayForAsset * (getReturnOnAsset / 100 / 12);
         valueAt60Asset += valueAt60Asset * (getReturnOnAsset / 100 / 12);
       }
+
+      profitOnInvNPS = corpusAt60NPS - (getInvNSP * yearTo60NPS * 12);
+      profitOnInvAsset = corpusAt60Asset - (getInvAsset * yearTo60Asset * 12);
     }
 
-
-    profitOnInvNPS = corpusAt60NPS - (getInvNSP * yearTo60NPS);
-    profitOnInvAsset = corpusAt60Asset - (getInvAsset * yearTo60Asset);
-
     taxOnProNPS = 0;
-    taxOnProAsset = (profitOnInvAsset - 100000) * 0.1;
+    taxOnProAsset = max((profitOnInvAsset - 100000) * 0.1, 0);
 
     if(corpusAt60NPS <= 500000){
       withdrawNPS = corpusAt60NPS;
