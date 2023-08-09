@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'Taxation',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        brightness: Brightness.light
       ),
       home: const AllCalculator(),
     );
