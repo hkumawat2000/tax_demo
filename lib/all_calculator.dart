@@ -25,11 +25,11 @@ class _AllCalculatorState extends State<AllCalculator> {
               children: const [
                 HRACalculator(),
                 Divider(height: 4, color: Colors.black,thickness: 6),
-                TaxCalculator(),
+                NPSCalculator(),
                 Divider(height: 4, color: Colors.black,thickness: 6),
                 CapitalGains(),
                 Divider(height: 4, color: Colors.black,thickness: 6),
-                NPSCalculator(),
+                TaxCalculator(),
               ],
             ),
           ),
