@@ -17,6 +17,15 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
   TextEditingController transferExpenseTextController = TextEditingController();
   TextEditingController transferExpenseDateTextController = TextEditingController();
 
+  String? assetType;
+  List<String> assetList = [
+    "Immovable property",
+    "Listed equity shares",
+    "Unlisted shares",
+    "Equity Mutual funds",
+    "Debt mutual funds",
+    "Other assets",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +35,14 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
       tilePadding: EdgeInsets.zero,
       title: const Text("Capital Gain Calculator"),
       children: [
+        const SizedBox(height: 10),
+        DropdownButton(
+          hint: const Text("Choose a Asset"),
+          value: assetType,
+          onChanged: (String? newValue) => setState(() => assetType = newValue),
+          items: assetList.map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
+          elevation: 0,
+        ),
         const SizedBox(height: 10),
         Row(
           children: [
@@ -209,6 +226,21 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
             ),
           ],
         ),
+        const SizedBox(height: 20),
+        MaterialButton(
+          color: Colors.blue,
+          minWidth: double.infinity,
+          height: 50,
+          onPressed: (){
+            FocusScope.of(context).unfocus();
+            setState(() {});
+          },
+          child: const Text("Calculate Capital Gain", style: TextStyle(color: Colors.white, fontSize: 20),),
+        ),
+        const SizedBox(height: 20),
+
+
+
         const SizedBox(height: 20),
       ],
     );
