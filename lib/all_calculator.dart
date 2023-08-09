@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tax/capital_gain.dart';
+import 'package:tax/capital_gain_calculator.dart';
 import 'package:tax/hra_calculator.dart';
 import 'package:tax/nps_calculator.dart';
 import 'package:tax/tax_calculator.dart';
@@ -26,6 +27,8 @@ class _AllCalculatorState extends State<AllCalculator> {
                 HRACalculator(),
                 Divider(height: 4, color: Colors.black,thickness: 6),
                 NPSCalculator(),
+                Divider(height: 4, color: Colors.black,thickness: 6),
+                CapitalGainCalculator(),
                 Divider(height: 4, color: Colors.black,thickness: 6),
                 CapitalGains(),
                 Divider(height: 4, color: Colors.black,thickness: 6),
