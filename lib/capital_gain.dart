@@ -201,12 +201,6 @@ class _CapitalGainsState extends State<CapitalGains> {
     ltTotalCost = ltPurchasePrice + etImproveCost;
     ltCapitalGain = ltNetSaleValue - ltTotalCost;
     ltTaxableGain = ltCapitalGain - 0;
-
-    // // Get difference in 2 date
-    // var a = DateTime.utc(2023, 10, 01);
-    // var b = DateTime.utc(2023, 09, 03);
-    // var days = a.difference(b).inDays;
-    // print("Years => ${days / 365}");
   }
 
   int getCostInflationIndex(String year) {

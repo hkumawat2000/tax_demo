@@ -159,8 +159,8 @@ class _HRACalculatorState extends State<HRACalculator> {
       }
       if(totalRentTextEditingController.text.isNotEmpty) {
         double totalRentPaid = double.parse(totalRentTextEditingController.text.toString().trim());
-        if ((totalRentPaid - (basicSalary * 10) / 100) > 0) {
-          rentPaid = totalRentPaid - (basicSalary * 10) / 100;
+        if ((totalRentPaid - (basicSalary * 0.1)) > 0) {
+          rentPaid = totalRentPaid - (basicSalary * 0.1);
         } else {
           rentPaid = 0;
         }

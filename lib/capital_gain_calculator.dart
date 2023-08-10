@@ -1,3 +1,6 @@
+import 'dart:html';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -17,7 +20,7 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
   TextEditingController transferExpenseTextController = TextEditingController();
   TextEditingController transferExpenseDateTextController = TextEditingController();
 
-  String? assetType;
+  String? selectedAssetType;
   List<String> assetList = [
     "Immovable property",
     "Listed equity shares",
@@ -25,10 +28,11 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
     "Equity Mutual funds",
     "Debt mutual funds",
     "Other assets",
+    "Zero Coupon Bond",
   ];
 
   bool isVisible = false;
-  String capitalGainType = "Long Term Capital Gain";
+  String? capitalGainType;
   String? indexedPurchasePrice;
   String? netSalePrice;
   String? totalExpense;
@@ -47,8 +51,8 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
         const SizedBox(height: 10),
         DropdownButton(
           hint: const Text("Choose a Asset"),
-          value: assetType,
-          onChanged: (String? newValue) => setState(() => assetType = newValue),
+          value: selectedAssetType,
+          onChanged: (String? newValue) => setState(() => selectedAssetType = newValue),
           items: assetList.map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
           elevation: 0,
         ),
@@ -63,6 +67,7 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                 ],
+                onChanged: (val) => setState((){}),
                 decoration: InputDecoration(
                     labelText: "Purchase Price",
                     counterText: "",
@@ -92,8 +97,10 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
                   LengthLimitingTextInputFormatter(10),
                   _DateFormatter(),
                 ],
+                onChanged: (val) => setState((){}),
                 decoration: InputDecoration(
                     labelText: "Date of Purchase",
+                    hintText: "DD/MM/YYYY",
                     counterText: "",
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
@@ -124,6 +131,7 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                 ],
+                onChanged: (val) => setState((){}),
                 decoration: InputDecoration(
                     labelText: "Sale Price",
                     counterText: "",
@@ -153,8 +161,10 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
                   LengthLimitingTextInputFormatter(10),
                   _DateFormatter(),
                 ],
+                onChanged: (val) => setState((){}),
                 decoration: InputDecoration(
                     labelText: "Date of Sale",
+                    hintText: "DD/MM/YYYY",
                     counterText: "",
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
@@ -185,6 +195,7 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                 ],
+                onChanged: (val) => setState((){}),
                 decoration: InputDecoration(
                     labelText: "Transfer Expense",
                     counterText: "",
@@ -214,8 +225,10 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
                   LengthLimitingTextInputFormatter(10),
                   _DateFormatter(),
                 ],
+                onChanged: (val) => setState((){}),
                 decoration: InputDecoration(
                     labelText: "Date of Expense",
+                    hintText: "DD/MM/YYYY",
                     counterText: "",
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
@@ -236,16 +249,19 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
           ],
         ),
         const SizedBox(height: 20),
-        MaterialButton(
-          color: Colors.blue,
-          minWidth: double.infinity,
-          height: 50,
-          onPressed: (){
-            FocusScope.of(context).unfocus();
-            isVisible = !isVisible;
-            capitalGainCalculation();
-          },
-          child: const Text("Calculate Capital Gain", style: TextStyle(color: Colors.white, fontSize: 20),),
+        AbsorbPointer(
+          absorbing: isCalculateButtonEnable() ? false : true,
+          child: MaterialButton(
+            color: isCalculateButtonEnable() ? Colors.blue : Colors.grey,
+            minWidth: double.infinity,
+            height: 50,
+            onPressed: (){
+              FocusScope.of(context).unfocus();
+              isVisible = !isVisible;
+              capitalGainCalculation();
+            },
+            child: const Text("Calculate Capital Gain", style: TextStyle(color: Colors.white, fontSize: 20),),
+          ),
         ),
         const SizedBox(height: 20),
 
@@ -254,7 +270,7 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(capitalGainType, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              Text("$capitalGainType", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
               Text("Indexed Purchase Price : $indexedPurchasePrice"),
               const SizedBox(height: 10),
@@ -279,17 +295,86 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
 
   capitalGainCalculation(){
     double purchasePrice = getStringToDouble(purchasePriceTextController.text.toString());
-    double purchaseDate = getStringToDouble(dateOfPurchaseTextController.text.toString());
+    String purchaseDate = dateOfPurchaseTextController.text.toString();
     double salePrice = getStringToDouble(salePriceTextController.text.toString());
-    double saleDate = getStringToDouble(dateOfSaleTextController.text.toString());
+    String saleDate = dateOfSaleTextController.text.toString();
     double expense = getStringToDouble(transferExpenseTextController.text.toString());
-    double expenseDate = getStringToDouble(transferExpenseDateTextController.text.toString());
+    String expenseDate = transferExpenseDateTextController.text.toString();
 
+    print("purchaseDate ==> $purchaseDate");
+    print("saleDate ==> $saleDate");
 
+    // Get difference in 2 date
+    DateTime a = DateTime.utc(int.parse(saleDate.split("/")[2]), int.parse(saleDate.split("/")[1]), int.parse(saleDate.split("/")[0]));
+    DateTime b = DateTime.utc(int.parse(purchaseDate.split("/")[2]), int.parse(purchaseDate.split("/")[1]), int.parse(purchaseDate.split("/")[0]));
+    double years = a.difference(b).inDays / 365;
 
+    switch(selectedAssetType){
+      case "Immovable property":
+        if(years <= 2){
+          capitalGainType = "Short Term Capital Gain";
+        } else {
+          capitalGainType = "Long Term Capital Gain";
+        }
+        break;
+      case "Listed equity shares":
+        if(years <= 1){
+          capitalGainType = "Short Term Capital Gain";
+        } else {
+          capitalGainType = "Long Term Capital Gain";
+        }
+        break;
+      case "Unlisted shares":
+        if(years <= 2){
+          capitalGainType = "Short Term Capital Gain";
+        } else {
+          capitalGainType = "Long Term Capital Gain";
+        }
+        break;
+      case "Equity Mutual funds":
+        if(years <= 1){
+          capitalGainType = "Short Term Capital Gain";
+        } else {
+          capitalGainType = "Long Term Capital Gain";
+        }
+        break;
+      case "Debt mutual funds":
+        if(years <= 3){
+          capitalGainType = "Short Term Capital Gain";
+        } else {
+          capitalGainType = "Long Term Capital Gain";
+        }
+        break;
+      case "Other assets":
+        if(years <= 3){
+          capitalGainType = "Short Term Capital Gain";
+        } else {
+          capitalGainType = "Long Term Capital Gain";
+        }
+        break;
+      case "Zero Coupon Bond":
+        if(years <= 1){
+          capitalGainType = "Short Term Capital Gain";
+        } else {
+          capitalGainType = "Long Term Capital Gain";
+        }
+        break;
+    }
     setState(() {});
   }
 
+  isCalculateButtonEnable(){
+    if(selectedAssetType == null || purchasePriceTextController.text.trim().isEmpty
+        || salePriceTextController.text.trim().isEmpty
+        || dateOfPurchaseTextController.text.trim().isEmpty
+        || dateOfSaleTextController.text.trim().isEmpty
+        || transferExpenseTextController.text.trim().isEmpty
+        || transferExpenseDateTextController.text.trim().isEmpty){
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   String numberToString(String str) {
     return str.replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => "${m[1]},");
