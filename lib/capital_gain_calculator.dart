@@ -27,6 +27,15 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
     "Other assets",
   ];
 
+  bool isVisible = false;
+  String capitalGainType = "Long Term Capital Gain";
+  String? indexedPurchasePrice;
+  String? netSalePrice;
+  String? totalExpense;
+  String? capitalGain;
+  int? taxPercentage;
+  double? taxableIncome;
+
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
@@ -233,17 +242,61 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
           height: 50,
           onPressed: (){
             FocusScope.of(context).unfocus();
-            setState(() {});
+            isVisible = !isVisible;
+            capitalGainCalculation();
           },
           child: const Text("Calculate Capital Gain", style: TextStyle(color: Colors.white, fontSize: 20),),
         ),
         const SizedBox(height: 20),
 
-
-
+        Visibility(
+          visible: isVisible,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(capitalGainType, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 10),
+              Text("Indexed Purchase Price : $indexedPurchasePrice"),
+              const SizedBox(height: 10),
+              Text("Net Sale Price : $netSalePrice"),
+              const SizedBox(height: 10),
+              Text("Total Expense/Improvement : $totalExpense"),
+              const SizedBox(height: 10),
+              Text("Capital Gain : $capitalGain", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 10),
+              Text("Tax Percentage : $taxPercentage", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 10),
+              Text("Total Taxable Capital Gain : $taxableIncome", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 10),
+            ],
+          ),
+        ),
         const SizedBox(height: 20),
       ],
     );
+  }
+
+
+  capitalGainCalculation(){
+    double purchasePrice = getStringToDouble(purchasePriceTextController.text.toString());
+    double purchaseDate = getStringToDouble(dateOfPurchaseTextController.text.toString());
+    double salePrice = getStringToDouble(salePriceTextController.text.toString());
+    double saleDate = getStringToDouble(dateOfSaleTextController.text.toString());
+    double expense = getStringToDouble(transferExpenseTextController.text.toString());
+    double expenseDate = getStringToDouble(transferExpenseDateTextController.text.toString());
+
+
+
+    setState(() {});
+  }
+
+
+  String numberToString(String str) {
+    return str.replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => "${m[1]},");
+  }
+
+  getStringToDouble(String value){
+    return value.isNotEmpty ? double.parse(value) : 0;
   }
 }
 
@@ -283,16 +336,16 @@ class _DateFormatter extends TextInputFormatter {
       cText = cText.substring(0, cText.length - 1);
     } else if (cLen == 3 && pLen == 2) {
       if (int.parse(cText.substring(2, 3)) > 1) {
-        cText = cText.substring(0, 2) + '/';
+        cText = '${cText.substring(0, 2)}/';
       } else {
-        cText = cText.substring(0, pLen) + '/' + cText.substring(pLen, pLen + 1);
+        cText = '${cText.substring(0, pLen)}/${cText.substring(pLen, pLen + 1)}';
       }
     } else if (cLen == 6 && pLen == 5) {
       int y1 = int.parse(cText.substring(5, 6));
       if (y1 < 1 || y1 > 2) {
-        cText = cText.substring(0, 5) + '/';
+        cText = '${cText.substring(0, 5)}/';
       } else {
-        cText = cText.substring(0, 5) + '/' + cText.substring(5, 6);
+        cText = '${cText.substring(0, 5)}/${cText.substring(5, 6)}';
       }
     } else if (cLen == 7) {
       int y1 = int.parse(cText.substring(6, 7));
