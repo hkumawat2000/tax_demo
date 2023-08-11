@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -324,7 +326,8 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
     netSalePrice = getStringToDouble(salePriceTextController.text.toString());
     String saleDate = dateOfSaleTextController.text.toString();
     double expense = getStringToDouble(transferExpenseTextController.text.toString());
-    String expenseDate = improvementDateTextController.text.toString();
+    double improvementCode = getStringToDouble(improvementCostTextController.text.toString());
+    String improvementDate = improvementDateTextController.text.toString();
 
     // Get difference in 2 date
     DateTime a = DateTime.utc(int.parse(saleDate.split("/")[2]), int.parse(saleDate.split("/")[1]), int.parse(saleDate.split("/")[0]));
@@ -385,9 +388,9 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
     indexedPurchasePrice = (purchasePrice * getCostInflationIndex(saleDate)) / getCostInflationIndex(purchaseDate);
 
     if(capitalGainType == "Short Term Capital Gain") {
-      totalExpense = expense;
+      totalExpense = expense + improvementCode;
     } else {
-      totalExpense = (expense * getCostInflationIndex(saleDate)) / getCostInflationIndex(expenseDate);
+      totalExpense = ((improvementCode * getCostInflationIndex(saleDate)) / getCostInflationIndex(improvementDate)) + expense;
     }
 
     capitalGain = netSalePrice - indexedPurchasePrice - totalExpense;
