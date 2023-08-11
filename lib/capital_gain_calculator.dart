@@ -14,8 +14,9 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
   TextEditingController dateOfSaleTextController = TextEditingController();
   TextEditingController purchasePriceTextController = TextEditingController();
   TextEditingController salePriceTextController = TextEditingController();
+  TextEditingController improvementCostTextController = TextEditingController();
   TextEditingController transferExpenseTextController = TextEditingController();
-  TextEditingController transferExpenseDateTextController = TextEditingController();
+  TextEditingController improvementDateTextController = TextEditingController();
 
   String? selectedAssetType;
   List<String> assetList = [
@@ -186,7 +187,7 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
           children: [
             Expanded(
               child: TextField(
-                controller: transferExpenseTextController,
+                controller: improvementCostTextController,
                 keyboardType: TextInputType.number,
                 style: const TextStyle(color: Colors.black),
                 inputFormatters: [
@@ -194,7 +195,7 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
                 ],
                 onChanged: (val) => setState((){}),
                 decoration: InputDecoration(
-                    labelText: "Transfer Expense",
+                    labelText: "Improvement Cost",
                     counterText: "",
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
@@ -215,7 +216,7 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
             const SizedBox(width: 10),
             Expanded(
               child: TextField(
-                controller: transferExpenseDateTextController,
+                controller: improvementDateTextController,
                 keyboardType: const TextInputType.numberWithOptions(decimal: false),
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp("[0-9/]")),
@@ -224,7 +225,7 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
                 ],
                 onChanged: (val) => setState((){}),
                 decoration: InputDecoration(
-                    labelText: "Date of Expense",
+                    labelText: "Date of Improvement",
                     hintText: "DD/MM/YYYY",
                     counterText: "",
                     enabledBorder: OutlineInputBorder(
@@ -244,6 +245,33 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
               ),
             ),
           ],
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          controller: transferExpenseTextController,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(color: Colors.black),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+          ],
+          onChanged: (val) => setState((){}),
+          decoration: InputDecoration(
+              labelText: "Transfer Expense",
+              counterText: "",
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey)
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              focusColor: Colors.grey
+          ),
         ),
         const SizedBox(height: 20),
         AbsorbPointer(
@@ -296,7 +324,7 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
     netSalePrice = getStringToDouble(salePriceTextController.text.toString());
     String saleDate = dateOfSaleTextController.text.toString();
     double expense = getStringToDouble(transferExpenseTextController.text.toString());
-    String expenseDate = transferExpenseDateTextController.text.toString();
+    String expenseDate = improvementDateTextController.text.toString();
 
     // Get difference in 2 date
     DateTime a = DateTime.utc(int.parse(saleDate.split("/")[2]), int.parse(saleDate.split("/")[1]), int.parse(saleDate.split("/")[0]));
@@ -373,7 +401,7 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
         || dateOfPurchaseTextController.text.trim().isEmpty
         || dateOfSaleTextController.text.trim().isEmpty
         || transferExpenseTextController.text.trim().isEmpty
-        || transferExpenseDateTextController.text.trim().isEmpty){
+        || improvementDateTextController.text.trim().isEmpty){
       return false;
     } else {
       return true;
