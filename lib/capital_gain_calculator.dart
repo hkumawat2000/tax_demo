@@ -1,6 +1,3 @@
-import 'dart:html';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -33,12 +30,12 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
 
   bool isVisible = false;
   String? capitalGainType;
-  double? indexedPurchasePrice;
-  double? netSalePrice;
-  double? totalExpense;
-  double? capitalGain;
-  int? taxPercentage;
-  double? taxableIncome;
+  double indexedPurchasePrice = 0;
+  double netSalePrice = 0;
+  double totalExpense = 0;
+  double capitalGain = 0;
+  int taxPercentage = 0;
+  double taxableIncome = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -272,17 +269,17 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
             children: [
               Text("$capitalGainType", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
-              Text("Indexed Purchase Price : $indexedPurchasePrice"),
+              Text("Indexed Purchase Price : ${indexedPurchasePrice.toStringAsFixed(2)}"),
               const SizedBox(height: 10),
-              Text("Net Sale Price : $netSalePrice"),
+              Text("Net Sale Price : ${netSalePrice.toStringAsFixed(2)}"),
               const SizedBox(height: 10),
-              Text("Total Expense/Improvement : $totalExpense"),
+              Text("Total Expense/Improvement : ${totalExpense.toStringAsFixed(2)}"),
               const SizedBox(height: 10),
-              Text("Capital Gain : $capitalGain", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+              Text("Capital Gain : ${capitalGain.toStringAsFixed(2)}", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
               Text("Tax Percentage : $taxPercentage", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
-              Text("Total Taxable Capital Gain : $taxableIncome", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+              Text("Total Taxable Capital Gain : ${taxableIncome.toStringAsFixed(2)}", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
             ],
           ),
@@ -359,6 +356,13 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
     }
     indexedPurchasePrice = (purchasePrice * getCostInflationIndex(saleDate)) / getCostInflationIndex(purchaseDate);
 
+    if(capitalGainType == "Short Term Capital Gain") {
+      totalExpense = expense;
+    } else {
+      totalExpense = (expense * getCostInflationIndex(saleDate)) / getCostInflationIndex(expenseDate);
+    }
+
+    capitalGain = netSalePrice - indexedPurchasePrice - totalExpense;
 
     setState(() {});
   }
