@@ -33,10 +33,10 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
 
   bool isVisible = false;
   String? capitalGainType;
-  String? indexedPurchasePrice;
-  String? netSalePrice;
-  String? totalExpense;
-  String? capitalGain;
+  double? indexedPurchasePrice;
+  double? netSalePrice;
+  double? totalExpense;
+  double? capitalGain;
   int? taxPercentage;
   double? taxableIncome;
 
@@ -257,7 +257,7 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
             height: 50,
             onPressed: (){
               FocusScope.of(context).unfocus();
-              isVisible = !isVisible;
+              isVisible = true;
               capitalGainCalculation();
             },
             child: const Text("Calculate Capital Gain", style: TextStyle(color: Colors.white, fontSize: 20),),
@@ -296,13 +296,10 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
   capitalGainCalculation(){
     double purchasePrice = getStringToDouble(purchasePriceTextController.text.toString());
     String purchaseDate = dateOfPurchaseTextController.text.toString();
-    double salePrice = getStringToDouble(salePriceTextController.text.toString());
+    netSalePrice = getStringToDouble(salePriceTextController.text.toString());
     String saleDate = dateOfSaleTextController.text.toString();
     double expense = getStringToDouble(transferExpenseTextController.text.toString());
     String expenseDate = transferExpenseDateTextController.text.toString();
-
-    print("purchaseDate ==> $purchaseDate");
-    print("saleDate ==> $saleDate");
 
     // Get difference in 2 date
     DateTime a = DateTime.utc(int.parse(saleDate.split("/")[2]), int.parse(saleDate.split("/")[1]), int.parse(saleDate.split("/")[0]));
@@ -360,6 +357,9 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
         }
         break;
     }
+    indexedPurchasePrice = (purchasePrice * getCostInflationIndex(saleDate)) / getCostInflationIndex(purchaseDate);
+
+
     setState(() {});
   }
 
@@ -382,6 +382,70 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
 
   getStringToDouble(String value){
     return value.isNotEmpty ? double.parse(value) : 0;
+  }
+
+
+  int getCostInflationIndex(String date) {
+    String financialYear = "";
+    int month = int.parse(date.split("/")[1]);
+    int year = int.parse(date.split("/")[2]);
+
+    if(month <= 3){
+      financialYear = "${year - 1}-${year.toString().substring(2)}";
+    } else {
+      financialYear = "$year-${(year + 1).toString().substring(2)}";
+    }
+
+    switch(financialYear){
+      case "2001-02":
+        return 100;
+      case "20012-03":
+        return 105;
+      case "2003-04":
+        return 109;
+      case "2004-05":
+        return 113;
+      case "2005-06":
+        return 117;
+      case "2006-07":
+        return 122;
+      case "2007-08":
+        return 129;
+      case "2008-09":
+        return 137;
+      case "2009-10":
+        return 148;
+      case "2010-11":
+        return 167;
+      case "2011-12":
+        return 184;
+      case "2012-13":
+        return 200;
+      case "2013-14":
+        return 220;
+      case "2014-15":
+        return 240;
+      case "2015-16":
+        return 254;
+      case "2016-17":
+        return 264;
+      case "2017-18":
+        return 272;
+      case "2018-19":
+        return 280;
+      case "2019-20":
+        return 289;
+      case "2020-21":
+        return 301;
+      case "2021-22":
+        return 317;
+      case "2022-23":
+        return 331;
+      case "2023-24":
+        return 348;
+      default:
+        return 1;
+    }
   }
 }
 
