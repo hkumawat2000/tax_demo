@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tax/capital_gain.dart';
 import 'package:tax/capital_gain_calculator.dart';
 import 'package:tax/hra_calculator.dart';
 import 'package:tax/nps_calculator.dart';
