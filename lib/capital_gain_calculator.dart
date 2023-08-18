@@ -332,57 +332,6 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
     DateTime b = DateTime.utc(int.parse(purchaseDate.split("/")[2]), int.parse(purchaseDate.split("/")[1]), int.parse(purchaseDate.split("/")[0]));
     double years = a.difference(b).inDays / 365;
 
-    switch(selectedAssetType){
-      case "Immovable property":
-        if(years <= 2){
-          capitalGainType = "Short Term Capital Gain";
-        } else {
-          capitalGainType = "Long Term Capital Gain";
-        }
-        break;
-      case "Listed equity shares":
-        if(years <= 1){
-          capitalGainType = "Short Term Capital Gain";
-        } else {
-          capitalGainType = "Long Term Capital Gain";
-        }
-        break;
-      case "Unlisted shares":
-        if(years <= 2){
-          capitalGainType = "Short Term Capital Gain";
-        } else {
-          capitalGainType = "Long Term Capital Gain";
-        }
-        break;
-      case "Equity Mutual funds":
-        if(years <= 1){
-          capitalGainType = "Short Term Capital Gain";
-        } else {
-          capitalGainType = "Long Term Capital Gain";
-        }
-        break;
-      case "Debt mutual funds":
-        if(years <= 3){
-          capitalGainType = "Short Term Capital Gain";
-        } else {
-          capitalGainType = "Long Term Capital Gain";
-        }
-        break;
-      case "Other assets":
-        if(years <= 3){
-          capitalGainType = "Short Term Capital Gain";
-        } else {
-          capitalGainType = "Long Term Capital Gain";
-        }
-        break;
-      case "Zero Coupon Bond":
-        if(years <= 1){
-          capitalGainType = "Short Term Capital Gain";
-        } else {
-          capitalGainType = "Long Term Capital Gain";
-        }
-        break;
-    }
     indexedPurchasePrice = (purchasePrice * getCostInflationIndex(saleDate)) / getCostInflationIndex(purchaseDate);
 
     if(capitalGainType == "Short Term Capital Gain") {
@@ -392,6 +341,73 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
     }
 
     capitalGain = netSalePrice - indexedPurchasePrice - totalExpense;
+
+    switch(selectedAssetType){
+      case "Immovable property":
+        if(years <= 2){
+          capitalGainType = "Short Term Capital Gain";
+          taxPercentage = 0;
+        } else {
+          capitalGainType = "Long Term Capital Gain";
+          taxPercentage = 20;
+        }
+        break;
+      case "Listed equity shares":
+        if(years <= 1){
+          capitalGainType = "Short Term Capital Gain";
+          taxPercentage = 15;
+        } else {
+          capitalGainType = "Long Term Capital Gain";
+          taxPercentage = 10;
+        }
+        break;
+      case "Unlisted shares":
+        if(years <= 2){
+          capitalGainType = "Short Term Capital Gain";
+          taxPercentage = 0;
+        } else {
+          capitalGainType = "Long Term Capital Gain";
+          taxPercentage = 10;
+        }
+        break;
+      case "Equity Mutual funds":
+        if(years <= 1){
+          capitalGainType = "Short Term Capital Gain";
+          taxPercentage = 15;
+        } else {
+          capitalGainType = "Long Term Capital Gain";
+          taxPercentage = 10;
+        }
+        break;
+      case "Debt mutual funds":
+        if(years <= 3){
+          capitalGainType = "Short Term Capital Gain";
+          taxPercentage = 0;
+        } else {
+          capitalGainType = "Long Term Capital Gain";
+          taxPercentage = 20;
+        }
+        break;
+      case "Other assets":
+        if(years <= 3){
+          capitalGainType = "Short Term Capital Gain";
+          taxPercentage = 0;
+        } else {
+          capitalGainType = "Long Term Capital Gain";
+          taxPercentage = 20;
+        }
+        break;
+      case "Zero Coupon Bond":
+        if(years <= 1){
+          capitalGainType = "Short Term Capital Gain";
+          taxPercentage = 0;
+        } else {
+          capitalGainType = "Long Term Capital Gain";
+          taxPercentage = 20;
+        }
+        break;
+    }
+    taxableIncome = capitalGain * taxPercentage / 100;
 
     setState(() {});
   }

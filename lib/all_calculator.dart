@@ -16,13 +16,13 @@ class _AllCalculatorState extends State<AllCalculator> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
+      child: const Scaffold(
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
+            padding: EdgeInsets.symmetric(horizontal: 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 HRACalculator(),
                 Divider(height: 4, color: Colors.black,thickness: 6),
                 NPSCalculator(),
