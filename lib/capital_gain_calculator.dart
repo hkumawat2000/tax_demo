@@ -10,6 +10,8 @@ class CapitalGainCalculator extends StatefulWidget {
 
 class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
 
+  TextEditingController ageTextController = TextEditingController();
+  TextEditingController taxableIncomeTextController = TextEditingController();
   TextEditingController dateOfPurchaseTextController = TextEditingController();
   TextEditingController dateOfSaleTextController = TextEditingController();
   TextEditingController purchasePriceTextController = TextEditingController();
@@ -47,12 +49,75 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
       title: const Text("Capital Gain Calculator"),
       children: [
         const SizedBox(height: 10),
-        DropdownButton(
-          hint: const Text("Choose a Asset"),
-          value: selectedAssetType,
-          onChanged: (String? newValue) => setState(() => selectedAssetType = newValue),
-          items: assetList.map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
-          elevation: 0,
+        Row(
+          children: [
+            DropdownButton(
+              hint: const Text("Choose a Asset"),
+              value: selectedAssetType,
+              onChanged: (String? newValue) => setState(() => selectedAssetType = newValue),
+              items: assetList.map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
+              elevation: 0,
+              // isExpanded: true,
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: TextField(
+                controller: ageTextController,
+                keyboardType: TextInputType.number,
+                style: const TextStyle(color: Colors.black),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                ],
+                onChanged: (val) => setState((){}),
+                decoration: InputDecoration(
+                    labelText: "Age",
+                    counterText: "",
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: const BorderSide(color: Colors.grey)
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    focusColor: Colors.grey
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: TextField(
+                controller: taxableIncomeTextController,
+                keyboardType: TextInputType.number,
+                style: const TextStyle(color: Colors.black),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                ],
+                onChanged: (val) => setState((){}),
+                decoration: InputDecoration(
+                    labelText: "Taxable Income",
+                    counterText: "",
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: const BorderSide(color: Colors.grey)
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    focusColor: Colors.grey
+                ),
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 10),
         Row(
