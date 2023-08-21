@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -38,7 +40,8 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
   double totalExpense = 0;
   double capitalGain = 0;
   int taxPercentage = 0;
-  double taxableIncome = 0;
+  double taxableCapitalGainOldRegime = 0;
+  double taxableCapitalGainNewRegime = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -370,9 +373,11 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
               const SizedBox(height: 10),
               Text("Capital Gain : ${capitalGain.toStringAsFixed(2)}", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
-              Text("Tax Percentage : $taxPercentage", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+              Text("Tax Percentage : ${taxPercentage == 0 ? "On Tax Slab": taxPercentage}", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
-              Text("Total Taxable Capital Gain : ${taxableIncome.toStringAsFixed(2)}", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+              Text("Total Taxable Capital Gain Old Regime: ${taxableCapitalGainOldRegime.toStringAsFixed(2)}", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 10),
+              Text("Total Taxable Capital Gain New Regime: ${taxableCapitalGainNewRegime.toStringAsFixed(2)}", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
             ],
           ),
@@ -384,6 +389,7 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
 
 
   capitalGainCalculation(){
+    double totalIncome = getStringToDouble(taxableIncomeTextController.text.toString());
     double purchasePrice = getStringToDouble(purchasePriceTextController.text.toString());
     String purchaseDate = dateOfPurchaseTextController.text.toString();
     netSalePrice = getStringToDouble(salePriceTextController.text.toString());
@@ -412,67 +418,99 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
         if(years <= 2){
           capitalGainType = "Short Term Capital Gain";
           taxPercentage = 0;
+          taxableCapitalGainOldRegime = taxCalculateWithOldRegime(int.parse(ageTextController.text.toString()), totalIncome + capitalGain)
+              - taxCalculateWithOldRegime(int.parse(ageTextController.text.toString()), totalIncome);
+          taxableCapitalGainNewRegime = taxCalculateWithNewRegime(totalIncome + capitalGain) - taxCalculateWithNewRegime(totalIncome);
         } else {
           capitalGainType = "Long Term Capital Gain";
           taxPercentage = 20;
+          taxableCapitalGainOldRegime = capitalGain * taxPercentage / 100;
+          taxableCapitalGainNewRegime = taxableCapitalGainOldRegime;
         }
         break;
       case "Listed equity shares":
         if(years <= 1){
           capitalGainType = "Short Term Capital Gain";
           taxPercentage = 15;
+          taxableCapitalGainOldRegime = capitalGain * taxPercentage / 100;
+          taxableCapitalGainNewRegime = taxableCapitalGainOldRegime;
         } else {
           capitalGainType = "Long Term Capital Gain";
-          taxPercentage = 10;
+          taxPercentage = 20;
+          taxableCapitalGainOldRegime = max((capitalGain - 100000), 0) * taxPercentage / 100;
+          taxableCapitalGainNewRegime = taxableCapitalGainOldRegime;
         }
         break;
       case "Unlisted shares":
         if(years <= 2){
           capitalGainType = "Short Term Capital Gain";
           taxPercentage = 0;
+          taxableCapitalGainOldRegime = taxCalculateWithOldRegime(int.parse(ageTextController.text.toString()), totalIncome + capitalGain)
+              - taxCalculateWithOldRegime(int.parse(ageTextController.text.toString()), totalIncome);
+          taxableCapitalGainNewRegime = taxCalculateWithNewRegime(totalIncome + capitalGain) - taxCalculateWithNewRegime(totalIncome);
         } else {
           capitalGainType = "Long Term Capital Gain";
           taxPercentage = 10;
+          taxableCapitalGainOldRegime = capitalGain * taxPercentage / 100;
+          taxableCapitalGainNewRegime = taxableCapitalGainOldRegime;
         }
         break;
       case "Equity Mutual funds":
         if(years <= 1){
           capitalGainType = "Short Term Capital Gain";
           taxPercentage = 15;
+          taxableCapitalGainOldRegime = capitalGain * taxPercentage / 100;
+          taxableCapitalGainNewRegime = taxableCapitalGainOldRegime;
         } else {
           capitalGainType = "Long Term Capital Gain";
-          taxPercentage = 10;
+          taxPercentage = 20;
+          taxableCapitalGainOldRegime = max((capitalGain - 100000), 0) * taxPercentage / 100;
+          taxableCapitalGainNewRegime = taxableCapitalGainOldRegime;
         }
         break;
       case "Debt mutual funds":
         if(years <= 3){
           capitalGainType = "Short Term Capital Gain";
           taxPercentage = 0;
+          taxableCapitalGainOldRegime = taxCalculateWithOldRegime(int.parse(ageTextController.text.toString()), totalIncome + capitalGain)
+              - taxCalculateWithOldRegime(int.parse(ageTextController.text.toString()), totalIncome);
+          taxableCapitalGainNewRegime = taxCalculateWithNewRegime(totalIncome + capitalGain) - taxCalculateWithNewRegime(totalIncome);
         } else {
           capitalGainType = "Long Term Capital Gain";
           taxPercentage = 20;
+          taxableCapitalGainOldRegime = capitalGain * taxPercentage / 100;
+          taxableCapitalGainNewRegime = taxableCapitalGainOldRegime;
         }
         break;
       case "Other assets":
         if(years <= 3){
           capitalGainType = "Short Term Capital Gain";
           taxPercentage = 0;
+          taxableCapitalGainOldRegime = taxCalculateWithOldRegime(int.parse(ageTextController.text.toString()), totalIncome + capitalGain)
+              - taxCalculateWithOldRegime(int.parse(ageTextController.text.toString()), totalIncome);
+          taxableCapitalGainNewRegime = taxCalculateWithNewRegime(totalIncome + capitalGain) - taxCalculateWithNewRegime(totalIncome);
         } else {
           capitalGainType = "Long Term Capital Gain";
           taxPercentage = 20;
+          taxableCapitalGainOldRegime = capitalGain * taxPercentage / 100;
+          taxableCapitalGainNewRegime = taxableCapitalGainOldRegime;
         }
         break;
       case "Zero Coupon Bond":
         if(years <= 1){
           capitalGainType = "Short Term Capital Gain";
           taxPercentage = 0;
+          taxableCapitalGainOldRegime = taxCalculateWithOldRegime(int.parse(ageTextController.text.toString()), totalIncome + capitalGain)
+              - taxCalculateWithOldRegime(int.parse(ageTextController.text.toString()), totalIncome);
+          taxableCapitalGainNewRegime = taxCalculateWithNewRegime(totalIncome + capitalGain) - taxCalculateWithNewRegime(totalIncome);
         } else {
           capitalGainType = "Long Term Capital Gain";
           taxPercentage = 20;
+          taxableCapitalGainOldRegime = capitalGain * taxPercentage / 100;
+          taxableCapitalGainNewRegime = taxableCapitalGainOldRegime;
         }
         break;
     }
-    taxableIncome = capitalGain * taxPercentage / 100;
 
     setState(() {});
   }
