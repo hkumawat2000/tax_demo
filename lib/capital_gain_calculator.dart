@@ -561,6 +561,76 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
         return 1;
     }
   }
+
+
+  getCitizenType(int age){
+    String citizenType = "";
+    if(age == 0) {
+      citizenType = "";
+    } else if(age <= 60) {
+      citizenType = "Normal Citizen";
+    } else if(age >= 60 && age <= 80){
+      citizenType = "Senior Citizen";
+    } else {
+      citizenType = "Super Senior Citizen";
+    }
+    return citizenType;
+  }
+
+
+  double taxCalculateWithOldRegime(int age, double totalTaxableIncome){
+    double netPayableTax = 0;
+    String citizenType = getCitizenType(age);
+    if(citizenType == "Normal Citizen"){
+      if(totalTaxableIncome <= 250000){
+        netPayableTax = 0;
+      } else if(totalTaxableIncome > 250001 && totalTaxableIncome <= 500000){
+        netPayableTax = (totalTaxableIncome - 250000) * 0.05;
+      } else if(totalTaxableIncome > 500001 && totalTaxableIncome <= 1000000){
+        netPayableTax = 12500 + (totalTaxableIncome - 500000) * 0.2;
+      } else if(totalTaxableIncome > 1000001){
+        netPayableTax = 112500 + (totalTaxableIncome - 1000000) * 0.3;
+      }
+    } else if(citizenType == "Senior Citizen"){
+      if(totalTaxableIncome <= 300000){
+        netPayableTax = 0;
+      } else if(totalTaxableIncome > 300001 && totalTaxableIncome <= 500000){
+        netPayableTax = (totalTaxableIncome - 300000) * 0.05;
+      } else if(totalTaxableIncome > 500001 && totalTaxableIncome <= 1000000){
+        netPayableTax = 10000 + (totalTaxableIncome - 500000) * 0.2;
+      } else if(totalTaxableIncome > 1000001){
+        netPayableTax = 110000 + (totalTaxableIncome - 1000000) * 0.3;
+      }
+    } else {
+      if(totalTaxableIncome <= 500000){
+        netPayableTax = 0;
+      } else if(totalTaxableIncome > 500001 && totalTaxableIncome <= 1000000){
+        netPayableTax = (totalTaxableIncome - 500000) * 0.2;
+      } else if(totalTaxableIncome > 1000001){
+        netPayableTax = 100000 + (totalTaxableIncome - 1000000) * 0.3;
+      }
+    }
+    return netPayableTax;
+  }
+
+
+  double taxCalculateWithNewRegime(double totalTaxableIncomeNewRegime){
+    double newPayableTaxAmount = 0;
+    if(totalTaxableIncomeNewRegime <= 300000){
+      newPayableTaxAmount = 0;
+    } else if(totalTaxableIncomeNewRegime >= 300001 && totalTaxableIncomeNewRegime <= 600000){
+      newPayableTaxAmount = (totalTaxableIncomeNewRegime - 300000) * 0.05;
+    } else if(totalTaxableIncomeNewRegime >= 600001 && totalTaxableIncomeNewRegime <= 900000){
+      newPayableTaxAmount = 15000 + (totalTaxableIncomeNewRegime - 600000) * 0.1;
+    } else if(totalTaxableIncomeNewRegime >= 900001 && totalTaxableIncomeNewRegime <= 1200000){
+      newPayableTaxAmount = 45000 + (totalTaxableIncomeNewRegime - 900000) * 0.15;
+    } else if(totalTaxableIncomeNewRegime >= 1200001 && totalTaxableIncomeNewRegime <= 1500000){
+      newPayableTaxAmount = 90000 + (totalTaxableIncomeNewRegime - 1200000) * 0.2;
+    } else if(totalTaxableIncomeNewRegime >= 1500001){
+      newPayableTaxAmount = 150000 + (totalTaxableIncomeNewRegime - 1500000) * 0.3;
+    }
+    return newPayableTaxAmount;
+  }
 }
 
 
