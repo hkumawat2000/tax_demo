@@ -373,7 +373,7 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
               const SizedBox(height: 10),
               Text("Capital Gain : ${capitalGain.toStringAsFixed(2)}", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
-              Text("Tax Percentage : ${taxPercentage == 0 ? "On Tax Slab": taxPercentage}", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+              Text("Tax Percentage : ${taxPercentage == 0 ? "Based on Tax Slab": "$taxPercentage%"}", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
               Text("Total Taxable Capital Gain Old Regime: ${taxableCapitalGainOldRegime.toStringAsFixed(2)}", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
