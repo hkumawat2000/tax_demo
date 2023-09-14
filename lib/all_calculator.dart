@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tax/capital_gain_calculator.dart';
+import 'package:tax/form16/upload_form16_a.dart';
 import 'package:tax/hra_calculator.dart';
 import 'package:tax/nps_calculator.dart';
 import 'package:tax/tax_calculator.dart';
@@ -16,13 +17,13 @@ class _AllCalculatorState extends State<AllCalculator> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-      child: const Scaffold(
+      child: Scaffold(
         body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: const [
                 HRACalculator(),
                 Divider(height: 4, color: Colors.black,thickness: 6),
                 NPSCalculator(),
@@ -32,6 +33,8 @@ class _AllCalculatorState extends State<AllCalculator> {
                 // CapitalGains(),
                 Divider(height: 4, color: Colors.black,thickness: 6),
                 TaxCalculator(),
+                Divider(height: 4, color: Colors.black,thickness: 6),
+                UploadForm16(),
               ],
             ),
           ),
