@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:tax/all_calculator.dart';
 
 void main() async {
-
-  await Firebase.initializeApp(
-    options: const FirebaseOptions(
-      apiKey: "AIzaSyA-ZM43ATaQWPf2H3UCSCRHnfMn8ZA7eMI",
-      authDomain: "tax-planning-a0ce7.firebaseapp.com",
-      projectId: "tax-planning-a0ce7",
-      storageBucket: "tax-planning-a0ce7.appspot.com",
-      messagingSenderId: "470562996829",
-      appId: "1:470562996829:web:3bae83f0e15948ba96c3b4",
-      measurementId: "G-LD0HHMFYHF",
-    ),
-  );
+  //
+  // await Firebase.initializeApp(
+  //   options: const FirebaseOptions(
+  //     apiKey: "AIzaSyA-ZM43ATaQWPf2H3UCSCRHnfMn8ZA7eMI",
+  //     authDomain: "tax-planning-a0ce7.firebaseapp.com",
+  //     projectId: "tax-planning-a0ce7",
+  //     storageBucket: "tax-planning-a0ce7.appspot.com",
+  //     messagingSenderId: "470562996829",
+  //     appId: "1:470562996829:web:3bae83f0e15948ba96c3b4",
+  //     measurementId: "G-LD0HHMFYHF",
+  //   ),
+  // );
 
   runApp(const MyApp());
 }

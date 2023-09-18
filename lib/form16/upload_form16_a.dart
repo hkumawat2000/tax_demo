@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class UploadForm16 extends StatefulWidget {
   const UploadForm16({super.key});
@@ -13,6 +15,9 @@ class UploadForm16 extends StatefulWidget {
 }
 
 class _UploadForm16State extends State<UploadForm16> {
+
+  String responseTxt = "";
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -26,30 +31,29 @@ class _UploadForm16State extends State<UploadForm16> {
           MaterialButton(
             onPressed: () async {
               FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
+              print("-------------");
+              // print(result!.files.first.bytes);
               if (result != null) {
-                File file = File(result.files.single.path!);
-                uploadPDFAPI(file);
-                print(result);
-                print(result.files);
-                print(result.files.single);
-                print(result.files.single.name);
-                print(result.files.single.size);
-                print(result.files.single.path);
-
+                uploadPDFAPI(result);
               }
             },
             child: Text("Upload PDF"),
           ),
+          const SizedBox(height: 50),
+          Text(responseTxt),
 
         ],
       ),
     );
   }
 
-  uploadPDFAPI(File file) async {
-    var byte = file.readAsBytes();
+  uploadPDFAPI(FilePickerResult result) async {
+    Map<String, String> headersMap = {};
+    headersMap['Content-Type'] = 'multipart/form-data';
+    BaseOptions options = BaseOptions(headers: headersMap);
 
-    Dio dio = Dio();
+    Dio dio = Dio(options);
+
     dio.interceptors.add(
       LogInterceptor(
         request: kDebugMode,
@@ -60,8 +64,17 @@ class _UploadForm16State extends State<UploadForm16> {
         error: kDebugMode,
       ),
     );
-    Response response = await dio.post("https://newdev.taxation.onefin.app/datafetchedform16", data: {"file" : file});
 
-    print(response);
+    File file = File(result.files.single.path!);
+    final formData = FormData.fromMap({
+      'file': await MultipartFile.fromFile(result.files.single.path!),
+      'Content-Type' : 'application/pdf'
+    });
+    final response = await dio.post('https://newdev.taxation.onefin.app/datafetchedform16', data: formData);
+
+    setState(() {
+      responseTxt = response.toString();
+    });
+    print("PATH => ${result.files.single.path!}");
   }
 }
