@@ -1929,8 +1929,8 @@ class _UploadForm16State extends State<UploadForm16> {
         ),
         const SizedBox(height: 10),
         Text("Net Additional Deduction under section 80CCD(2) :  ${numberToString(min(
-            int.parse(nps80ccd2DeductionTextEditingController.text.isEmpty ? "0" : nps80ccd2DeductionTextEditingController.text.trim()),
-            int.parse(basicSalarySalaryTextEditingController.text.isEmpty ? "0" : basicSalarySalaryTextEditingController.text.trim()) * 0.1
+            double.parse(nps80ccd2DeductionTextEditingController.text.isEmpty ? "0" : nps80ccd2DeductionTextEditingController.text.trim()),
+            double.parse(basicSalarySalaryTextEditingController.text.isEmpty ? "0" : basicSalarySalaryTextEditingController.text.trim()) * 0.1
         ).toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
 
 
@@ -2538,8 +2538,8 @@ class _UploadForm16State extends State<UploadForm16> {
         section80s5DeductionValue + section80s6DeductionValue + section80s7DeductionValue + section80s8DeductionValue +
         section80s9DeductionValue + section80s10DeductionValue + section80s11DeductionValue + section80s12DeductionValue + section80s13DeductionValue;
 
-    overAllTotalDeduction = min(int.parse(getStringToDouble(nps80ccd1BDeductionTextEditingController.text.toString().trim()).toString()), 50000) +
-        min(int.parse(getStringToDouble(nps80ccd2DeductionTextEditingController.text.toString().trim()).toString()), int.parse(getStringToDouble(basicSalarySalaryTextEditingController.text.toString().trim()).toString()) * 0.1) +
+    overAllTotalDeduction = min(double.parse(getStringToDouble(nps80ccd1BDeductionTextEditingController.text.toString().trim()).toString()), 50000) +
+        min(double.parse(getStringToDouble(nps80ccd2DeductionTextEditingController.text.toString().trim()).toString()), double.parse(getStringToDouble(basicSalarySalaryTextEditingController.text.toString().trim()).toString()) * 0.1) +
         min(total80sDeduction, 150000) + section80Deduction;
     setState(() {
       totalSection80sDeduction = section80Deduction;
@@ -2827,10 +2827,18 @@ class _UploadForm16State extends State<UploadForm16> {
     ofHraExemption = getStringToDouble(form16response.houseRentAllowance!);
     grossSalary = getStringToDouble(form16response.salaryAsPerProvisionsContainedInSection171!);
     ptDeductionTextEditingController.text = form16response.taxOnEmploymentUnderSection16!;
-
-
-    setState(() {
-    });
+    li80CDeductionTextEditingController.text = form16response.point10AToH!.deductionInRespectOfLifeInsurancePremiaContributionsTo!.grossAmount.toString();
+    pp80cccDeductionTextEditingController.text = form16response.point10AToH!.underSection80CCC!.grossAmount.toString();
+    nps80ccd1DeductionTextEditingController.text = form16response.point10AToH!.schemeUnderSection80CCD1!.grossAmount.toString();
+    total80sDeduction = getStringToDouble(form16response.point10AToH!.totalDeductionUnderSection80C80CCCAnd80CCD1!.grossAmount!.toString());
+    nps80ccd1BDeductionTextEditingController.text = form16response.point10AToH!.pensionSchemeUnderSection80CCD1B!.grossAmount.toString();
+    nps80ccd2DeductionTextEditingController.text = form16response.point10AToH!.schemeUnderSection80CCD2!.grossAmount.toString();
+    section80s1DeductionTextEditingController.text = form16response.point10AToH!.deductionInRespectOfHealthInsurancePremiaUnderSection!.grossAmount.toString();
+    section80s3DeductionTextEditingController.text = form16response.point10AToH!.educationUnderSection80E!.grossAmount.toString();
+    section80s7DeductionTextEditingController.text = form16response.point10IToL!.totalDeductionInRespectOfDonationsToCertainFunds!.grossAmount.toString();
+    section80s9DeductionTextEditingController.text = form16response.point10IToL!.underSection80TTA!.grossAmount.toString();
+    section80s12DeductionTextEditingController.text = form16response.point10IToL!.chapterVIA!.grossAmount.toString();
+    setState(() {});
   }
 
 
