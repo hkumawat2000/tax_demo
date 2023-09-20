@@ -307,7 +307,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
     return ExpansionTile(
       title: const Text("Income From Salary"),
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
-      childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
+      childrenPadding: const EdgeInsets.symmetric(horizontal: 4),
       tilePadding: EdgeInsets.zero,
       trailing: Text("₹${numberToString(netTaxableOfSalaryIncome.toStringAsFixed(0))}"),
       children: [
@@ -768,7 +768,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
     return ExpansionTile(
       title: const Text("Income from House Property"),
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
-      childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
+      childrenPadding: const EdgeInsets.symmetric(horizontal: 4),
       tilePadding: EdgeInsets.zero,
       trailing: Text("₹${numberToString(totalHouseIncome.toStringAsFixed(0))}"),
       children: [
@@ -1281,7 +1281,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
     return ExpansionTile(
       title: const Text("Income from Other Sources"),
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
-      childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
+      childrenPadding: const EdgeInsets.symmetric(horizontal: 4),
       tilePadding: EdgeInsets.zero,
       trailing: Text("₹${numberToString(totalOtherIncomeSource.toStringAsFixed(0))}"),
       children: [
@@ -1492,7 +1492,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
     return ExpansionTile(
       title: const Text("Income from Business"),
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
-      childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
+      childrenPadding: const EdgeInsets.symmetric(horizontal: 4),
       tilePadding: EdgeInsets.zero,
       trailing: Text("₹${numberToString(getStringToDouble(businessProfitTextEditingController.text.trim()).toStringAsFixed(0))}"),
       children: [
@@ -1534,7 +1534,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
     return ExpansionTile(
       title: const Text("Deduction"),
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
-      childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
+      childrenPadding: const EdgeInsets.symmetric(horizontal: 4),
       tilePadding: EdgeInsets.zero,
       trailing: Text("₹${numberToString(overAllTotalDeduction.toStringAsFixed(0))}"),
       children: [
@@ -2066,18 +2066,22 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               ),
             ),
             const SizedBox(width: 10),
-            DropdownButton(
-              hint: const Text("Choose a Disability"),
-              value: selectedDisability,
-              onChanged: (String? newValue) => setState(() => selectedDisability = newValue!),
-              items: ["Less than 40%", "40% to 79%", "80% & more"].map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
+            Expanded(
+              child: DropdownButton(
+                hint: const Text("Choose a Disability"),
+                value: selectedDisability,
+                onChanged: (String? newValue) => setState(() => selectedDisability = newValue!),
+                items: ["Less than 40%", "40% to 79%", "80% & more"].map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
+              ),
             ),
             const SizedBox(width: 10),
-            DropdownButton(
-              hint: const Text("Choose a Claiming"),
-              value: selectedClaiming,
-              onChanged: (String? newValue) => setState(() => selectedClaiming = newValue!),
-              items: ["Claiming 80U?", "Yes", "No"].map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
+            Expanded(
+              child: DropdownButton(
+                hint: const Text("Choose a Claiming"),
+                value: selectedClaiming,
+                onChanged: (String? newValue) => setState(() => selectedClaiming = newValue!),
+                items: ["Claiming 80U?", "Yes", "No"].map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
+              ),
             ),
           ],
         ),

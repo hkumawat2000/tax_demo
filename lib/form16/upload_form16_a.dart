@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tax/network/response/form_16_response.dart';
 
 class UploadForm16 extends StatefulWidget {
   const UploadForm16({super.key});
@@ -183,6 +184,7 @@ class _UploadForm16State extends State<UploadForm16> {
   }
 
   String responseTxt = "";
+  Form16Response form16response = Form16Response();
 
   @override
   Widget build(BuildContext context) {
@@ -197,6 +199,9 @@ class _UploadForm16State extends State<UploadForm16> {
             onPressed: () async {
               FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
               if (result != null) {
+                setState(() {
+                  responseTxt = "";
+                });
                 uploadPDFAPI(result);
               }
             },
@@ -2082,18 +2087,22 @@ class _UploadForm16State extends State<UploadForm16> {
               ),
             ),
             const SizedBox(width: 10),
-            DropdownButton(
-              hint: const Text("Choose a Disability"),
-              value: selectedDisability,
-              onChanged: (String? newValue) => setState(() => selectedDisability = newValue!),
-              items: ["Less than 40%", "40% to 79%", "80% & more"].map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
+            Expanded(
+              child: DropdownButton(
+                hint: const Text("Choose a Disability"),
+                value: selectedDisability,
+                onChanged: (String? newValue) => setState(() => selectedDisability = newValue!),
+                items: ["Less than 40%", "40% to 79%", "80% & more"].map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
+              ),
             ),
             const SizedBox(width: 10),
-            DropdownButton(
-              hint: const Text("Choose a Claiming"),
-              value: selectedClaiming,
-              onChanged: (String? newValue) => setState(() => selectedClaiming = newValue!),
-              items: ["Claiming 80U?", "Yes", "No"].map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
+            Expanded(
+              child: DropdownButton(
+                hint: const Text("Choose a Claiming"),
+                value: selectedClaiming,
+                onChanged: (String? newValue) => setState(() => selectedClaiming = newValue!),
+                items: ["Claiming 80U?", "Yes", "No"].map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
+              ),
             ),
           ],
         ),
@@ -2809,9 +2818,18 @@ class _UploadForm16State extends State<UploadForm16> {
       });
     }
     response = await dio.post('https://newdev.taxation.onefin.app/datafetchedform16', data: formData);
+    responseTxt = response.toString();
+    form16response = Form16Response.fromJson(response.data);
+
+    year = form16response.assessmentYear!;
+    basicSalarySalaryTextEditingController.text = form16response.salaryAsPerProvisionsContainedInSection171!;
+    tdsDeductionTextEditingController.text = form16response.quaterlyTotal!.amountOfTaxDepositedRemitted!;
+    ofHraExemption = getStringToDouble(form16response.houseRentAllowance!);
+    grossSalary = getStringToDouble(form16response.salaryAsPerProvisionsContainedInSection171!);
+    ptDeductionTextEditingController.text = form16response.taxOnEmploymentUnderSection16!;
+
 
     setState(() {
-      responseTxt = response.toString();
     });
   }
 
