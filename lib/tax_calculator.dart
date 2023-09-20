@@ -1877,9 +1877,8 @@ class _TaxCalculatorState extends State<TaxCalculator> {
           onChanged: (val) => calculateAllDeduction(),
         ),
         const SizedBox(height: 10),
-        Text("Net Additional Deduction under section 80CCD :  ${numberToString(min(int.parse(getStringToDouble(nps80ccd1BDeductionTextEditingController.text.toString().trim()).toString()), 50000).toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-
-
+        Text("Net Additional Deduction under section 80CCD :  ${numberToString(min(
+            int.parse(nps80ccd1BDeductionTextEditingController.text.isEmpty ? "0" : nps80ccd1BDeductionTextEditingController.text.trim()), 50000).toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
         const SizedBox(height: 20),
         TextField(
           controller: nps80ccd2DeductionTextEditingController,
@@ -1908,7 +1907,10 @@ class _TaxCalculatorState extends State<TaxCalculator> {
           onChanged: (val) => calculateAllDeduction(),
         ),
         const SizedBox(height: 10),
-        Text("Net Additional Deduction under section 80CCD(2) :  ${numberToString(min(int.parse(getStringToDouble(nps80ccd2DeductionTextEditingController.text.toString().trim()).toString()), int.parse(getStringToDouble(basicSalarySalaryTextEditingController.text.toString().trim()).toString()) * 0.1).toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+        Text("Net Additional Deduction under section 80CCD(2) :  ${numberToString(min(
+            int.parse(nps80ccd2DeductionTextEditingController.text.isEmpty ? "0" : nps80ccd2DeductionTextEditingController.text.trim()),
+            int.parse(basicSalarySalaryTextEditingController.text.isEmpty ? "0" : basicSalarySalaryTextEditingController.text.trim()) * 0.1
+        ).toStringAsFixed(0))}", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
 
 
         const SizedBox(height: 20),

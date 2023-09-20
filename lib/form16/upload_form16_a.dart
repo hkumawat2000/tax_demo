@@ -31,17 +31,15 @@ class _UploadForm16State extends State<UploadForm16> {
           MaterialButton(
             onPressed: () async {
               FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
-              print("-------------");
-              // print(result!.files.first.bytes);
               if (result != null) {
                 uploadPDFAPI(result);
               }
             },
             child: Text("Upload PDF"),
           ),
-          const SizedBox(height: 50),
+          const SizedBox(height: 20),
           Text(responseTxt),
-
+          const SizedBox(height: 20),
         ],
       ),
     );

@@ -24,6 +24,7 @@ class _AllCalculatorState extends State<AllCalculator> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: const [
+                SizedBox(height: 30),
                 HRACalculator(),
                 Divider(height: 4, color: Colors.black,thickness: 6),
                 NPSCalculator(),
