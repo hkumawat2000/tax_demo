@@ -62,17 +62,23 @@ class _UploadForm16State extends State<UploadForm16> {
         error: kDebugMode,
       ),
     );
-
-    File file = File(result.files.single.path!);
-    final formData = FormData.fromMap({
-      'file': await MultipartFile.fromFile(result.files.single.path!),
-      'Content-Type' : 'application/pdf'
-    });
-    final response = await dio.post('https://newdev.taxation.onefin.app/datafetchedform16', data: formData);
+    final response;
+    final formData;
+    if(kIsWeb){
+      formData = FormData.fromMap({
+        'file': await MultipartFile.fromBytes(result.files.first.bytes!),
+        'Content-Type' : 'application/pdf'
+      });
+    } else {
+      formData = FormData.fromMap({
+        'file': await MultipartFile.fromFile(result.files.single.path!),
+        'Content-Type' : 'application/pdf'
+      });
+    }
+    response = await dio.post('https://newdev.taxation.onefin.app/datafetchedform16', data: formData);
 
     setState(() {
       responseTxt = response.toString();
     });
-    print("PATH => ${result.files.single.path!}");
   }
 }

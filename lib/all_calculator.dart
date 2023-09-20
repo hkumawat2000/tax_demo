@@ -17,26 +17,27 @@ class _AllCalculatorState extends State<AllCalculator> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                SizedBox(height: 30),
-                HRACalculator(),
-                Divider(height: 4, color: Colors.black,thickness: 6),
-                NPSCalculator(),
-                Divider(height: 4, color: Colors.black,thickness: 6),
-                CapitalGainCalculator(),
-                // Divider(height: 4, color: Colors.black,thickness: 6),
-                // CapitalGains(),
-                Divider(height: 4, color: Colors.black,thickness: 6),
-                TaxCalculator(),
-                Divider(height: 4, color: Colors.black,thickness: 6),
-                UploadForm16(),
-              ],
+      child: SafeArea(
+        child: Scaffold(
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  HRACalculator(),
+                  Divider(height: 4, color: Colors.black,thickness: 6),
+                  NPSCalculator(),
+                  Divider(height: 4, color: Colors.black,thickness: 6),
+                  CapitalGainCalculator(),
+                  // Divider(height: 4, color: Colors.black,thickness: 6),
+                  // CapitalGains(),
+                  Divider(height: 4, color: Colors.black,thickness: 6),
+                  TaxCalculator(),
+                  Divider(height: 4, color: Colors.black,thickness: 6),
+                  UploadForm16(),
+                ],
+              ),
             ),
           ),
         ),
