@@ -2819,11 +2819,11 @@ class _UploadForm16State extends State<UploadForm16> {
     form16response = Form16Response.fromJson(response.data);
     Navigator.pop(context);
     year = form16response.assessmentYear!;
-    basicSalarySalaryTextEditingController.text = form16response.salaryAsPerProvisionsContainedInSection171!;
-    tdsDeductionTextEditingController.text = form16response.quaterlyTotal!.amountOfTaxDepositedRemitted!;
-    ofHraExemption = getStringToDouble(form16response.houseRentAllowance!);
-    grossSalary = getStringToDouble(form16response.salaryAsPerProvisionsContainedInSection171!);
-    ptDeductionTextEditingController.text = form16response.taxOnEmploymentUnderSection16!;
+    basicSalarySalaryTextEditingController.text = form16response.salaryAsPerProvisionsContainedInSection171 ?? "";
+    tdsDeductionTextEditingController.text = form16response.quaterlyTotal!.amountOfTaxDepositedRemitted ?? "";
+    ofHraExemption = getStringToDouble(form16response.houseRentAllowance ?? "0");
+    grossSalary = getStringToDouble(form16response.salaryAsPerProvisionsContainedInSection171 ?? "0");
+    ptDeductionTextEditingController.text = form16response.taxOnEmploymentUnderSection16 ?? "";
     if(form16response.point10AToH != null){
       li80CDeductionTextEditingController.text = form16response.point10AToH!.deductionInRespectOfLifeInsurancePremiaContributionsTo!.grossAmount.toString();
       pp80cccDeductionTextEditingController.text = form16response.point10AToH!.underSection80CCC!.grossAmount.toString();
