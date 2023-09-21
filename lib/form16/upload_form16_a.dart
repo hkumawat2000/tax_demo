@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tax/network/response/form_16_response.dart';
+import 'package:tax/widgets/LoadingDialogWidget.dart';
 
 class UploadForm16 extends StatefulWidget {
   const UploadForm16({super.key});
@@ -2787,9 +2788,11 @@ class _UploadForm16State extends State<UploadForm16> {
   }
 
   uploadPDFAPI(FilePickerResult result) async {
+    LoadingDialogWidget.showDialogLoading(context, "Please Wait...");
     Map<String, String> headersMap = {};
     headersMap['Content-Type'] = 'multipart/form-data';
-    headersMap['Access-Control-Allow-Headers'] = '*';
+    // headersMap['Access-Control-Allow-Headers'] = '*';
+    headersMap['Access-Control-Allow-Origin'] = '*';
     BaseOptions options = BaseOptions(headers: headersMap);
 
     Dio dio = Dio(options);
@@ -2820,24 +2823,28 @@ class _UploadForm16State extends State<UploadForm16> {
     response = await dio.post('https://newdev.taxation.onefin.app/datafetchedform16', data: formData);
     responseTxt = response.toString();
     form16response = Form16Response.fromJson(response.data);
-
+    Navigator.pop(context);
     year = form16response.assessmentYear!;
     basicSalarySalaryTextEditingController.text = form16response.salaryAsPerProvisionsContainedInSection171!;
     tdsDeductionTextEditingController.text = form16response.quaterlyTotal!.amountOfTaxDepositedRemitted!;
     ofHraExemption = getStringToDouble(form16response.houseRentAllowance!);
     grossSalary = getStringToDouble(form16response.salaryAsPerProvisionsContainedInSection171!);
     ptDeductionTextEditingController.text = form16response.taxOnEmploymentUnderSection16!;
-    li80CDeductionTextEditingController.text = form16response.point10AToH!.deductionInRespectOfLifeInsurancePremiaContributionsTo!.grossAmount.toString();
-    pp80cccDeductionTextEditingController.text = form16response.point10AToH!.underSection80CCC!.grossAmount.toString();
-    nps80ccd1DeductionTextEditingController.text = form16response.point10AToH!.schemeUnderSection80CCD1!.grossAmount.toString();
-    total80sDeduction = getStringToDouble(form16response.point10AToH!.totalDeductionUnderSection80C80CCCAnd80CCD1!.grossAmount!.toString());
-    nps80ccd1BDeductionTextEditingController.text = form16response.point10AToH!.pensionSchemeUnderSection80CCD1B!.grossAmount.toString();
-    nps80ccd2DeductionTextEditingController.text = form16response.point10AToH!.schemeUnderSection80CCD2!.grossAmount.toString();
-    section80s1DeductionTextEditingController.text = form16response.point10AToH!.deductionInRespectOfHealthInsurancePremiaUnderSection!.grossAmount.toString();
-    section80s3DeductionTextEditingController.text = form16response.point10AToH!.educationUnderSection80E!.grossAmount.toString();
-    section80s7DeductionTextEditingController.text = form16response.point10IToL!.totalDeductionInRespectOfDonationsToCertainFunds!.grossAmount.toString();
-    section80s9DeductionTextEditingController.text = form16response.point10IToL!.underSection80TTA!.grossAmount.toString();
-    section80s12DeductionTextEditingController.text = form16response.point10IToL!.chapterVIA!.grossAmount.toString();
+    if(form16response.point10AToH != null){
+      li80CDeductionTextEditingController.text = form16response.point10AToH!.deductionInRespectOfLifeInsurancePremiaContributionsTo!.grossAmount.toString();
+      pp80cccDeductionTextEditingController.text = form16response.point10AToH!.underSection80CCC!.grossAmount.toString();
+      nps80ccd1DeductionTextEditingController.text = form16response.point10AToH!.schemeUnderSection80CCD1!.grossAmount.toString();
+      total80sDeduction = getStringToDouble(form16response.point10AToH!.totalDeductionUnderSection80C80CCCAnd80CCD1!.grossAmount!.toString());
+      nps80ccd1BDeductionTextEditingController.text = form16response.point10AToH!.pensionSchemeUnderSection80CCD1B!.grossAmount.toString();
+      nps80ccd2DeductionTextEditingController.text = form16response.point10AToH!.schemeUnderSection80CCD2!.grossAmount.toString();
+      section80s1DeductionTextEditingController.text = form16response.point10AToH!.deductionInRespectOfHealthInsurancePremiaUnderSection!.grossAmount.toString();
+      section80s3DeductionTextEditingController.text = form16response.point10AToH!.educationUnderSection80E!.grossAmount.toString();
+    }
+    if(form16response.point10IToL != null){
+      section80s7DeductionTextEditingController.text = form16response.point10IToL!.totalDeductionInRespectOfDonationsToCertainFunds!.grossAmount.toString();
+      section80s9DeductionTextEditingController.text = form16response.point10IToL!.underSection80TTA!.grossAmount.toString();
+      section80s12DeductionTextEditingController.text = form16response.point10IToL!.chapterVIA!.grossAmount.toString();
+    }
     setState(() {});
   }
 
