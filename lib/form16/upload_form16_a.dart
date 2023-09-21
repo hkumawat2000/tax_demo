@@ -184,7 +184,6 @@ class _UploadForm16State extends State<UploadForm16> {
     super.initState();
   }
 
-  String responseTxt = "";
   Form16Response form16response = Form16Response();
 
   @override
@@ -200,15 +199,11 @@ class _UploadForm16State extends State<UploadForm16> {
             onPressed: () async {
               FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
               if (result != null) {
-                setState(() {
-                  responseTxt = "";
-                });
                 uploadPDFAPI(result);
               }
             },
             child: const Text("Upload PDF"),
           ),
-          Text(responseTxt),
           Row(
             children: [
               const Text("Assessment Year"),
@@ -2821,7 +2816,6 @@ class _UploadForm16State extends State<UploadForm16> {
       });
     }
     response = await dio.post('https://newdev.taxation.onefin.app/datafetchedform16', data: formData);
-    responseTxt = response.toString();
     form16response = Form16Response.fromJson(response.data);
     Navigator.pop(context);
     year = form16response.assessmentYear!;
@@ -2845,7 +2839,14 @@ class _UploadForm16State extends State<UploadForm16> {
       section80s9DeductionTextEditingController.text = form16response.point10IToL!.underSection80TTA!.grossAmount.toString();
       section80s12DeductionTextEditingController.text = form16response.point10IToL!.chapterVIA!.grossAmount.toString();
     }
-    setState(() {});
+    calculateOnlySalary();
+    calculateOnlyHousePropertiesIncome();
+    calculateOnlyOtherSourceIncome();
+    calculateAllDeduction();
+    calculateAllSection80sDeduction();
+    isResultVisibility = true;
+    taxCalculateWithOldRegime();
+    taxCalculateWithNewRegime();
   }
 
 
