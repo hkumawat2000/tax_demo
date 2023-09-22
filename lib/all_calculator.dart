@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tax/capital_gain_calculator.dart';
-import 'package:tax/form16/upload_form16_a.dart';
-import 'package:tax/hra_calculator.dart';
-import 'package:tax/nps_calculator.dart';
-import 'package:tax/tax_calculator.dart';
 
 class AllCalculator extends StatefulWidget {
   const AllCalculator({super.key});
@@ -24,18 +19,79 @@ class _AllCalculatorState extends State<AllCalculator> {
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  HRACalculator(),
-                  Divider(height: 4, color: Colors.black,thickness: 6),
-                  NPSCalculator(),
-                  Divider(height: 4, color: Colors.black,thickness: 6),
-                  CapitalGainCalculator(),
+                children: [
+                  const SizedBox(height: 20),
+                  MaterialButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/hra');
+                    },
+                    color: Colors.black38,
+                    padding: const EdgeInsets.all(30),
+                    minWidth: double.infinity,
+                    child: const Text("HRA Calculator", style: TextStyle(fontSize: 20)),
+                  ),
+                  const SizedBox(height: 20),
+                  MaterialButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/nps');
+                    },
+                    color: Colors.black38,
+                    padding: const EdgeInsets.all(30),
+                    minWidth: double.infinity,
+                    child: const Text("NPS Calculator", style: TextStyle(fontSize: 20)),
+                  ),
+                  const SizedBox(height: 20),
+                  MaterialButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/oldCapitalGain');
+                    },
+                    color: Colors.black38,
+                    padding: const EdgeInsets.all(30),
+                    minWidth: double.infinity,
+                    child: const Text("Old Capital Gain Calculator", style: TextStyle(fontSize: 20)),
+                  ),
+                  const SizedBox(height: 20),
+                  MaterialButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/capitalGain');
+                    },
+                    color: Colors.black38,
+                    padding: const EdgeInsets.all(30),
+                    minWidth: double.infinity,
+                    child: const Text("Capital Gain Calculator", style: TextStyle(fontSize: 20)),
+                  ),
+                  const SizedBox(height: 20),
+                  MaterialButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/tax');
+                    },
+                    color: Colors.black38,
+                    padding: const EdgeInsets.all(30),
+                    minWidth: double.infinity,
+                    child: const Text("Tax Calculator", style: TextStyle(fontSize: 20)),
+                  ),
+                  const SizedBox(height: 20),
+                  MaterialButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/form16');
+                    },
+                    color: Colors.black38,
+                    padding: const EdgeInsets.all(30),
+                    minWidth: double.infinity,
+                    child: const Text("Form 16 Calculator", style: TextStyle(fontSize: 20)),
+                  ),
+                  const SizedBox(height: 20),
+                  // HRACalculator(),
+                  // Divider(height: 4, color: Colors.black,thickness: 6),
+                  // NPSCalculator(),
+                  // Divider(height: 4, color: Colors.black,thickness: 6),
+                  // CapitalGainCalculator(),
                   // Divider(height: 4, color: Colors.black,thickness: 6),
                   // CapitalGains(),
-                  Divider(height: 4, color: Colors.black,thickness: 6),
-                  TaxCalculator(),
-                  Divider(height: 4, color: Colors.black,thickness: 6),
-                  UploadForm16(),
+                  // Divider(height: 4, color: Colors.black,thickness: 6),
+                  // TaxCalculator(),
+                  // Divider(height: 4, color: Colors.black,thickness: 6),
+                  // UploadForm16(),
                 ],
               ),
             ),

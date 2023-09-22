@@ -67,177 +67,138 @@ class _NPSCalculatorState extends State<NPSCalculator> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: ExpansionTile(
-        title: const Text("NPS Calculator"),
-        expandedCrossAxisAlignment: CrossAxisAlignment.start,
-        childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
-        tilePadding: EdgeInsets.zero,
-        children: [
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Expanded(
-                child: RadioListTile(
-                  value: "monthly",
-                  groupValue: periodType,
-                  contentPadding: EdgeInsets.zero,
-                  title: const Text("Monthly"),
-                  onChanged: (val){
-                    setState(() {
-                      periodType = val!;
-                      calculateNPSValues();
-                    });
-                  },
-                ),
-              ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: RadioListTile(
-                  value: "yearly",
-                  groupValue: periodType,
-                  contentPadding: EdgeInsets.zero,
-                  title: const Text("Yearly"),
-                  onChanged: (val){
-                    setState(() {
-                      periodType = val!;
-                      calculateNPSValues();
-                    });
-                  },
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          TextField(
-            controller: currentAgeTextEditingController,
-            focusNode: ageFocusNode,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            onChanged: (val) => calculateNPSValues(),
-            decoration: InputDecoration(
-                labelText: "Current Age",
-                counterText: "",
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(6),
-                    borderSide: const BorderSide(color: Colors.grey)
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(color: Colors.grey),
-                ),
-                disabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(color: Colors.grey),
-                ),
-                focusColor: Colors.grey
-            ),
-          ),
-
-          const SizedBox(height: 20),
-          TextField(
-            controller: taxSlabTextEditingController,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            onChanged: (val) => calculateNPSValues(),
-            decoration: InputDecoration(
-                labelText: "Current Tax Slab",
-                counterText: "",
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(6),
-                    borderSide: const BorderSide(color: Colors.grey)
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(color: Colors.grey),
-                ),
-                disabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(color: Colors.grey),
-                ),
-                focusColor: Colors.grey
-            ),
-          ),
-
-          const SizedBox(height: 20),
-          TextField(
-            controller: periodPayForTextEditingController,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            onChanged: (val) => calculateNPSValues(),
-            decoration: InputDecoration(
-                labelText: "Period paying for",
-                counterText: "",
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(6),
-                    borderSide: const BorderSide(color: Colors.grey)
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(color: Colors.grey),
-                ),
-                disabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(color: Colors.grey),
-                ),
-                focusColor: Colors.grey
-            ),
-          ),
-
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: investmentAmountTextEditingController,
-                  keyboardType: TextInputType.number,
-                  style: const TextStyle(color: Colors.black),
-                  onChanged: (val) {
-                    if(getStringToDouble(investmentAmountTextEditingController.text.trim()) > 500){
-                      isValidInvestment = true;
-                    } else {
-                      isValidInvestment = false;
-                    }
-                    calculateNPSValues();
-                  },
-                  decoration: InputDecoration(
-                    labelText: "Investment (10% of basic of employer contribution)",
-                    counterText: "",
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey)
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(6),
-                      borderSide: const BorderSide(color: Colors.grey),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(6),
-                      borderSide: const BorderSide(color: Colors.grey),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(6),
-                      borderSide: const BorderSide(color: Colors.red),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(6),
-                      borderSide: const BorderSide(color: Colors.red),
-                    ),
-                    errorStyle: const TextStyle(color: Colors.red),
-                    errorText: isValidInvestment ? null : "Should be greater than 500",
-                    focusColor: Colors.grey,
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: RadioListTile(
+                    value: "monthly",
+                    groupValue: periodType,
+                    contentPadding: EdgeInsets.zero,
+                    title: const Text("Monthly"),
+                    onChanged: (val){
+                      setState(() {
+                        periodType = val!;
+                        calculateNPSValues();
+                      });
+                    },
                   ),
                 ),
+                const SizedBox(width: 20),
+                Expanded(
+                  child: RadioListTile(
+                    value: "yearly",
+                    groupValue: periodType,
+                    contentPadding: EdgeInsets.zero,
+                    title: const Text("Yearly"),
+                    onChanged: (val){
+                      setState(() {
+                        periodType = val!;
+                        calculateNPSValues();
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            TextField(
+              controller: currentAgeTextEditingController,
+              focusNode: ageFocusNode,
+              keyboardType: TextInputType.number,
+              style: const TextStyle(color: Colors.black),
+              onChanged: (val) => calculateNPSValues(),
+              decoration: InputDecoration(
+                  labelText: "Current Age",
+                  counterText: "",
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(6),
+                    borderSide: const BorderSide(color: Colors.grey),
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(6),
+                    borderSide: const BorderSide(color: Colors.grey),
+                  ),
+                  focusColor: Colors.grey
               ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: TextField(
-                  controller: investmentAssetAmountTextEditingController,
-                  keyboardType: TextInputType.number,
-                  style: const TextStyle(color: Colors.black),
-                  onChanged: (val) => calculateNPSValues(),
-                  readOnly: true,
-                  decoration: InputDecoration(
+            ),
+
+            const SizedBox(height: 20),
+            TextField(
+              controller: taxSlabTextEditingController,
+              keyboardType: TextInputType.number,
+              style: const TextStyle(color: Colors.black),
+              onChanged: (val) => calculateNPSValues(),
+              decoration: InputDecoration(
+                  labelText: "Current Tax Slab",
+                  counterText: "",
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(6),
+                    borderSide: const BorderSide(color: Colors.grey),
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(6),
+                    borderSide: const BorderSide(color: Colors.grey),
+                  ),
+                  focusColor: Colors.grey
+              ),
+            ),
+
+            const SizedBox(height: 20),
+            TextField(
+              controller: periodPayForTextEditingController,
+              keyboardType: TextInputType.number,
+              style: const TextStyle(color: Colors.black),
+              onChanged: (val) => calculateNPSValues(),
+              decoration: InputDecoration(
+                  labelText: "Period paying for",
+                  counterText: "",
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(6),
+                    borderSide: const BorderSide(color: Colors.grey),
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(6),
+                    borderSide: const BorderSide(color: Colors.grey),
+                  ),
+                  focusColor: Colors.grey
+              ),
+            ),
+
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: investmentAmountTextEditingController,
+                    keyboardType: TextInputType.number,
+                    style: const TextStyle(color: Colors.black),
+                    onChanged: (val) {
+                      if(getStringToDouble(investmentAmountTextEditingController.text.trim()) > 500){
+                        isValidInvestment = true;
+                      } else {
+                        isValidInvestment = false;
+                      }
+                      calculateNPSValues();
+                    },
+                    decoration: InputDecoration(
                       labelText: "Investment (10% of basic of employer contribution)",
                       counterText: "",
                       enabledBorder: OutlineInputBorder(
@@ -252,188 +213,226 @@ class _NPSCalculatorState extends State<NPSCalculator> {
                         borderRadius: BorderRadius.circular(6),
                         borderSide: const BorderSide(color: Colors.grey),
                       ),
-                      focusColor: Colors.grey
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: const BorderSide(color: Colors.red),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: const BorderSide(color: Colors.red),
+                      ),
+                      errorStyle: const TextStyle(color: Colors.red),
+                      errorText: isValidInvestment ? null : "Should be greater than 500",
+                      focusColor: Colors.grey,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: returnOnNPSTextEditingController,
-                  keyboardType: TextInputType.number,
-                  style: const TextStyle(color: Colors.black),
-                  onChanged: (val) => calculateNPSValues(),
-                  decoration: InputDecoration(
-                      labelText: "Return On NPS",
-                      counterText: "",
-                      enabledBorder: OutlineInputBorder(
+                const SizedBox(width: 20),
+                Expanded(
+                  child: TextField(
+                    controller: investmentAssetAmountTextEditingController,
+                    keyboardType: TextInputType.number,
+                    style: const TextStyle(color: Colors.black),
+                    onChanged: (val) => calculateNPSValues(),
+                    readOnly: true,
+                    decoration: InputDecoration(
+                        labelText: "Investment (10% of basic of employer contribution)",
+                        counterText: "",
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide: const BorderSide(color: Colors.grey)
+                        ),
+                        focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(6),
-                          borderSide: const BorderSide(color: Colors.grey)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      focusColor: Colors.grey
-                  ),
-                ),
-              ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: TextField(
-                  controller: returnOnAssetsTextEditingController,
-                  keyboardType: TextInputType.number,
-                  style: const TextStyle(color: Colors.black),
-                  onChanged: (val) => calculateNPSValues(),
-                  decoration: InputDecoration(
-                      labelText: "Return On other asset",
-                      counterText: "",
-                      enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        disabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(6),
-                          borderSide: const BorderSide(color: Colors.grey)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      focusColor: Colors.grey
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        focusColor: Colors.grey
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
 
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Expanded(child: Text("Years to 60 : $yearTo60NPS")),
-              const SizedBox(width: 20),
-              Expanded(child: Text("Years to 60 : $yearTo60Asset")),
-            ],
-          ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: returnOnNPSTextEditingController,
+                    keyboardType: TextInputType.number,
+                    style: const TextStyle(color: Colors.black),
+                    onChanged: (val) => calculateNPSValues(),
+                    decoration: InputDecoration(
+                        labelText: "Return On NPS",
+                        counterText: "",
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide: const BorderSide(color: Colors.grey)
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        focusColor: Colors.grey
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 20),
+                Expanded(
+                  child: TextField(
+                    controller: returnOnAssetsTextEditingController,
+                    keyboardType: TextInputType.number,
+                    style: const TextStyle(color: Colors.black),
+                    onChanged: (val) => calculateNPSValues(),
+                    decoration: InputDecoration(
+                        labelText: "Return On other asset",
+                        counterText: "",
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide: const BorderSide(color: Colors.grey)
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(color: Colors.grey),
+                        ),
+                        focusColor: Colors.grey
+                    ),
+                  ),
+                ),
+              ],
+            ),
 
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Expanded(child: Text("Corpus at 60 : ₹ ${numberToString(corpusAt60NPS.toStringAsFixed(2))}")),
-              const SizedBox(width: 20),
-              Expanded(child: Text("Corpus at 60 : ₹ ${numberToString(corpusAt60Asset.toStringAsFixed(2))}")),
-            ],
-          ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(child: Text("Years to 60 : $yearTo60NPS")),
+                const SizedBox(width: 20),
+                Expanded(child: Text("Years to 60 : $yearTo60Asset")),
+              ],
+            ),
 
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Expanded(child: Text("Profit on Investment : ₹ ${numberToString(profitOnInvNPS.toStringAsFixed(2))}")),
-              const SizedBox(width: 20),
-              Expanded(child: Text("Profit on Investment : ₹ ${numberToString(profitOnInvAsset.toStringAsFixed(2))}")),
-            ],
-          ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(child: Text("Corpus at 60 : ₹ ${numberToString(corpusAt60NPS.toStringAsFixed(2))}")),
+                const SizedBox(width: 20),
+                Expanded(child: Text("Corpus at 60 : ₹ ${numberToString(corpusAt60Asset.toStringAsFixed(2))}")),
+              ],
+            ),
 
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Expanded(child: Text("Tax on Profit : ₹ ${numberToString(taxOnProNPS.toStringAsFixed(2))}")),
-              const SizedBox(width: 20),
-              Expanded(child: Text("Tax on Profit : ₹ ${numberToString(taxOnProAsset.toStringAsFixed(2))}")),
-            ],
-          ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(child: Text("Profit on Investment : ₹ ${numberToString(profitOnInvNPS.toStringAsFixed(2))}")),
+                const SizedBox(width: 20),
+                Expanded(child: Text("Profit on Investment : ₹ ${numberToString(profitOnInvAsset.toStringAsFixed(2))}")),
+              ],
+            ),
 
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Expanded(child: Text("Lumpsum withdraw (at 60) : ₹ ${numberToString(withdrawNPS.toStringAsFixed(2))}")),
-              const SizedBox(width: 20),
-              Expanded(child: Text("Lumpsum withdraw (at 60) : ₹ ${numberToString(withdrawAsset.toStringAsFixed(2))}")),
-            ],
-          ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(child: Text("Tax on Profit : ₹ ${numberToString(taxOnProNPS.toStringAsFixed(2))}")),
+                const SizedBox(width: 20),
+                Expanded(child: Text("Tax on Profit : ₹ ${numberToString(taxOnProAsset.toStringAsFixed(2))}")),
+              ],
+            ),
 
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Expanded(child: Text("Balance to be invested for Annuity : ₹ ${numberToString(balanceInvForAnnuityNPS.toStringAsFixed(2))}")),
-              const SizedBox(width: 20),
-              Expanded(child: Text("Balance to be invested for Annuity : ₹ ${numberToString(balanceInvForAnnuityAsset.toStringAsFixed(2))}")),
-            ],
-          ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(child: Text("Lumpsum withdraw (at 60) : ₹ ${numberToString(withdrawNPS.toStringAsFixed(2))}")),
+                const SizedBox(width: 20),
+                Expanded(child: Text("Lumpsum withdraw (at 60) : ₹ ${numberToString(withdrawAsset.toStringAsFixed(2))}")),
+              ],
+            ),
 
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Expanded(child: Text("Annuity @ 6.5% per year : ₹ ${numberToString(annuityPerYearNPS.toStringAsFixed(2))}")),
-              const SizedBox(width: 20),
-              Expanded(child: Text("Annuity @ 6.5% per year : ₹ ${numberToString(annuityPerYearAsset.toStringAsFixed(2))}")),
-            ],
-          ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(child: Text("Balance to be invested for Annuity : ₹ ${numberToString(balanceInvForAnnuityNPS.toStringAsFixed(2))}")),
+                const SizedBox(width: 20),
+                Expanded(child: Text("Balance to be invested for Annuity : ₹ ${numberToString(balanceInvForAnnuityAsset.toStringAsFixed(2))}")),
+              ],
+            ),
 
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Expanded(child: Text("Net Corpus at 60 : ₹ ${numberToString(netCorpusAt60NPS.toStringAsFixed(2))}")),
-              const SizedBox(width: 20),
-              Expanded(child: Text("Net Corpus at 60 : ₹ ${numberToString(netCorpusAt60Asset.toStringAsFixed(2))}")),
-            ],
-          ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(child: Text("Annuity @ 6.5% per year : ₹ ${numberToString(annuityPerYearNPS.toStringAsFixed(2))}")),
+                const SizedBox(width: 20),
+                Expanded(child: Text("Annuity @ 6.5% per year : ₹ ${numberToString(annuityPerYearAsset.toStringAsFixed(2))}")),
+              ],
+            ),
 
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Expanded(child: Text("Value at 60 for 1 time investment : ₹ ${numberToString(valueAt60NPS.toStringAsFixed(2))}")),
-              const SizedBox(width: 20),
-              Expanded(child: Text("Value at 60 for 1 time investment : ₹ ${numberToString(valueAt60Asset.toStringAsFixed(2))}")),
-            ],
-          ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(child: Text("Net Corpus at 60 : ₹ ${numberToString(netCorpusAt60NPS.toStringAsFixed(2))}")),
+                const SizedBox(width: 20),
+                Expanded(child: Text("Net Corpus at 60 : ₹ ${numberToString(netCorpusAt60Asset.toStringAsFixed(2))}")),
+              ],
+            ),
 
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              Expanded(child: Text("Value at 60 for $periodPayForNSP time investment : ₹ ${numberToString(valuePeriodPayForNSP.toStringAsFixed(2))}")),
-              const SizedBox(width: 20),
-              Expanded(child: Text("Value at 60 for $periodPayForAsset time investment : ₹ ${numberToString(valuePeriodPayForAsset.toStringAsFixed(2))}")),
-            ],
-          ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(child: Text("Value at 60 for 1 time investment : ₹ ${numberToString(valueAt60NPS.toStringAsFixed(2))}")),
+                const SizedBox(width: 20),
+                Expanded(child: Text("Value at 60 for 1 time investment : ₹ ${numberToString(valueAt60Asset.toStringAsFixed(2))}")),
+              ],
+            ),
 
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              const Expanded(child: Text("")),
-              const SizedBox(width: 20),
-              Expanded(child: Text("Profit for 1 year : ₹ ${numberToString(profitFor1YearAsset.toStringAsFixed(2))}")),
-            ],
-          ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(child: Text("Value at 60 for $periodPayForNSP time investment : ₹ ${numberToString(valuePeriodPayForNSP.toStringAsFixed(2))}")),
+                const SizedBox(width: 20),
+                Expanded(child: Text("Value at 60 for $periodPayForAsset time investment : ₹ ${numberToString(valuePeriodPayForAsset.toStringAsFixed(2))}")),
+              ],
+            ),
 
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              const Expanded(child: Text("")),
-              const SizedBox(width: 20),
-              Expanded(child: Text("Tax on profit : ₹ ${numberToString(taxOnProfitAsset.toStringAsFixed(2))}")),
-            ],
-          ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                const Expanded(child: Text("")),
+                const SizedBox(width: 20),
+                Expanded(child: Text("Profit for 1 year : ₹ ${numberToString(profitFor1YearAsset.toStringAsFixed(2))}")),
+              ],
+            ),
 
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              const Expanded(child: Text("")),
-              const SizedBox(width: 20),
-              Expanded(child: Text("Net return : ₹ ${numberToString(netReturnAsset.toStringAsFixed(2))}")),
-            ],
-          ),
-          const SizedBox(height: 20),
-        ],
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                const Expanded(child: Text("")),
+                const SizedBox(width: 20),
+                Expanded(child: Text("Tax on profit : ₹ ${numberToString(taxOnProfitAsset.toStringAsFixed(2))}")),
+              ],
+            ),
+
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                const Expanded(child: Text("")),
+                const SizedBox(width: 20),
+                Expanded(child: Text("Net return : ₹ ${numberToString(netReturnAsset.toStringAsFixed(2))}")),
+              ],
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }

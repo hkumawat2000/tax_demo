@@ -31,153 +31,152 @@ class _CapitalGainsState extends State<CapitalGains> {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-      expandedCrossAxisAlignment: CrossAxisAlignment.start,
-      childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
-      tilePadding: EdgeInsets.zero,
-      title: const Text("Capital Gains"),
-      children: [
-        const SizedBox(height: 10),
-        TextField(
-          controller: saleValueTextEditingController,
-          keyboardType: TextInputType.number,
-          style: const TextStyle(color: Colors.black),
-          decoration: InputDecoration(
-              labelText: "Sale value",
-              counterText: "",
-              enabledBorder: OutlineInputBorder(
+    return Scaffold(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 10),
+          TextField(
+            controller: saleValueTextEditingController,
+            keyboardType: TextInputType.number,
+            style: const TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+                labelText: "Sale value",
+                counterText: "",
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(6),
+                    borderSide: const BorderSide(color: Colors.grey)
+                ),
+                focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(color: Colors.grey)
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6),
-                borderSide: const BorderSide(color: Colors.grey),
-              ),
-              disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6),
-                borderSide: const BorderSide(color: Colors.grey),
-              ),
-              focusColor: Colors.grey
-          ),
-        ),
-        const SizedBox(height: 10),
-        TextField(
-          controller: expenseOnSaleTextEditingController,
-          keyboardType: TextInputType.number,
-          style: const TextStyle(color: Colors.black),
-          decoration: InputDecoration(
-              labelText: "Expenses on sale",
-              counterText: "",
-              enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.grey),
+                ),
+                disabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(color: Colors.grey)
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6),
-                borderSide: const BorderSide(color: Colors.grey),
-              ),
-              disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6),
-                borderSide: const BorderSide(color: Colors.grey),
-              ),
-              focusColor: Colors.grey
+                  borderSide: const BorderSide(color: Colors.grey),
+                ),
+                focusColor: Colors.grey
+            ),
           ),
-        ),
-        const SizedBox(height: 10),
-        TextField(
-          controller: purchasePriceTextEditingController,
-          keyboardType: TextInputType.number,
-          style: const TextStyle(color: Colors.black),
-          decoration: InputDecoration(
-              labelText: "Purchase price",
-              counterText: "",
-              enabledBorder: OutlineInputBorder(
+          const SizedBox(height: 10),
+          TextField(
+            controller: expenseOnSaleTextEditingController,
+            keyboardType: TextInputType.number,
+            style: const TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+                labelText: "Expenses on sale",
+                counterText: "",
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(6),
+                    borderSide: const BorderSide(color: Colors.grey)
+                ),
+                focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(color: Colors.grey)
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6),
-                borderSide: const BorderSide(color: Colors.grey),
-              ),
-              disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6),
-                borderSide: const BorderSide(color: Colors.grey),
-              ),
-              focusColor: Colors.grey
-          ),
-        ),
-        const SizedBox(height: 10),
-        TextField(
-          controller: costTextEditingController,
-          keyboardType: TextInputType.number,
-          style: const TextStyle(color: Colors.black),
-          decoration: InputDecoration(
-              labelText: "Improvement cost (Renovation etc)",
-              counterText: "",
-              enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.grey),
+                ),
+                disabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(color: Colors.grey)
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6),
-                borderSide: const BorderSide(color: Colors.grey),
-              ),
-              disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6),
-                borderSide: const BorderSide(color: Colors.grey),
-              ),
-              focusColor: Colors.grey
+                  borderSide: const BorderSide(color: Colors.grey),
+                ),
+                focusColor: Colors.grey
+            ),
           ),
-        ),
-        const SizedBox(height: 10),
-        const Text("Purchase Year"),
-        const SizedBox(height: 5),
-        DropdownButton(
-          hint: const Text("Please choose a year"),
-          value: purchaseYear,
-          onChanged: (String? newValue) => setState(() => purchaseYear = newValue),
-          items: yearList.map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
-        ),
-        const SizedBox(height: 10),
-        const Text("Sale Year"),
-        const SizedBox(height: 5),
-        DropdownButton(
-          hint: const Text("Please choose a year"),
-          value: saleYear,
-          onChanged: (String? newValue) => setState(() => saleYear = newValue),
-          items: yearList.map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
-        ),
-        const SizedBox(height: 10),
-        MaterialButton(
-          color: Colors.blue,
-          minWidth: double.infinity,
-          height: 50,
-          onPressed: (){
-            FocusScope.of(context).unfocus();
-            calculateTaxTerm();
-            setState(() {});
-          },
-          child: const Text("Calculate", style: TextStyle(color: Colors.white, fontSize: 20),),
-        ),
-        const SizedBox(height: 20),
+          const SizedBox(height: 10),
+          TextField(
+            controller: purchasePriceTextEditingController,
+            keyboardType: TextInputType.number,
+            style: const TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+                labelText: "Purchase price",
+                counterText: "",
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(6),
+                    borderSide: const BorderSide(color: Colors.grey)
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey),
+                ),
+                focusColor: Colors.grey
+            ),
+          ),
+          const SizedBox(height: 10),
+          TextField(
+            controller: costTextEditingController,
+            keyboardType: TextInputType.number,
+            style: const TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+                labelText: "Improvement cost (Renovation etc)",
+                counterText: "",
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(6),
+                    borderSide: const BorderSide(color: Colors.grey)
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey),
+                ),
+                focusColor: Colors.grey
+            ),
+          ),
+          const SizedBox(height: 10),
+          const Text("Purchase Year"),
+          const SizedBox(height: 5),
+          DropdownButton(
+            hint: const Text("Please choose a year"),
+            value: purchaseYear,
+            onChanged: (String? newValue) => setState(() => purchaseYear = newValue),
+            items: yearList.map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
+          ),
+          const SizedBox(height: 10),
+          const Text("Sale Year"),
+          const SizedBox(height: 5),
+          DropdownButton(
+            hint: const Text("Please choose a year"),
+            value: saleYear,
+            onChanged: (String? newValue) => setState(() => saleYear = newValue),
+            items: yearList.map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
+          ),
+          const SizedBox(height: 10),
+          MaterialButton(
+            color: Colors.blue,
+            minWidth: double.infinity,
+            height: 50,
+            onPressed: (){
+              FocusScope.of(context).unfocus();
+              calculateTaxTerm();
+              setState(() {});
+            },
+            child: const Text("Calculate", style: TextStyle(color: Colors.white, fontSize: 20),),
+          ),
+          const SizedBox(height: 20),
 
-        const Text("Short term capital gain", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-        Text("Net sales value                     :  ${numberToString(stNetSaleValue.toStringAsFixed(2))}"),
-        Text("Total cost                              :  ${numberToString(stTotalCost.toStringAsFixed(2))}"),
-        Text("Capital Gain                          :  ${numberToString(stCapitalGain.toStringAsFixed(2))}"),
-        const Text("Exemptions u/s 54B/ 54D  :  50,000"),
-        Text("Taxable Capital Gain           :  ${numberToString(stTaxableGain.toStringAsFixed(2))}"),
-        const SizedBox(height: 20),
-        const Text("Long term capital gain", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-        Text("Net sales value                     :  ${numberToString(ltNetSaleValue.toStringAsFixed(2))}"),
-        Text("Purchase price (Indexed)   :  ${numberToString(ltTotalCost.toStringAsFixed(2))}"),
+          const Text("Short term capital gain", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Text("Net sales value                     :  ${numberToString(stNetSaleValue.toStringAsFixed(2))}"),
+          Text("Total cost                              :  ${numberToString(stTotalCost.toStringAsFixed(2))}"),
+          Text("Capital Gain                          :  ${numberToString(stCapitalGain.toStringAsFixed(2))}"),
+          const Text("Exemptions u/s 54B/ 54D  :  50,000"),
+          Text("Taxable Capital Gain           :  ${numberToString(stTaxableGain.toStringAsFixed(2))}"),
+          const SizedBox(height: 20),
+          const Text("Long term capital gain", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Text("Net sales value                     :  ${numberToString(ltNetSaleValue.toStringAsFixed(2))}"),
+          Text("Purchase price (Indexed)   :  ${numberToString(ltTotalCost.toStringAsFixed(2))}"),
 
-        Text("Total cost                              :  ${numberToString(ltTotalCost.toStringAsFixed(2))}"),
-        Text("Capital Gain                          :  ${numberToString(ltCapitalGain.toStringAsFixed(2))}"),
-        const Text("Exemptions u/s 54B/ 54D  :  0"),
-        Text("Taxable Capital Gain           :  ${numberToString(ltTaxableGain.toStringAsFixed(2))}"),
-        const SizedBox(height: 20),
-      ],
+          Text("Total cost                              :  ${numberToString(ltTotalCost.toStringAsFixed(2))}"),
+          Text("Capital Gain                          :  ${numberToString(ltCapitalGain.toStringAsFixed(2))}"),
+          const Text("Exemptions u/s 54B/ 54D  :  0"),
+          Text("Taxable Capital Gain           :  ${numberToString(ltTaxableGain.toStringAsFixed(2))}"),
+          const SizedBox(height: 20),
+        ],
+      ),
     );
   }
 

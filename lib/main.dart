@@ -2,6 +2,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tax/all_calculator.dart';
+import 'package:tax/capital_gain.dart';
+import 'package:tax/capital_gain_calculator.dart';
+import 'package:tax/form16/upload_form16_a.dart';
+import 'package:tax/hra_calculator.dart';
+import 'package:tax/nps_calculator.dart';
+import 'package:tax/tax_calculator.dart';
 
 void main() async {
 
@@ -26,12 +32,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      initialRoute: '/',
+      routes: {
+        '/' : (context) => const AllCalculator(),
+        '/hra': (context) => const HRACalculator(),
+        '/nps': (context) => const NPSCalculator(),
+        '/oldCapitalGain': (context) => const CapitalGains(),
+        '/capitalGain': (context) => const CapitalGainCalculator(),
+        '/tax': (context) => const TaxCalculator(),
+        '/form16': (context) => const UploadForm16(),
+      },
       title: 'Taxation',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         brightness: Brightness.light
       ),
-      home: const AllCalculator(),
     );
   }
 

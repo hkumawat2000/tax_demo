@@ -24,126 +24,125 @@ class _HRACalculatorState extends State<HRACalculator> {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-      title: const Text("HRA Calculator"),
-      expandedCrossAxisAlignment: CrossAxisAlignment.start,
-      childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
-      tilePadding: EdgeInsets.zero,
-      children: [
-        const SizedBox(height: 20),
-        TextField(
-          controller: basicSalaryTextEditingController,
-          keyboardType: TextInputType.number,
-          style: const TextStyle(color: Colors.black),
-          decoration: InputDecoration(
-              labelText: "Basic Salary",
-              counterText: "",
-              enabledBorder: OutlineInputBorder(
+    return Scaffold(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 20),
+          TextField(
+            controller: basicSalaryTextEditingController,
+            keyboardType: TextInputType.number,
+            style: const TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+                labelText: "Basic Salary",
+                counterText: "",
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(6),
+                    borderSide: const BorderSide(color: Colors.grey)
+                ),
+                focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(color: Colors.grey)
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6),
-                borderSide: const BorderSide(color: Colors.grey),
-              ),
-              disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6),
-                borderSide: const BorderSide(color: Colors.grey),
-              ),
-              focusColor: Colors.grey
-          ),
-        ),
-        const SizedBox(height: 20),
-        TextField(
-          controller: hraTextEditingController,
-          keyboardType: TextInputType.number,
-          style: const TextStyle(color: Colors.black),
-          decoration: InputDecoration(
-              labelText: "House Rent Allowance",
-              counterText: "",
-              enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.grey),
+                ),
+                disabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(color: Colors.grey)
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6),
-                borderSide: const BorderSide(color: Colors.grey),
-              ),
-              disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6),
-                borderSide: const BorderSide(color: Colors.grey),
-              ),
-              focusColor: Colors.grey
+                  borderSide: const BorderSide(color: Colors.grey),
+                ),
+                focusColor: Colors.grey
+            ),
           ),
-        ),
-        const SizedBox(height: 20),
-        TextField(
-          controller: totalRentTextEditingController,
-          keyboardType: TextInputType.number,
-          style: const TextStyle(color: Colors.black),
-          decoration: InputDecoration(
-              labelText: "Total Rent Paid",
-              counterText: "",
-              enabledBorder: OutlineInputBorder(
+          const SizedBox(height: 20),
+          TextField(
+            controller: hraTextEditingController,
+            keyboardType: TextInputType.number,
+            style: const TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+                labelText: "House Rent Allowance",
+                counterText: "",
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(6),
+                    borderSide: const BorderSide(color: Colors.grey)
+                ),
+                focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(color: Colors.grey)
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6),
-                borderSide: const BorderSide(color: Colors.grey),
-              ),
-              disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(6),
-                borderSide: const BorderSide(color: Colors.grey),
-              ),
-              focusColor: Colors.grey
+                  borderSide: const BorderSide(color: Colors.grey),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey),
+                ),
+                focusColor: Colors.grey
+            ),
           ),
-        ),
-        const SizedBox(height: 30),
-        const Text('City Type:', style: TextStyle(fontSize: 16)),
-        RadioListTile(
-          value: "metro",
-          groupValue: cityType,
-          contentPadding: EdgeInsets.zero,
-          title: const Text("Metro City"),
-          onChanged: (val){
-            setState(() {
-              cityType = val!;
-            });
-          },
-        ),
-        RadioListTile(
-          value: "non-metro",
-          groupValue: cityType,
-          contentPadding: EdgeInsets.zero,
-          title: const Text("Non-Metro City"),
-          onChanged: (val){
-            setState(() {
-              cityType = val!;
-            });
-          },
-        ),
-        const SizedBox(height: 30),
-        MaterialButton(
-          color: Colors.blue,
-          minWidth: double.infinity,
-          height: 50,
-          onPressed: (){
-            FocusScope.of(context).unfocus();
-            calculateHRA();
-          },
-          child: const Text("Calculate", style: TextStyle(color: Colors.white, fontSize: 20),),
-        ),
-        const SizedBox(height: 20),
-        Text("HRA Received                      : ${numberToString(hraReceived.toStringAsFixed(0))}"),
-        Text("40% or 50% of Basic           : ${numberToString(basic.toStringAsFixed(0))}"),
-        Text("Rent Paid > 10% of Salary  : ${numberToString(rentPaid.toStringAsFixed(0))}"),
-        Text("HRA Exemption                   : ${numberToString(hraExemption.toStringAsFixed(0))}"),
-        Text("HRA Taxable                        : ${numberToString(hraTaxable.toStringAsFixed(0))}"),
-        const SizedBox(height: 40),
-        Text("Optimized Rent                    : ${numberToString(minRent.toStringAsFixed(0))}"),
-        const SizedBox(height: 20),
-      ],
+          const SizedBox(height: 20),
+          TextField(
+            controller: totalRentTextEditingController,
+            keyboardType: TextInputType.number,
+            style: const TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+                labelText: "Total Rent Paid",
+                counterText: "",
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(6),
+                    borderSide: const BorderSide(color: Colors.grey)
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(6),
+                  borderSide: const BorderSide(color: Colors.grey),
+                ),
+                focusColor: Colors.grey
+            ),
+          ),
+          const SizedBox(height: 30),
+          const Text('City Type:', style: TextStyle(fontSize: 16)),
+          RadioListTile(
+            value: "metro",
+            groupValue: cityType,
+            contentPadding: EdgeInsets.zero,
+            title: const Text("Metro City"),
+            onChanged: (val){
+              setState(() {
+                cityType = val!;
+              });
+            },
+          ),
+          RadioListTile(
+            value: "non-metro",
+            groupValue: cityType,
+            contentPadding: EdgeInsets.zero,
+            title: const Text("Non-Metro City"),
+            onChanged: (val){
+              setState(() {
+                cityType = val!;
+              });
+            },
+          ),
+          const SizedBox(height: 30),
+          MaterialButton(
+            color: Colors.blue,
+            minWidth: double.infinity,
+            height: 50,
+            onPressed: (){
+              FocusScope.of(context).unfocus();
+              calculateHRA();
+            },
+            child: const Text("Calculate", style: TextStyle(color: Colors.white, fontSize: 20),),
+          ),
+          const SizedBox(height: 20),
+          Text("HRA Received                      : ${numberToString(hraReceived.toStringAsFixed(0))}"),
+          Text("40% or 50% of Basic           : ${numberToString(basic.toStringAsFixed(0))}"),
+          Text("Rent Paid > 10% of Salary  : ${numberToString(rentPaid.toStringAsFixed(0))}"),
+          Text("HRA Exemption                   : ${numberToString(hraExemption.toStringAsFixed(0))}"),
+          Text("HRA Taxable                        : ${numberToString(hraTaxable.toStringAsFixed(0))}"),
+          const SizedBox(height: 40),
+          Text("Optimized Rent                    : ${numberToString(minRent.toStringAsFixed(0))}"),
+          const SizedBox(height: 20),
+        ],
+      ),
     );
   }
 
