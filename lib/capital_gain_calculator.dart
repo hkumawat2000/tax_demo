@@ -46,342 +46,347 @@ class _CapitalGainCalculatorState extends State<CapitalGainCalculator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 10),
-          Row(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              DropdownButton(
-                hint: const Text("Choose a Asset"),
-                value: selectedAssetType,
-                onChanged: (String? newValue) => setState(() => selectedAssetType = newValue),
-                items: assetList.map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
-                elevation: 0,
-                // isExpanded: true,
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: TextField(
-                  controller: ageTextController,
-                  keyboardType: TextInputType.number,
-                  style: const TextStyle(color: Colors.black),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-                  ],
-                  onChanged: (val) => setState((){}),
-                  decoration: InputDecoration(
-                      labelText: "Age",
-                      counterText: "",
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(6),
-                          borderSide: const BorderSide(color: Colors.grey)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      focusColor: Colors.grey
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  DropdownButton(
+                    hint: const Text("Choose a Asset"),
+                    value: selectedAssetType,
+                    onChanged: (String? newValue) => setState(() => selectedAssetType = newValue),
+                    items: assetList.map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
+                    elevation: 0,
+                    // isExpanded: true,
                   ),
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: TextField(
-                  controller: taxableIncomeTextController,
-                  keyboardType: TextInputType.number,
-                  style: const TextStyle(color: Colors.black),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-                  ],
-                  onChanged: (val) => setState((){}),
-                  decoration: InputDecoration(
-                      labelText: "Taxable Income",
-                      counterText: "",
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(6),
-                          borderSide: const BorderSide(color: Colors.grey)
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: TextField(
+                      controller: ageTextController,
+                      keyboardType: TextInputType.number,
+                      style: const TextStyle(color: Colors.black),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                      ],
+                      onChanged: (val) => setState((){}),
+                      decoration: InputDecoration(
+                          labelText: "Age",
+                          counterText: "",
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(6),
+                              borderSide: const BorderSide(color: Colors.grey)
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          focusColor: Colors.grey
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      focusColor: Colors.grey
+                    ),
                   ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: purchasePriceTextController,
-                  keyboardType: TextInputType.number,
-                  style: const TextStyle(color: Colors.black),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-                  ],
-                  onChanged: (val) => setState((){}),
-                  decoration: InputDecoration(
-                      labelText: "Purchase Price",
-                      counterText: "",
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(6),
-                          borderSide: const BorderSide(color: Colors.grey)
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: TextField(
+                      controller: taxableIncomeTextController,
+                      keyboardType: TextInputType.number,
+                      style: const TextStyle(color: Colors.black),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                      ],
+                      onChanged: (val) => setState((){}),
+                      decoration: InputDecoration(
+                          labelText: "Taxable Income",
+                          counterText: "",
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(6),
+                              borderSide: const BorderSide(color: Colors.grey)
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          focusColor: Colors.grey
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      focusColor: Colors.grey
+                    ),
                   ),
-                ),
+                ],
               ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: TextField(
-                  controller: dateOfPurchaseTextController,
-                  keyboardType: const TextInputType.numberWithOptions(decimal: false),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp("[0-9/]")),
-                    LengthLimitingTextInputFormatter(10),
-                    _DateFormatter(),
-                  ],
-                  onChanged: (val) => setState((){}),
-                  decoration: InputDecoration(
-                      labelText: "Date of Purchase",
-                      hintText: "DD/MM/YYYY",
-                      counterText: "",
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(6),
-                          borderSide: const BorderSide(color: Colors.grey)
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: purchasePriceTextController,
+                      keyboardType: TextInputType.number,
+                      style: const TextStyle(color: Colors.black),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                      ],
+                      onChanged: (val) => setState((){}),
+                      decoration: InputDecoration(
+                          labelText: "Purchase Price",
+                          counterText: "",
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(6),
+                              borderSide: const BorderSide(color: Colors.grey)
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          focusColor: Colors.grey
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      focusColor: Colors.grey
+                    ),
                   ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: salePriceTextController,
-                  keyboardType: TextInputType.number,
-                  style: const TextStyle(color: Colors.black),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-                  ],
-                  onChanged: (val) => setState((){}),
-                  decoration: InputDecoration(
-                      labelText: "Sale Price",
-                      counterText: "",
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(6),
-                          borderSide: const BorderSide(color: Colors.grey)
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: TextField(
+                      controller: dateOfPurchaseTextController,
+                      keyboardType: const TextInputType.numberWithOptions(decimal: false),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp("[0-9/]")),
+                        LengthLimitingTextInputFormatter(10),
+                        _DateFormatter(),
+                      ],
+                      onChanged: (val) => setState((){}),
+                      decoration: InputDecoration(
+                          labelText: "Date of Purchase",
+                          hintText: "DD/MM/YYYY",
+                          counterText: "",
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(6),
+                              borderSide: const BorderSide(color: Colors.grey)
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          focusColor: Colors.grey
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      focusColor: Colors.grey
+                    ),
                   ),
-                ),
+                ],
               ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: TextField(
-                  controller: dateOfSaleTextController,
-                  keyboardType: const TextInputType.numberWithOptions(decimal: false),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp("[0-9/]")),
-                    LengthLimitingTextInputFormatter(10),
-                    _DateFormatter(),
-                  ],
-                  onChanged: (val) => setState((){}),
-                  decoration: InputDecoration(
-                      labelText: "Date of Sale",
-                      hintText: "DD/MM/YYYY",
-                      counterText: "",
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(6),
-                          borderSide: const BorderSide(color: Colors.grey)
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: salePriceTextController,
+                      keyboardType: TextInputType.number,
+                      style: const TextStyle(color: Colors.black),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                      ],
+                      onChanged: (val) => setState((){}),
+                      decoration: InputDecoration(
+                          labelText: "Sale Price",
+                          counterText: "",
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(6),
+                              borderSide: const BorderSide(color: Colors.grey)
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          focusColor: Colors.grey
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      focusColor: Colors.grey
+                    ),
                   ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: improvementCostTextController,
-                  keyboardType: TextInputType.number,
-                  style: const TextStyle(color: Colors.black),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-                  ],
-                  onChanged: (val) => setState((){}),
-                  decoration: InputDecoration(
-                      labelText: "Improvement Cost",
-                      counterText: "",
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(6),
-                          borderSide: const BorderSide(color: Colors.grey)
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: TextField(
+                      controller: dateOfSaleTextController,
+                      keyboardType: const TextInputType.numberWithOptions(decimal: false),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp("[0-9/]")),
+                        LengthLimitingTextInputFormatter(10),
+                        _DateFormatter(),
+                      ],
+                      onChanged: (val) => setState((){}),
+                      decoration: InputDecoration(
+                          labelText: "Date of Sale",
+                          hintText: "DD/MM/YYYY",
+                          counterText: "",
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(6),
+                              borderSide: const BorderSide(color: Colors.grey)
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          focusColor: Colors.grey
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      focusColor: Colors.grey
+                    ),
                   ),
-                ),
+                ],
               ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: TextField(
-                  controller: improvementDateTextController,
-                  keyboardType: const TextInputType.numberWithOptions(decimal: false),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp("[0-9/]")),
-                    LengthLimitingTextInputFormatter(10),
-                    _DateFormatter(),
-                  ],
-                  onChanged: (val) => setState((){}),
-                  decoration: InputDecoration(
-                      labelText: "Date of Improvement",
-                      hintText: "DD/MM/YYYY",
-                      counterText: "",
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(6),
-                          borderSide: const BorderSide(color: Colors.grey)
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: improvementCostTextController,
+                      keyboardType: TextInputType.number,
+                      style: const TextStyle(color: Colors.black),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                      ],
+                      onChanged: (val) => setState((){}),
+                      decoration: InputDecoration(
+                          labelText: "Improvement Cost",
+                          counterText: "",
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(6),
+                              borderSide: const BorderSide(color: Colors.grey)
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          focusColor: Colors.grey
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: const BorderSide(color: Colors.grey),
-                      ),
-                      focusColor: Colors.grey
+                    ),
                   ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: TextField(
+                      controller: improvementDateTextController,
+                      keyboardType: const TextInputType.numberWithOptions(decimal: false),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp("[0-9/]")),
+                        LengthLimitingTextInputFormatter(10),
+                        _DateFormatter(),
+                      ],
+                      onChanged: (val) => setState((){}),
+                      decoration: InputDecoration(
+                          labelText: "Date of Improvement",
+                          hintText: "DD/MM/YYYY",
+                          counterText: "",
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(6),
+                              borderSide: const BorderSide(color: Colors.grey)
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide: const BorderSide(color: Colors.grey),
+                          ),
+                          focusColor: Colors.grey
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                controller: transferExpenseTextController,
+                keyboardType: TextInputType.number,
+                style: const TextStyle(color: Colors.black),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                ],
+                onChanged: (val) => setState((){}),
+                decoration: InputDecoration(
+                    labelText: "Transfer Expense",
+                    counterText: "",
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: const BorderSide(color: Colors.grey)
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    focusColor: Colors.grey
                 ),
               ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          TextField(
-            controller: transferExpenseTextController,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-            ],
-            onChanged: (val) => setState((){}),
-            decoration: InputDecoration(
-                labelText: "Transfer Expense",
-                counterText: "",
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(6),
-                    borderSide: const BorderSide(color: Colors.grey)
+              const SizedBox(height: 20),
+              AbsorbPointer(
+                absorbing: isCalculateButtonEnable() ? false : true,
+                child: MaterialButton(
+                  color: isCalculateButtonEnable() ? Colors.blue : Colors.grey,
+                  minWidth: double.infinity,
+                  height: 50,
+                  onPressed: (){
+                    FocusScope.of(context).unfocus();
+                    isVisible = true;
+                    capitalGainCalculation();
+                  },
+                  child: const Text("Calculate Capital Gain", style: TextStyle(color: Colors.white, fontSize: 20),),
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(color: Colors.grey),
-                ),
-                disabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(color: Colors.grey),
-                ),
-                focusColor: Colors.grey
-            ),
-          ),
-          const SizedBox(height: 20),
-          AbsorbPointer(
-            absorbing: isCalculateButtonEnable() ? false : true,
-            child: MaterialButton(
-              color: isCalculateButtonEnable() ? Colors.blue : Colors.grey,
-              minWidth: double.infinity,
-              height: 50,
-              onPressed: (){
-                FocusScope.of(context).unfocus();
-                isVisible = true;
-                capitalGainCalculation();
-              },
-              child: const Text("Calculate Capital Gain", style: TextStyle(color: Colors.white, fontSize: 20),),
-            ),
-          ),
-          const SizedBox(height: 20),
+              ),
+              const SizedBox(height: 20),
 
-          Visibility(
-            visible: isVisible,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("$capitalGainType", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 10),
-                Text("Indexed Purchase Price : ${indexedPurchasePrice.toStringAsFixed(2)}"),
-                const SizedBox(height: 10),
-                Text("Net Sale Price : ${netSalePrice.toStringAsFixed(2)}"),
-                const SizedBox(height: 10),
-                Text("Total Expense/Improvement : ${totalExpense.toStringAsFixed(2)}"),
-                const SizedBox(height: 10),
-                Text("Capital Gain : ${capitalGain.toStringAsFixed(2)}", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 10),
-                Text("Tax Percentage : ${taxPercentage == 0 ? "Based on Tax Slab": "$taxPercentage%"}", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 10),
-                Text("Total Taxable Capital Gain Old Regime: ${taxableCapitalGainOldRegime.toStringAsFixed(2)}", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 10),
-                Text("Total Taxable Capital Gain New Regime: ${taxableCapitalGainNewRegime.toStringAsFixed(2)}", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 10),
-              ],
-            ),
+              Visibility(
+                visible: isVisible,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("$capitalGainType", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 10),
+                    Text("Indexed Purchase Price : ${indexedPurchasePrice.toStringAsFixed(2)}"),
+                    const SizedBox(height: 10),
+                    Text("Net Sale Price : ${netSalePrice.toStringAsFixed(2)}"),
+                    const SizedBox(height: 10),
+                    Text("Total Expense/Improvement : ${totalExpense.toStringAsFixed(2)}"),
+                    const SizedBox(height: 10),
+                    Text("Capital Gain : ${capitalGain.toStringAsFixed(2)}", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 10),
+                    Text("Tax Percentage : ${taxPercentage == 0 ? "Based on Tax Slab": "$taxPercentage%"}", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 10),
+                    Text("Total Taxable Capital Gain Old Regime: ${taxableCapitalGainOldRegime.toStringAsFixed(2)}", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 10),
+                    Text("Total Taxable Capital Gain New Regime: ${taxableCapitalGainNewRegime.toStringAsFixed(2)}", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 10),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+            ],
           ),
-          const SizedBox(height: 20),
-        ],
+        ),
       ),
     );
   }

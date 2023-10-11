@@ -182,121 +182,124 @@ class _TaxCalculatorState extends State<TaxCalculator> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                const Text("Assessment Year"),
-                const SizedBox(width: 20),
-                DropdownButton(
-                  value: selectedAssessmentYear,
-                  onChanged: (String? newValue) => setState(() => selectedAssessmentYear = newValue!),
-                  items: ["2024-25", "2023-24"].map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: ageTextEditingController,
-              keyboardType: TextInputType.number,
-              style: const TextStyle(color: Colors.black),
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-              ],
-              decoration: InputDecoration(
-                  labelText: "Age",
-                  counterText: "",
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(6),
-                      borderSide: const BorderSide(color: Colors.grey)
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(6),
-                    borderSide: const BorderSide(color: Colors.grey),
-                  ),
-                  disabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(6),
-                    borderSide: const BorderSide(color: Colors.grey),
-                  ),
-                  focusColor: Colors.grey
-              ),
-              onChanged: (val) => getCitizenType(int.parse(getStringToDouble(ageTextEditingController.text.toString().trim()).toString())),
-            ),
-            const SizedBox(height: 10),
-            Text("Citizen Type : $citizenType", style: const TextStyle(fontWeight: FontWeight.bold)),
-            salaryIncomeChildWidget(),
-            houseIncomeChildWidget(),
-            otherSourceIncomeChildWidget(),
-            businessIncomeChildWidget(),
-            deductionChildWidget(),
-            const SizedBox(height: 20),
-            MaterialButton(
-              color: Colors.blue,
-              minWidth: double.infinity,
-              height: 50,
-              onPressed: (){
-                FocusScope.of(context).unfocus();
-                calculateOnlySalary();
-                calculateOnlyHousePropertiesIncome();
-                calculateOnlyOtherSourceIncome();
-                calculateAllDeduction();
-                calculateAllSection80sDeduction();
-                isResultVisibility = true;
-                taxCalculateWithOldRegime();
-                taxCalculateWithNewRegime();
-              },
-              child: const Text("Calculate", style: TextStyle(color: Colors.white, fontSize: 20),),
-            ),
-            const SizedBox(height: 40),
-            Visibility(
-              visible: isResultVisibility,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 children: [
-                  const Text("Old Regime Payable Tax Amount", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                  Text("Income taxable under the head Salaries : ₹ ${numberToString(netTaxableOfSalaryIncome.toStringAsFixed(0))}"),
-                  Text("Income taxable under the head House Property : ₹ ${numberToString(totalHouseIncome.toStringAsFixed(0))}"),
-                  Text("Income taxable under the head Other Sources : ₹ ${numberToString(totalOtherIncomeSource.toStringAsFixed(0))}"),
-                  Text("Total Deductions : ₹ ${numberToString(overAllTotalDeduction.toStringAsFixed(0))}"),
-                  const SizedBox(height: 6),
-                  Text("Total Taxable Income : ₹ ${numberToString(totalTaxableIncomeOldRegime.toStringAsFixed(0))}"),
-                  const SizedBox(height: 6),
-                  Text("Old Regime Payable Tax Amount is : ₹ ${numberToString(oldPayableTaxAmount.toStringAsFixed(0))}"),
-                  Text("Less : Rebate u/s 87A : ₹ ${numberToString(lessRebateOldRegime.toStringAsFixed(0))}"),
-                  Text("Tax Payable after rebate : ₹ ${numberToString(afterLessRebateOldRegime.toStringAsFixed(0))}"),
-                  Text("Add : Surcharge : ₹ ${numberToString(surchargeOldRegime.toStringAsFixed(0))}"),
-                  Text("Add : Education + Health Cess : ₹ ${numberToString(educationTaxOldRegime.toStringAsFixed(0))}"),
-                  Text("Total Tax Liability : ₹ ${numberToString(totalTaxLiabilityOldRegime.toStringAsFixed(0))}"),
-                  Text("Less : TDS from Salary : ₹ ${numberToString(getStringToDouble(tdsDeductionTextEditingController.text.trim()).toStringAsFixed(0))}"),
-                  const SizedBox(height: 10),
-                  Text("Tax Payable / (Refundable): ₹ ${numberToString((totalTaxLiabilityOldRegime + getStringToDouble(tdsDeductionTextEditingController.text.trim())).toStringAsFixed(0))} ($oldTaxSlab)"),
-                  const SizedBox(height: 20),
-
-
-                  const Text("New Regime Payable Tax Amount", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                  Text("Income from Salary : ₹ ${numberToString((selectedAssessmentYear == "2024-25" ? grossSalary - 50000 : grossSalary).toStringAsFixed(0))}"),
-                  Text("Income from House property : ₹ ${numberToString(totalHouseIncome.toStringAsFixed(0))}"),
-                  Text("Income from Other Sources : ₹ ${numberToString(totalOtherIncomeSource.toStringAsFixed(0))}"),
-                  const Text("Less Deductions"),
-                  Text("Additional Deduction under Sec 80CCD(2) - Employer contribution : ₹ ${numberToString(netDeductionInNewRegime.toStringAsFixed(0))}"),
-                  const SizedBox(height: 6),
-                  Text("Total Taxable Income : ₹ ${numberToString(totalTaxableIncomeNewRegime.toStringAsFixed(0))}"),
-                  const SizedBox(height: 6),
-                  Text("Tax Payable : ₹ ${numberToString(newPayableTaxAmount.toStringAsFixed(0))}"),
-                  Text("Less : Rebate u/s 87A : ₹ ${numberToString(lessRebateNewRegime.toStringAsFixed(0))}"),
-                  Text("Tax Payable after rebate : ₹ ${numberToString(afterLessRebateNewRegime.toStringAsFixed(0))}"),
-                  Text("Add : Surcharge : ₹ ${numberToString(surchargeNewRegime.toStringAsFixed(0))}"),
-                  Text("Add : Education + Health Cess : ₹ ${numberToString(educationTaxNewRegime.toStringAsFixed(0))}"),
-                  Text("Total Tax Liability : ₹ ${numberToString(totalTaxLiabilityNewRegime.toStringAsFixed(0))}"),
-                  Text("Less : TDS from Salary : ₹ ${numberToString(getStringToDouble(tdsDeductionTextEditingController.text.trim()).toStringAsFixed(0))}"),
-                  const SizedBox(height: 10),
-                  Text("Tax Payable / (Refundable): ₹ ${numberToString((totalTaxLiabilityNewRegime + getStringToDouble(tdsDeductionTextEditingController.text.trim())).toStringAsFixed(0))} ($newTaxSlab)"),
-                  const SizedBox(height: 20),
+                  const Text("Assessment Year"),
+                  const SizedBox(width: 20),
+                  DropdownButton(
+                    value: selectedAssessmentYear,
+                    onChanged: (String? newValue) => setState(() => selectedAssessmentYear = newValue!),
+                    items: ["2024-25", "2023-24"].map((value) => DropdownMenuItem(value: value,child: Text(value))).toList(),
+                  ),
                 ],
               ),
-            ),
-          ],
+              const SizedBox(height: 10),
+              TextField(
+                controller: ageTextEditingController,
+                keyboardType: TextInputType.number,
+                style: const TextStyle(color: Colors.black),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                ],
+                decoration: InputDecoration(
+                    labelText: "Age",
+                    counterText: "",
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        borderSide: const BorderSide(color: Colors.grey)
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Colors.grey),
+                    ),
+                    focusColor: Colors.grey
+                ),
+                onChanged: (val) => getCitizenType(int.parse(getStringToDouble(ageTextEditingController.text.toString().trim()).toString())),
+              ),
+              const SizedBox(height: 10),
+              Text("Citizen Type : $citizenType", style: const TextStyle(fontWeight: FontWeight.bold)),
+              salaryIncomeChildWidget(),
+              houseIncomeChildWidget(),
+              otherSourceIncomeChildWidget(),
+              businessIncomeChildWidget(),
+              deductionChildWidget(),
+              const SizedBox(height: 20),
+              MaterialButton(
+                color: Colors.blue,
+                minWidth: double.infinity,
+                height: 50,
+                onPressed: (){
+                  FocusScope.of(context).unfocus();
+                  calculateOnlySalary();
+                  calculateOnlyHousePropertiesIncome();
+                  calculateOnlyOtherSourceIncome();
+                  calculateAllDeduction();
+                  calculateAllSection80sDeduction();
+                  isResultVisibility = true;
+                  taxCalculateWithOldRegime();
+                  taxCalculateWithNewRegime();
+                },
+                child: const Text("Calculate", style: TextStyle(color: Colors.white, fontSize: 20),),
+              ),
+              const SizedBox(height: 40),
+              Visibility(
+                visible: isResultVisibility,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("Old Regime Payable Tax Amount", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    Text("Income taxable under the head Salaries : ₹ ${numberToString(netTaxableOfSalaryIncome.toStringAsFixed(0))}"),
+                    Text("Income taxable under the head House Property : ₹ ${numberToString(totalHouseIncome.toStringAsFixed(0))}"),
+                    Text("Income taxable under the head Other Sources : ₹ ${numberToString(totalOtherIncomeSource.toStringAsFixed(0))}"),
+                    Text("Total Deductions : ₹ ${numberToString(overAllTotalDeduction.toStringAsFixed(0))}"),
+                    const SizedBox(height: 6),
+                    Text("Total Taxable Income : ₹ ${numberToString(totalTaxableIncomeOldRegime.toStringAsFixed(0))}"),
+                    const SizedBox(height: 6),
+                    Text("Old Regime Payable Tax Amount is : ₹ ${numberToString(oldPayableTaxAmount.toStringAsFixed(0))}"),
+                    Text("Less : Rebate u/s 87A : ₹ ${numberToString(lessRebateOldRegime.toStringAsFixed(0))}"),
+                    Text("Tax Payable after rebate : ₹ ${numberToString(afterLessRebateOldRegime.toStringAsFixed(0))}"),
+                    Text("Add : Surcharge : ₹ ${numberToString(surchargeOldRegime.toStringAsFixed(0))}"),
+                    Text("Add : Education + Health Cess : ₹ ${numberToString(educationTaxOldRegime.toStringAsFixed(0))}"),
+                    Text("Total Tax Liability : ₹ ${numberToString(totalTaxLiabilityOldRegime.toStringAsFixed(0))}"),
+                    Text("Less : TDS from Salary : ₹ ${numberToString(getStringToDouble(tdsDeductionTextEditingController.text.trim()).toStringAsFixed(0))}"),
+                    const SizedBox(height: 10),
+                    Text("Tax Payable / (Refundable): ₹ ${numberToString((totalTaxLiabilityOldRegime + getStringToDouble(tdsDeductionTextEditingController.text.trim())).toStringAsFixed(0))} ($oldTaxSlab)"),
+                    const SizedBox(height: 20),
+
+
+                    const Text("New Regime Payable Tax Amount", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    Text("Income from Salary : ₹ ${numberToString((selectedAssessmentYear == "2024-25" ? grossSalary - 50000 : grossSalary).toStringAsFixed(0))}"),
+                    Text("Income from House property : ₹ ${numberToString(totalHouseIncome.toStringAsFixed(0))}"),
+                    Text("Income from Other Sources : ₹ ${numberToString(totalOtherIncomeSource.toStringAsFixed(0))}"),
+                    const Text("Less Deductions"),
+                    Text("Additional Deduction under Sec 80CCD(2) - Employer contribution : ₹ ${numberToString(netDeductionInNewRegime.toStringAsFixed(0))}"),
+                    const SizedBox(height: 6),
+                    Text("Total Taxable Income : ₹ ${numberToString(totalTaxableIncomeNewRegime.toStringAsFixed(0))}"),
+                    const SizedBox(height: 6),
+                    Text("Tax Payable : ₹ ${numberToString(newPayableTaxAmount.toStringAsFixed(0))}"),
+                    Text("Less : Rebate u/s 87A : ₹ ${numberToString(lessRebateNewRegime.toStringAsFixed(0))}"),
+                    Text("Tax Payable after rebate : ₹ ${numberToString(afterLessRebateNewRegime.toStringAsFixed(0))}"),
+                    Text("Add : Surcharge : ₹ ${numberToString(surchargeNewRegime.toStringAsFixed(0))}"),
+                    Text("Add : Education + Health Cess : ₹ ${numberToString(educationTaxNewRegime.toStringAsFixed(0))}"),
+                    Text("Total Tax Liability : ₹ ${numberToString(totalTaxLiabilityNewRegime.toStringAsFixed(0))}"),
+                    Text("Less : TDS from Salary : ₹ ${numberToString(getStringToDouble(tdsDeductionTextEditingController.text.trim()).toStringAsFixed(0))}"),
+                    const SizedBox(height: 10),
+                    Text("Tax Payable / (Refundable): ₹ ${numberToString((totalTaxLiabilityNewRegime + getStringToDouble(tdsDeductionTextEditingController.text.trim())).toStringAsFixed(0))} ($newTaxSlab)"),
+                    const SizedBox(height: 20),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
