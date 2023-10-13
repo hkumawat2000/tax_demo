@@ -1,7 +1,7 @@
 {
   "hosting": {
     "public": "build/web",
-    "site" : "dev-1finance-tax",
+    "site" : "uat-1finance-tax",
     "ignore": [
       "firebase.json",
       "**/.*",
